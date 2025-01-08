@@ -1,13 +1,13 @@
 package me.collebol;
 
-import me.collebol.graphics.text.NanoVGExample;
+import me.collebol.graphics.TextRenderer;
 import me.collebol.gui.Panel;
+import me.collebol.utils.PanelLocation;
 import org.lwjgl.opengl.GL11;
 
 public class ExamplePanel extends Panel {
-    public ExamplePanel(NanoVGExample e) {
-        super(0, e);
-        this.nanoVGExample = e;
+    public ExamplePanel(EJGEngine i) {
+        super(0, i);
     }
 
     @Override
@@ -29,5 +29,7 @@ public class ExamplePanel extends Panel {
         GL11.glVertex2f(0.0f, 0.5f);
 
         GL11.glEnd();
+
+        getEngine().getTextRenderer().render("Welcome to EJGEngine!", new PanelLocation(((float) getEngine().WINDOW_WIDTH / 2), 100), 40.0f);
     }
 }

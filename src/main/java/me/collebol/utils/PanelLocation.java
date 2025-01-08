@@ -1,11 +1,11 @@
 package me.collebol.utils;
 
-public class ScreenLocation {
+public class PanelLocation {
 
     public float x;
     public float y;
 
-    public ScreenLocation(float x, float y){
+    public PanelLocation(float x, float y){
         this.x = x;
         this.y = y;
     }

@@ -1,7 +1,6 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
-import me.collebol.graphics.text.NanoVGExample;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -12,7 +11,10 @@ import java.util.HashMap;
 
 public class MainWindow implements Runnable {
 
-    public EJGEngine instance;
+    private EJGEngine engine;
+    private EJGEngine getEngine(){
+        return engine;
+    }
 
     private long WINDOW;
 
@@ -20,7 +22,7 @@ public class MainWindow implements Runnable {
     public Panel currentScene;
 
     public MainWindow(EJGEngine e){
-        this.instance = e;
+        this.engine = e;
     }
 
     public void run(){
@@ -42,14 +44,14 @@ public class MainWindow implements Runnable {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
-        WINDOW = GLFW.glfwCreateWindow(instance.WINDOW_WIDTH, instance.WINDOW_HEIGHT, instance.TITLE, 0, 0);
+        WINDOW = GLFW.glfwCreateWindow(getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, getEngine().TITLE, 0, 0);
         if(WINDOW == 0){
             throw new RuntimeException("Failed to create the GLFW window.");
         }
 
         GLFW.glfwSetWindowPos(WINDOW, 100, 100);
         GLFW.glfwMakeContextCurrent(WINDOW);
-        GLFW.glfwSwapInterval(instance.REFRESH_INTERVAL); //v-sync
+        GLFW.glfwSwapInterval(getEngine().REFRESH_INTERVAL); //v-sync
         GLFW.glfwShowWindow(WINDOW);
 
         GLFW.glfwSetWindowRefreshCallback(WINDOW, window -> {
@@ -58,8 +60,14 @@ public class MainWindow implements Runnable {
             GLFW.glfwSwapBuffers(window);
         });
 
+        GLFW.glfwSetFramebufferSizeCallback(WINDOW, (window, width, height) -> {
+            GL11.glViewport(0, 0, width, height);
+            getEngine().WINDOW_WIDTH = width;
+            getEngine().WINDOW_HEIGHT = height;
+        });
+
         GL.createCapabilities();
-        instance.nanoVGExample.init();
+        getEngine().getTextRenderer().setup();
     }
 
     private void loop(){
@@ -86,7 +94,8 @@ public class MainWindow implements Runnable {
     }
 
     public void updateData(){
-        GLFW.glfwSetWindowTitle(WINDOW, instance.TITLE);
+        GLFW.glfwSetWindowTitle(WINDOW, getEngine().TITLE);
+
     }
 
     public void addPanel(Panel panel){

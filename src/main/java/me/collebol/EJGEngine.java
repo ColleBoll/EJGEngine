@@ -1,7 +1,7 @@
 package me.collebol;
 
 
-import me.collebol.graphics.text.NanoVGExample;
+import me.collebol.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.Panel;
 
@@ -28,12 +28,15 @@ public abstract class EJGEngine {
         return WINDOW;
     }
 
-    public NanoVGExample nanoVGExample;
+    private TextRenderer TEXT_RENDERER;
+    public TextRenderer getTextRenderer(){
+        return TEXT_RENDERER;
+    }
 
     public void start(){
         WINDOW = new MainWindow(this);
-        this.nanoVGExample = new NanoVGExample();
-        Panel t = new ExamplePanel(nanoVGExample);
+        this.TEXT_RENDERER = new TextRenderer(this);
+        Panel t = new ExamplePanel(this);
         WINDOW.addPanel(t);
         WINDOW.setPanel(0);
         enable();
