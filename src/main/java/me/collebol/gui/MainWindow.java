@@ -1,5 +1,6 @@
-package me.collebol;
+package me.collebol.gui;
 
+import me.collebol.EJGEngine;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -7,30 +8,18 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainWindow implements Runnable {
 
-    private int WIDTH, HEIGHT;
-    private String TITLE;
-    public int FPS;
+    public EJGEngine instance;
 
     private long WINDOW;
 
-    private HashMap<Integer, Scene> SCENES = new HashMap<>();
-    public Scene currentScene;
+    private HashMap<Integer, Panel> SCENES = new HashMap<>();
+    public Panel currentScene;
 
-    public MainWindow(int width, int height, String title){
-        this.WIDTH = width;
-        this.HEIGHT = height;
-        this.TITLE = title;
-    }
-
-    public MainWindow(){
-        this.WIDTH = 800;
-        this.HEIGHT = 600;
-        this.TITLE = "EJGEngine";
-        this.FPS = 60;
+    public MainWindow(EJGEngine e){
+        this.instance = e;
     }
 
     public void run(){
@@ -52,14 +41,14 @@ public class MainWindow implements Runnable {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
-        WINDOW = GLFW.glfwCreateWindow(WIDTH, HEIGHT, TITLE, 0, 0);
+        WINDOW = GLFW.glfwCreateWindow(instance.WINDOW_WIDTH, instance.WINDOW_HEIGHT, instance.TITLE, 0, 0);
         if(WINDOW == 0){
             throw new RuntimeException("Failed to create the GLFW window.");
         }
 
         GLFW.glfwSetWindowPos(WINDOW, 100, 100);
         GLFW.glfwMakeContextCurrent(WINDOW);
-        GLFW.glfwSwapInterval(1); //v-sync
+        GLFW.glfwSwapInterval(instance.REFRESH_INTERVAL); //v-sync
         GLFW.glfwShowWindow(WINDOW);
 
         GLFW.glfwSetWindowRefreshCallback(WINDOW, window -> {
@@ -94,10 +83,14 @@ public class MainWindow implements Runnable {
 
     }
 
-    public void addScene(Scene scene){
-        SCENES.put(scene.i, scene);
+    public void updateData(){
+        GLFW.glfwSetWindowTitle(WINDOW, instance.TITLE);
     }
-    public void setScene(int i){
+
+    public void addPanel(Panel panel){
+        SCENES.put(panel.index, panel);
+    }
+    public void setPanel(int i){
         if(SCENES.containsKey(i)){
             currentScene = SCENES.get(i);
         }

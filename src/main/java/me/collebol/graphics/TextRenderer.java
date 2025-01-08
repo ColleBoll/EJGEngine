@@ -1,4 +1,4 @@
-package me.collebol.utils;
+package me.collebol.graphics;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBTTAlignedQuad;
@@ -56,7 +56,7 @@ public class TextRenderer {
             GL11.glBegin(GL11.GL_QUADS);
             for (int i = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
-                stbtt_GetPackedQuad(charData, 512, 512, c - 32, xBuffer, yBuffer, quad, 1);
+                //stbtt_GetPackedQuad(charData, 512, 512, c - 32, xBuffer, yBuffer, quad, 1);
 
                 GL11.glTexCoord2f(quad.s0(), quad.t0());
                 GL11.glVertex2f(quad.x0(), quad.y0());
