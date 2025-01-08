@@ -1,6 +1,7 @@
 package me.collebol;
 
 
+import me.collebol.graphics.text.NanoVGExample;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.Panel;
 
@@ -27,9 +28,12 @@ public abstract class EJGEngine {
         return WINDOW;
     }
 
+    public NanoVGExample nanoVGExample;
+
     public void start(){
         WINDOW = new MainWindow(this);
-        Panel t = new ExamplePanel();
+        this.nanoVGExample = new NanoVGExample();
+        Panel t = new ExamplePanel(nanoVGExample);
         WINDOW.addPanel(t);
         WINDOW.setPanel(0);
         enable();

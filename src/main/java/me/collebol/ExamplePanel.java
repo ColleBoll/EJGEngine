@@ -1,11 +1,13 @@
 package me.collebol;
 
+import me.collebol.graphics.text.NanoVGExample;
 import me.collebol.gui.Panel;
 import org.lwjgl.opengl.GL11;
 
 public class ExamplePanel extends Panel {
-    public ExamplePanel() {
-        super(0);
+    public ExamplePanel(NanoVGExample e) {
+        super(0, e);
+        this.nanoVGExample = e;
     }
 
     @Override

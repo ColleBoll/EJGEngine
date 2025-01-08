@@ -1,6 +1,7 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
+import me.collebol.graphics.text.NanoVGExample;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -15,7 +16,7 @@ public class MainWindow implements Runnable {
 
     private long WINDOW;
 
-    private HashMap<Integer, Panel> SCENES = new HashMap<>();
+    private HashMap<Integer, Panel> PANELS = new HashMap<>();
     public Panel currentScene;
 
     public MainWindow(EJGEngine e){
@@ -58,6 +59,7 @@ public class MainWindow implements Runnable {
         });
 
         GL.createCapabilities();
+        instance.nanoVGExample.init();
     }
 
     private void loop(){
@@ -66,7 +68,7 @@ public class MainWindow implements Runnable {
         float dt = -1.0f;
 
         while (!GLFW.glfwWindowShouldClose(WINDOW)){
-            System.out.println(1.0f / dt + " FPS");
+            //System.out.println(1.0f / dt + " FPS");
             GLFW.glfwPollEvents();
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -88,11 +90,11 @@ public class MainWindow implements Runnable {
     }
 
     public void addPanel(Panel panel){
-        SCENES.put(panel.index, panel);
+        PANELS.put(panel.index, panel);
     }
     public void setPanel(int i){
-        if(SCENES.containsKey(i)){
-            currentScene = SCENES.get(i);
+        if(PANELS.containsKey(i)){
+            currentScene = PANELS.get(i);
         }
     }
 }
