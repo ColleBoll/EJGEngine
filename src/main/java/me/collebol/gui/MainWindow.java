@@ -60,6 +60,7 @@ public class MainWindow implements Runnable {
             GLFW.glfwSwapBuffers(window);
         });
 
+        // make screen responsive
         GLFW.glfwSetFramebufferSizeCallback(WINDOW, (window, width, height) -> {
             GL11.glViewport(0, 0, width, height);
             getEngine().WINDOW_WIDTH = width;
@@ -76,7 +77,6 @@ public class MainWindow implements Runnable {
         float dt = -1.0f;
 
         while (!GLFW.glfwWindowShouldClose(WINDOW)){
-            //System.out.println(1.0f / dt + " FPS");
             GLFW.glfwPollEvents();
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);

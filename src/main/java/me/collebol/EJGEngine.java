@@ -1,7 +1,7 @@
 package me.collebol;
 
 
-import me.collebol.graphics.TextRenderer;
+import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.Panel;
 

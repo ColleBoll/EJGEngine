@@ -1,7 +1,6 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
-import me.collebol.graphics.TextRenderer;
 
 public abstract class Panel {
 

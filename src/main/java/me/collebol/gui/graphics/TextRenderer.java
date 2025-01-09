@@ -1,4 +1,4 @@
-package me.collebol.graphics;
+package me.collebol.gui.graphics;
 
 import me.collebol.EJGEngine;
 import me.collebol.utils.PanelLocation;
