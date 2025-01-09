@@ -24,6 +24,11 @@ public abstract class EJGEngine {
     public int WINDOW_HEIGHT = TILE_SIZE * WINDOW_MAX_TILE_HEIGHT;
 
     private MainWindow WINDOW;
+
+    /**
+     * The window the game is displayed on.
+     * @return window
+     */
     public MainWindow getWindow() {
         return WINDOW;
     }
