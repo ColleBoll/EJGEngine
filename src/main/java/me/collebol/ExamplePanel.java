@@ -31,5 +31,8 @@ public class ExamplePanel extends Panel {
         GL11.glEnd();
 
         getEngine().getTextRenderer().render("Welcome to EJGEngine!", new PanelLocation(((float) getEngine().WINDOW_WIDTH / 2), 100), 40.0f);
+        getEngine().getTextRenderer().render("A project using OpenGL",
+                new PanelLocation(((float) getEngine().WINDOW_WIDTH / 2), 550),
+                40.0f);
     }
 }
