@@ -12,12 +12,14 @@ import static org.lwjgl.nanovg.NanoVGGL3.*;
 public class TextRenderer {
     private long vg;
     private EJGEngine engine;
+    private String font_path;
     private EJGEngine getEngine(){
         return engine;
     }
 
-    public TextRenderer(EJGEngine i){
+    public TextRenderer(EJGEngine i, String font_path){
         this.engine = i;
+        this.font_path = font_path;
     }
 
     public void setup() {
@@ -26,7 +28,7 @@ public class TextRenderer {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
 
-        int font = nvgCreateFont(vg, "default", "src/main/resources/font.ttf");
+        int font = nvgCreateFont(vg, "default", font_path);
         if (font == -1) {
             throw new RuntimeException("Could not add font.");
         }

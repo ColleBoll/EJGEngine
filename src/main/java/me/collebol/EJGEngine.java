@@ -37,10 +37,16 @@ public abstract class EJGEngine {
     public TextRenderer getTextRenderer(){
         return TEXT_RENDERER;
     }
+    public void setTextRenderer(String font_path){
+        this.TEXT_RENDERER = new TextRenderer(this, font_path);
+    }
 
     public void start(){
+        setup();
+        if(TEXT_RENDERER == null){
+            throw new RuntimeException("SET TEXT_RENDERER!");
+        }
         WINDOW = new MainWindow(this);
-        this.TEXT_RENDERER = new TextRenderer(this);
         Panel t = new ExamplePanel(this);
         WINDOW.addPanel(t);
         WINDOW.setPanel(0);
@@ -48,6 +54,8 @@ public abstract class EJGEngine {
         WINDOW.run();
         disable();
     }
+
+    public abstract void setup();
 
     public abstract void enable();
 
