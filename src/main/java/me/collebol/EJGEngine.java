@@ -39,6 +39,7 @@ public abstract class EJGEngine {
     }
 
     public void start(){
+        setup();
         WINDOW = new MainWindow(this);
         this.TEXT_RENDERER = new TextRenderer(this);
         Panel t = new ExamplePanel(this);
@@ -48,6 +49,8 @@ public abstract class EJGEngine {
         WINDOW.run();
         disable();
     }
+
+    public abstract void setup();
 
     public abstract void enable();
 
