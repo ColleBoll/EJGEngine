@@ -11,25 +11,50 @@ import java.util.HashMap;
 
 public class MainWindow implements Runnable {
 
-    private EJGEngine engine;
+    private EJGEngine ENGINE;
     private EJGEngine getEngine(){
-        return engine;
+        return this.ENGINE;
     }
 
     private long WINDOW;
 
     private HashMap<Integer, Panel> PANELS = new HashMap<>();
-    public Panel currentScene;
+    /**
+     * Add a panel to the window where you can switch between.
+     * @param panel A panel in the main window
+     */
+    public void addPanel(Panel panel){
+        this.PANELS.put(panel.index, panel);
+    }
+    /**
+     * Display the given panel.
+     * @param i Panel index.
+     */
+    public void setPanel(int i){
+        if(this.PANELS.containsKey(i)){
+            this.CURRENT_PANEL = this.PANELS.get(i);
+        }
+    }
+
+    private Panel CURRENT_PANEL;
+    /**
+     * Gives the current panel of the window.
+     * @return The panel that is displaying!
+     */
+    public Panel getCurrentPanel(){
+        return this.CURRENT_PANEL;
+    }
+
 
     public MainWindow(EJGEngine e){
-        this.engine = e;
+        this.ENGINE = e;
     }
 
     public void run(){
         init();
         loop();
 
-        GLFW.glfwDestroyWindow(WINDOW);
+        GLFW.glfwDestroyWindow(this.WINDOW);
         GLFW.glfwTerminate();
     }
 
@@ -44,23 +69,24 @@ public class MainWindow implements Runnable {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
-        WINDOW = GLFW.glfwCreateWindow(getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, getEngine().TITLE, 0, 0);
-        if(WINDOW == 0){
+        this.WINDOW = GLFW.glfwCreateWindow(getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, getEngine().TITLE, 0, 0);
+        if(this.WINDOW == 0){
             throw new RuntimeException("Failed to create the GLFW window.");
         }
 
-        GLFW.glfwSetWindowPos(WINDOW, 100, 100);
-        GLFW.glfwMakeContextCurrent(WINDOW);
+        GLFW.glfwSetWindowPos(this.WINDOW, 100, 100);
+        GLFW.glfwMakeContextCurrent(this.WINDOW);
         GLFW.glfwSwapInterval(getEngine().REFRESH_INTERVAL); //v-sync
-        GLFW.glfwShowWindow(WINDOW);
+        GLFW.glfwShowWindow(this.WINDOW);
 
-        GLFW.glfwSetWindowRefreshCallback(WINDOW, window -> {
+        GLFW.glfwSetWindowRefreshCallback(this.WINDOW, window -> {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            currentScene.paint();
+            this.CURRENT_PANEL.paint();
             GLFW.glfwSwapBuffers(window);
         });
 
-        GLFW.glfwSetFramebufferSizeCallback(WINDOW, (window, width, height) -> {
+        // make screen responsive
+        GLFW.glfwSetFramebufferSizeCallback(this.WINDOW, (window, width, height) -> {
             GL11.glViewport(0, 0, width, height);
             getEngine().WINDOW_WIDTH = width;
             getEngine().WINDOW_HEIGHT = height;
@@ -75,16 +101,15 @@ public class MainWindow implements Runnable {
         float endTime;
         float dt = -1.0f;
 
-        while (!GLFW.glfwWindowShouldClose(WINDOW)){
-            //System.out.println(1.0f / dt + " FPS");
+        while (!GLFW.glfwWindowShouldClose(this.WINDOW)){
             GLFW.glfwPollEvents();
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            currentScene.update(dt);
-            currentScene.paint();
+            this.CURRENT_PANEL.update(dt);
+            this.CURRENT_PANEL.paint();
 
-            GLFW.glfwSwapBuffers(WINDOW);
+            GLFW.glfwSwapBuffers(this.WINDOW);
 
             endTime = Time.getTime();
             dt = endTime - beginTime;
@@ -94,25 +119,7 @@ public class MainWindow implements Runnable {
     }
 
     public void updateData(){
-        GLFW.glfwSetWindowTitle(WINDOW, getEngine().TITLE);
+        GLFW.glfwSetWindowTitle(this.WINDOW, getEngine().TITLE);
 
-    }
-
-    /**
-     * Add a panel to the window where you can switch between.
-     * @param panel A panel in the main window
-     */
-    public void addPanel(Panel panel){
-        PANELS.put(panel.index, panel);
-    }
-
-    /**
-     * Display the given panel.
-     * @param i Panel index.
-     */
-    public void setPanel(int i){
-        if(PANELS.containsKey(i)){
-            currentScene = PANELS.get(i);
-        }
     }
 }

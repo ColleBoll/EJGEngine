@@ -1,6 +1,5 @@
 package me.collebol;
 
-import me.collebol.graphics.TextRenderer;
 import me.collebol.gui.Panel;
 import me.collebol.utils.PanelLocation;
 import org.lwjgl.opengl.GL11;
