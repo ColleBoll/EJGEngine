@@ -21,30 +21,30 @@ public class TextRenderer {
     }
 
     public void setup() {
-        vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
-        if (vg == MemoryUtil.NULL) {
+        this.vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
+        if (this.vg == MemoryUtil.NULL) {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
 
-        int font = nvgCreateFont(vg, "default", "src/main/resources/font.ttf");
+        int font = nvgCreateFont(this.vg, "default", "src/main/resources/font.ttf");
         if (font == -1) {
             throw new RuntimeException("Could not add font.");
         }
     }
 
     public void render(String text, PanelLocation loc, float size) {
-        nvgBeginFrame(vg, getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, 20);
+        nvgBeginFrame(this.vg, getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, 20);
 
         NVGColor color = NVGColor.create();
         nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);
 
-        nvgFontSize(vg, size);
-        nvgFontFace(vg, "default");
-        nvgFillColor(vg, color);
-        nvgTextAlign(vg, NVG_ALIGN_CENTER);
-        nvgText(vg, loc.x, loc.y, text);
+        nvgFontSize(this.vg, size);
+        nvgFontFace(this.vg, "default");
+        nvgFillColor(this.vg, color);
+        nvgTextAlign(this.vg, NVG_ALIGN_CENTER);
+        nvgText(this.vg, loc.x, loc.y, text);
 
-        nvgEndFrame(vg);
+        nvgEndFrame(this.vg);
     }
 
     public void cleanup() {

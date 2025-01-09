@@ -4,6 +4,7 @@ package me.collebol;
 import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.Panel;
+import me.collebol.gui.graphics.TextureRenderer;
 
 public abstract class EJGEngine {
 
@@ -38,15 +39,21 @@ public abstract class EJGEngine {
         return TEXT_RENDERER;
     }
 
+    private TextureRenderer TEXTURE_RENDERER;
+    public TextureRenderer getTextureRenderer(){
+        return TEXTURE_RENDERER;
+    }
+
     public void start(){
         setup();
-        WINDOW = new MainWindow(this);
+        this.TEXTURE_RENDERER = new TextureRenderer();
         this.TEXT_RENDERER = new TextRenderer(this);
+        this.WINDOW = new MainWindow(this);
         Panel t = new ExamplePanel(this);
-        WINDOW.addPanel(t);
-        WINDOW.setPanel(0);
+        this.WINDOW.addPanel(t);
+        this.WINDOW.setPanel(0);
         enable();
-        WINDOW.run();
+        this.WINDOW.run();
         disable();
     }
 

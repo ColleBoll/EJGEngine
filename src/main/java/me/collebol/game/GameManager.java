@@ -1,12 +1,21 @@
 package me.collebol.game;
 
+import me.collebol.EJGEngine;
 import me.collebol.game.entity.Player;
 
 public abstract class GameManager implements Runnable {
 
+    private EJGEngine ENGINE;
+    public EJGEngine getEngine() {
+        return this.ENGINE;
+    }
+    public void setEngine(EJGEngine engine) {
+        this.ENGINE = engine;
+    }
+
     private int TICKS = 20;
     public int getTicks() {
-        return TICKS;
+        return this.TICKS;
     }
     public void setTicks(int ticks) {
         this.TICKS = ticks;
@@ -14,16 +23,20 @@ public abstract class GameManager implements Runnable {
 
     private Player PLAYER;
     public Player getPlayer() {
-        return PLAYER;
+        return this.PLAYER;
     }
     public void setPlayer(Player player) {
         this.PLAYER = player;
     }
 
+    public GameManager(EJGEngine engine){
+        this.ENGINE = engine;
+    }
+
     private Thread THREAD;
     public void startGameThread(){
-        THREAD = new Thread();
-        THREAD.start();
+        this.THREAD = new Thread();
+        this.THREAD.start();
     }
 
     @Override
@@ -33,7 +46,7 @@ public abstract class GameManager implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while (THREAD != null){
+        while (this.THREAD != null){
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
