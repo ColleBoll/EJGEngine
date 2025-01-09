@@ -98,9 +98,18 @@ public class MainWindow implements Runnable {
 
     }
 
+    /**
+     * Add a panel to the window where you can switch between.
+     * @param panel A panel in the main window
+     */
     public void addPanel(Panel panel){
         PANELS.put(panel.index, panel);
     }
+
+    /**
+     * Display the given panel.
+     * @param i Panel index.
+     */
     public void setPanel(int i){
         if(PANELS.containsKey(i)){
             currentScene = PANELS.get(i);
