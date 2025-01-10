@@ -5,8 +5,8 @@ import me.collebol.utils.PanelLocation;
 import org.lwjgl.opengl.GL11;
 
 public class ExamplePanel extends Panel {
-    public ExamplePanel(EJGEngine i) {
-        super(0, i);
+    public ExamplePanel(EJGEngine e) {
+        super(0, e);
     }
 
     @Override

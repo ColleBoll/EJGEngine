@@ -16,8 +16,8 @@ public class TextRenderer {
         return engine;
     }
 
-    public TextRenderer(EJGEngine i){
-        this.engine = i;
+    public TextRenderer(EJGEngine e){
+        this.engine = e;
     }
 
     public void setup() {
