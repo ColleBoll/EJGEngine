@@ -33,7 +33,7 @@ public class TextRenderer {
     }
 
     public void render(String text, PanelLocation loc, float size) {
-        nvgBeginFrame(this.vg, getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, 20);
+        nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
         nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);

@@ -16,7 +16,16 @@ public class MainWindow implements Runnable {
         return this.ENGINE;
     }
 
-    private long WINDOW;
+    private String title = "EJGEngine";
+    private int refreshInterval = 1;
+    private int originalTileSize = 16;
+    private int scale = 3;
+    private int maxTileWidth = 19;
+    private int maxTileHeight = 13;
+    private int width = getTileSize() * maxTileWidth;
+    private int height = getTileSize() * maxTileHeight;
+
+    private long window;
 
     private HashMap<Integer, Panel> PANELS = new HashMap<>();
     /**
@@ -54,7 +63,7 @@ public class MainWindow implements Runnable {
         init();
         loop();
 
-        GLFW.glfwDestroyWindow(this.WINDOW);
+        GLFW.glfwDestroyWindow(this.window);
         GLFW.glfwTerminate();
     }
 
@@ -69,30 +78,44 @@ public class MainWindow implements Runnable {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
-        this.WINDOW = GLFW.glfwCreateWindow(getEngine().WINDOW_WIDTH, getEngine().WINDOW_HEIGHT, getEngine().TITLE, 0, 0);
-        if(this.WINDOW == 0){
+        this.window = GLFW.glfwCreateWindow(getWidth(), getHeight(), getTitle(), 0, 0);
+        if(this.window == 0){
             throw new RuntimeException("Failed to create the GLFW window.");
         }
 
-        GLFW.glfwSetWindowPos(this.WINDOW, 100, 100);
-        GLFW.glfwMakeContextCurrent(this.WINDOW);
-        GLFW.glfwSwapInterval(getEngine().REFRESH_INTERVAL); //v-sync
-        GLFW.glfwShowWindow(this.WINDOW);
+        GLFW.glfwSetWindowPos(this.window, 100, 100);
+        GLFW.glfwMakeContextCurrent(this.window);
+        GLFW.glfwSwapInterval(getRefreshInterval()); //v-sync
+        GLFW.glfwShowWindow(this.window);
 
-        GLFW.glfwSetWindowRefreshCallback(this.WINDOW, window -> {
+        GLFW.glfwSetWindowRefreshCallback(this.window, window -> {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
             this.CURRENT_PANEL.paint();
             GLFW.glfwSwapBuffers(window);
         });
 
         // make screen responsive
-        GLFW.glfwSetFramebufferSizeCallback(this.WINDOW, (window, width, height) -> {
+        GLFW.glfwSetFramebufferSizeCallback(this.window, (window, width, height) -> {
             GL11.glViewport(0, 0, width, height);
-            getEngine().WINDOW_WIDTH = width;
-            getEngine().WINDOW_HEIGHT = height;
+            setWidth(width);
+            setHeight(height);
+
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0, width, height, 0, -1, 1);
+            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+            GL11.glLoadIdentity();
         });
 
         GL.createCapabilities();
+
+        GL11.glViewport(0, 0, getWidth(), getHeight());
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0, getWidth(), getHeight(), 0, -1, 1);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glLoadIdentity();
+
         getEngine().getTextRenderer().setup();
     }
 
@@ -101,7 +124,7 @@ public class MainWindow implements Runnable {
         float endTime;
         float dt = -1.0f;
 
-        while (!GLFW.glfwWindowShouldClose(this.WINDOW)){
+        while (!GLFW.glfwWindowShouldClose(this.window)){
             GLFW.glfwPollEvents();
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -109,7 +132,7 @@ public class MainWindow implements Runnable {
             this.CURRENT_PANEL.update(dt);
             this.CURRENT_PANEL.paint();
 
-            GLFW.glfwSwapBuffers(this.WINDOW);
+            GLFW.glfwSwapBuffers(this.window);
 
             endTime = Time.getTime();
             dt = endTime - beginTime;
@@ -118,8 +141,73 @@ public class MainWindow implements Runnable {
 
     }
 
-    public void updateData(){
-        GLFW.glfwSetWindowTitle(this.WINDOW, getEngine().TITLE);
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+        GLFW.glfwSetWindowTitle(this.window, getTitle());
+    }
+
+    public int getRefreshInterval() {
+        return refreshInterval;
+    }
+
+    public void setRefreshInterval(int refreshInterval) {
+        this.refreshInterval = refreshInterval;
+        GLFW.glfwSwapInterval(getRefreshInterval());
+    }
+
+    public int getOriginalTileSize() {
+        return originalTileSize;
+    }
+
+    public void setOriginalTileSize(int originalTileSize) {
+        this.originalTileSize = originalTileSize;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getTileSize() {
+        return getOriginalTileSize() * getScale();
+    }
+
+    public int getMaxTileWidth() {
+        return maxTileWidth;
+    }
+
+    public void setMaxTileWidth(int maxTileWidth) {
+        this.maxTileWidth = maxTileWidth;
+    }
+
+    public int getMaxTileHeight() {
+        return maxTileHeight;
+    }
+
+    public void setMaxTileHeight(int maxTileHeight) {
+        this.maxTileHeight = maxTileHeight;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
