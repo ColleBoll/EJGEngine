@@ -16,22 +16,25 @@ public class ExamplePanel extends Panel {
 
     @Override
     public void paint() {
+
+        PanelLocation loc = new PanelLocation(200, 200);
+
         GL11.glBegin(GL11.GL_TRIANGLES);
 
         GL11.glColor3f(1.0f, 0.0f, 0.0f);
-        GL11.glVertex2f(-0.5f, -0.5f);
+        GL11.glVertex2f(loc.x + 100, loc.y + 100);
 
         GL11.glColor3f(0.0f, 1.0f, 0.0f);
-        GL11.glVertex2f(0.5f, -0.5f);
+        GL11.glVertex2f(loc.x, loc.y);
 
         GL11.glColor3f(0.0f, 0.0f, 1.0f);
-        GL11.glVertex2f(0.0f, 0.5f);
+        GL11.glVertex2f(loc.x + 200, loc.y);
 
         GL11.glEnd();
 
-        getEngine().getTextRenderer().render("Welcome to EJGEngine!", new PanelLocation(((float) getEngine().WINDOW_WIDTH / 2), 100), 40.0f);
+        getEngine().getTextRenderer().render("Welcome to EJGEngine!", new PanelLocation(((float) getEngine().getWindow().getWidth() / 2), 100), 40.0f);
         getEngine().getTextRenderer().render("A project using OpenGL",
-                new PanelLocation(((float) getEngine().WINDOW_WIDTH / 2), 550),
+                new PanelLocation(((float) getEngine().getWindow().getWidth() / 2), 550),
                 40.0f);
     }
 }
