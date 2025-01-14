@@ -2,12 +2,11 @@ package me.collebol.gui.graphics;
 
 import me.collebol.EJGEngine;
 import me.collebol.utils.PanelLocation;
-import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.system.MemoryUtil;
 
 import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVGGL3.*;
 
 public class TextRenderer {
     private long vg;
@@ -21,7 +20,7 @@ public class TextRenderer {
     }
 
     public void setup() {
-        this.vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
+        this.vg = NanoVGGL2.nvgCreate(NanoVGGL2.NVG_ANTIALIAS | NanoVGGL2.NVG_STENCIL_STROKES);
         if (this.vg == MemoryUtil.NULL) {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
@@ -48,6 +47,6 @@ public class TextRenderer {
     }
 
     public void cleanup() {
-        nvgDelete(vg);
+        NanoVGGL2.nvgDelete(vg);
     }
 }
