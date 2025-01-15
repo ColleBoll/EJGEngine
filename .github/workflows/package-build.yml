@@ -28,4 +28,4 @@ jobs:
           echo "Building for ${{ matrix.os }}"
           mvn --batch-mode deploy -P${{ matrix.os }}
         env:
-          GITHUB_TOKEN: ${{ secrets.JAVA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
