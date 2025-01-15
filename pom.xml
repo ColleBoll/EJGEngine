@@ -83,7 +83,7 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <minimizeJar>true</minimizeJar>
-<!--                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>-->
+                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>
                         </configuration>
                     </execution>
                 </executions>
