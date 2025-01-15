@@ -5,8 +5,11 @@ on:
     types: [published]
 
 jobs:
-  deploy-windows:
-    runs-on: windows-latest
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos, windows]
     permissions:
       contents: read
       packages: write
@@ -20,31 +23,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build and Deploy Windows
+      - name: Build and Deploy
         run: |
-          echo "Building for Windows"
-          mvn --batch-mode deploy -P windows
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy-macos:
-    runs-on: macos-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Build and Deploy macOS
-        run: |
-          echo "Building for macOS"
-          mvn --batch-mode deploy -P macos
+          echo "Building for ${{ matrix.os }}"
+          mvn --batch-mode deploy -Dartifact.suffix=${{ matrix.os }} -P ${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
