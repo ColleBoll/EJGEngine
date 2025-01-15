@@ -2,7 +2,7 @@ name: Create Release Tag and Title
 
 on:
   release:
-    types: [created]
+    types: [created, unpublished]
 
 jobs:
   create-release-tag:
