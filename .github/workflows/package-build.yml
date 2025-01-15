@@ -1,28 +1,28 @@
-name: Deploy on Release
+name: Publish to GitHub Packages
 
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        os: [macos, windows]
     steps:
-      - name: Checkout repository
+      - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
-          server-id: github
-          settings-path: ~/.m2
+          java-version: '17'
 
-      - name: Build and Deploy to GitHub Packages
+      - name: Build and Deploy
+        run: |
+          echo "Building for ${{ matrix.os }}"
+          mvn -B clean deploy -P${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn clean deploy
