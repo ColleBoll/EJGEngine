@@ -6,7 +6,7 @@
 
     <groupId>me.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>1.0-ALPHA-SNAPSHOT</version>
+    <version>v0.1.1</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -14,6 +14,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lwjgl.version>3.3.6</lwjgl.version>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/colleboll/EJGEngine</url>
+        </repository>
+    </distributionManagement>
 
     <profiles>
         <profile>
