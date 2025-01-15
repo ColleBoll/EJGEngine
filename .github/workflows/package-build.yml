@@ -26,6 +26,6 @@ jobs:
       - name: Build and Deploy
         run: |
           echo "Building for ${{ matrix.os }}"
-          mvn --batch-mode deploy -P${{ matrix.os }}
+          mvn --batch-mode deploy -P ${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
