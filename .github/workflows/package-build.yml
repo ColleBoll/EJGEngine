@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [macos, windows]
     permissions:
-      contents: write
+      contents: read
       packages: write
     steps:
       - name: Check out code
@@ -21,14 +21,11 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
-
-      - name: Copy Maven settings
-        run: mkdir -p ~/.m2 && cp settings.xml ~/.m2/settings.xml
+          java-version: '11'
 
       - name: Build and Deploy
         run: |
           echo "Building for ${{ matrix.os }}"
-          mvn -B clean deploy -P${{ matrix.os }}
+          mvn --batch-mode deploy -P${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.JAVA_TOKEN }}
