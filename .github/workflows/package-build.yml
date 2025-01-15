@@ -5,11 +5,8 @@ on:
     types: [published]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [macos, windows]
+  deploy-windows:
+    runs-on: windows-latest
     permissions:
       contents: read
       packages: write
@@ -23,9 +20,31 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build and Deploy
+      - name: Build and Deploy Windows
         run: |
-          echo "Building for ${{ matrix.os }}"
-          mvn --batch-mode deploy -P ${{ matrix.os }}
+          echo "Building for Windows"
+          mvn --batch-mode deploy -P windows
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build and Deploy macOS
+        run: |
+          echo "Building for macOS"
+          mvn --batch-mode deploy -P macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
