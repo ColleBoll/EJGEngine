@@ -25,16 +25,32 @@
     </distributionManagement>
 
     <profiles>
+        <!--        intel-->
         <profile>
-            <id>macos</id>
+            <id>macos-x86_64</id>
             <activation>
                 <os>
                     <family>mac</family>
+                    <arch>x86_64</arch>
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>-macos</artifact.suffix>
+                <artifact.suffix>-macos-x64</artifact.suffix>
                 <lwjgl.natives>natives-macos</lwjgl.natives>
+            </properties>
+        </profile>
+        <!--        Apple chip M-->
+        <profile>
+            <id>macos-aarch64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <artifact.suffix>-macos-arm64</artifact.suffix>
+                <lwjgl.natives>natives-macos-arm64</lwjgl.natives>
             </properties>
         </profile>
         <profile>
@@ -55,23 +71,23 @@
         <finalName>${project.artifactId}-${project.version}${artifact.suffix}</finalName>
         <plugins>
             <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-shade-plugin</artifactId>
-    <version>3.5.0</version>
-    <executions>
-        <execution>
-            <phase>package</phase>
-            <goals>
-                <goal>shade</goal>
-            </goals>
-            <configuration>
-                <createDependencyReducedPom>false</createDependencyReducedPom>
-                <minimizeJar>true</minimizeJar>
-                <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>true</minimizeJar>
+<!--                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
