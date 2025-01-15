@@ -20,6 +20,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Copy Maven settings
+        run: mkdir -p ~/.m2 && cp settings.xml ~/.m2/settings.xml
+
       - name: Build and Deploy
         run: |
           echo "Building for ${{ matrix.os }}"
