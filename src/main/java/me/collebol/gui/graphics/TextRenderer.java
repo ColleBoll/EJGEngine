@@ -11,12 +11,17 @@ import static org.lwjgl.nanovg.NanoVG.*;
 public class TextRenderer {
     private long vg;
     private EJGEngine engine;
+    private String name;
+    private String fontPath;
+
     private EJGEngine getEngine(){
         return engine;
     }
 
-    public TextRenderer(EJGEngine e){
+    public TextRenderer(String name, String fontPath, EJGEngine e){
         this.engine = e;
+        this.name = name;
+        this.fontPath = fontPath;
     }
 
     public void setup() {
@@ -25,7 +30,7 @@ public class TextRenderer {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
 
-        int font = nvgCreateFont(this.vg, "default", "src/main/resources/font.ttf");
+        int font = nvgCreateFont(this.vg, this.name, this.fontPath);
         if (font == -1) {
             throw new RuntimeException("Could not add font.");
         }
@@ -38,7 +43,7 @@ public class TextRenderer {
         nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);
 
         nvgFontSize(this.vg, size);
-        nvgFontFace(this.vg, "default");
+        nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
         nvgTextAlign(this.vg, NVG_ALIGN_CENTER);
         nvgText(this.vg, loc.x, loc.y, text);
@@ -48,5 +53,13 @@ public class TextRenderer {
 
     public void cleanup() {
         NanoVGGL2.nvgDelete(vg);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFontPath() {
+        return fontPath;
     }
 }
