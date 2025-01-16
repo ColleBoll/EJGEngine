@@ -1,6 +1,7 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
+import me.collebol.gui.graphics.TextureRenderer;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -11,11 +12,7 @@ import java.util.HashMap;
 
 public class MainWindow implements Runnable {
 
-    private EJGEngine ENGINE;
-    private EJGEngine getEngine(){
-        return this.ENGINE;
-    }
-
+    private EJGEngine engine;
     private String title = "EJGEngine";
     private int refreshInterval = 1;
     private int originalTileSize = 16;
@@ -28,35 +25,11 @@ public class MainWindow implements Runnable {
     private long window;
 
     private HashMap<Integer, Panel> PANELS = new HashMap<>();
-    /**
-     * Add a panel to the window where you can switch between.
-     * @param panel A panel in the main window
-     */
-    public void addPanel(Panel panel){
-        this.PANELS.put(panel.index, panel);
-    }
-    /**
-     * Display the given panel.
-     * @param i Panel index.
-     */
-    public void setPanel(int i){
-        if(this.PANELS.containsKey(i)){
-            this.CURRENT_PANEL = this.PANELS.get(i);
-        }
-    }
 
     private Panel CURRENT_PANEL;
-    /**
-     * Gives the current panel of the window.
-     * @return The panel that is displaying!
-     */
-    public Panel getCurrentPanel(){
-        return this.CURRENT_PANEL;
-    }
-
 
     public MainWindow(EJGEngine e){
-        this.ENGINE = e;
+        this.engine = e;
     }
 
     public void run(){
@@ -116,7 +89,8 @@ public class MainWindow implements Runnable {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
 
-        getEngine().getTextRenderer().setup();
+        //Call the register method in the engine
+        getEngine().register();
     }
 
     private void loop(){
@@ -139,6 +113,36 @@ public class MainWindow implements Runnable {
             beginTime = endTime;
         }
 
+    }
+
+    private EJGEngine getEngine(){
+        return this.engine;
+    }
+
+    /**
+     * Add a panel to the window where you can switch between.
+     * @param panel A panel in the main window
+     */
+    public void registerPanel(Panel panel){
+        this.PANELS.put(panel.index, panel);
+    }
+
+    /**
+     * Display the given panel.
+     * @param i Panel index.
+     */
+    public void setPanel(int i){
+        if(this.PANELS.containsKey(i)){
+            this.CURRENT_PANEL = this.PANELS.get(i);
+        }
+    }
+
+    /**
+     * Gives the current panel of the window.
+     * @return The panel that is displaying!
+     */
+    public Panel getCurrentPanel(){
+        return this.CURRENT_PANEL;
     }
 
     public String getTitle() {
