@@ -46,7 +46,7 @@ EJGEngine is a game engine designed to be used on **Windows** or **macOS** devic
         <dependency>
             <groupId>me.collebol</groupId>
             <artifactId>ejgengine</artifactId>
-            <version>v0.1.3-rc.1</version>
+            <version>v0.1.2-windows</version>
         </dependency>
     </dependencies>
     ```
