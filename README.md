@@ -1,13 +1,86 @@
-# EJGEngine - Java game engine
+# EJGEngine
 
-> ⚠️ This game engine is in **EARLY** ALPHA development! ⚠️
+EJGEngine is a game engine designed to be used on **Windows** or **macOS** devices. It is currently in an early development state, so the project structure may change frequently.
 
-EJGEngine is a java game engine based on OpenGL (LWJGL).
-Currently you can only use it on **Windows** and **macOS**.
-*More will be added soon!*</br>
-This engine provides a good base frame for your **2D** game development!
-*__3D__ may be added soon!*
+## Features
 
-**PLEASE, report any bugs at the [issues](https://github.com/ColleBoll/EJGEngine/issues) page!**
+- Cross-platform support (Windows and macOS)
+- Written in Java
+- Uses LWJGL for graphics and audio
 
-## How do I install?
+## Getting Started
+
+### Prerequisites
+
+- **Java 17** or higher: [Download from Oracle](https://www.oracle.com/java/technologies/downloads/)
+- **Maven**: [Download from Apache](https://maven.apache.org/download.cgi)
+- **IntelliJ IDEA** (recommended) or another IDE
+
+### Installation
+> [!TIP]
+> Read the full documentation of the use on the [wiki](https://github.com/ColleBoll/EJGEngine/wiki).
+
+1. **Set up your Maven `settings.xml`:**
+    ```xml
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <servers>
+            <server>
+                <id>github</id>
+                <username>${env.GITHUB_ACTOR}</username>
+                <password>${env.GITHUB_TOKEN}</password>
+            </server>
+        </servers>
+    </settings>
+    ```
+
+2. **Add the EJGEngine dependency to your `pom.xml`:**
+    ```xml
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ColleBoll/EJGEngine</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>me.collebol</groupId>
+            <artifactId>ejgengine</artifactId>
+            <version>v0.1.3-rc.1</version>
+        </dependency>
+    </dependencies>
+    ```
+
+3. **Reload Maven:**
+    - Right-click `pom.xml` > Maven > Reload project
+
+### Usage
+
+Create a new Java class that extends `EJGEngine` and override the necessary methods:
+
+```java
+public class Main extends EJGEngine {
+
+    public static void main(String[] args) {
+        Main myGame = new Main();
+        myGame.start();
+    }
+
+    @Override
+    public void setup() {
+        
+    }
+
+    @Override
+    public void enable() {
+        
+    }
+
+    @Override
+    public void disable() {
+        
+    }
+}
+```
