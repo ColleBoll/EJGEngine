@@ -22,7 +22,7 @@ EJGEngine is a game engine designed to be used on **Windows** or **macOS** devic
 
 1. **Set up your Maven `settings.xml`:**
     ```xml
-    <settings
+    <settings>
         <servers>
             <server>
                 <id>github</id>
