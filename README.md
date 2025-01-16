@@ -22,14 +22,12 @@ EJGEngine is a game engine designed to be used on **Windows** or **macOS** devic
 
 1. **Set up your Maven `settings.xml`:**
     ```xml
-    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <settings
         <servers>
             <server>
                 <id>github</id>
-                <username>${env.GITHUB_ACTOR}</username>
-                <password>${env.GITHUB_TOKEN}</password>
+                <username>YOUR-GITHUB-USERNAME</username>
+                <password>YOUR-GITHUB-TOKEN</password>
             </server>
         </servers>
     </settings>
