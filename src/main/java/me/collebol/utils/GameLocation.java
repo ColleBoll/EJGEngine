@@ -1,5 +1,8 @@
 package me.collebol.utils;
 
+/**
+ * awfasdads
+ */
 public class GameLocation {
 
     public double x;

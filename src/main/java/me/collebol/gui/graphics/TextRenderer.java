@@ -1,7 +1,7 @@
 package me.collebol.gui.graphics;
 
 import me.collebol.EJGEngine;
-import me.collebol.utils.PanelLocation;
+import me.collebol.math.Vector2D;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.system.MemoryUtil;
@@ -36,7 +36,7 @@ public class TextRenderer {
         }
     }
 
-    public void render(String text, PanelLocation loc, float size) {
+    public void render(String text, Vector2D position, float size) {
         nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
@@ -46,7 +46,7 @@ public class TextRenderer {
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
         nvgTextAlign(this.vg, NVG_ALIGN_CENTER);
-        nvgText(this.vg, loc.x, loc.y, text);
+        nvgText(this.vg, position.getX(), position.getY(), text);
 
         nvgEndFrame(this.vg);
     }

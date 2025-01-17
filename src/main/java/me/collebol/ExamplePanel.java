@@ -1,7 +1,7 @@
 package me.collebol;
 
 import me.collebol.gui.Panel;
-import me.collebol.utils.PanelLocation;
+import me.collebol.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 public class ExamplePanel extends Panel {
@@ -17,18 +17,18 @@ public class ExamplePanel extends Panel {
     @Override
     public void paint() {
 
-        PanelLocation loc = new PanelLocation((float) getEngine().getWindow().getWidth() / 2, (float) getEngine().getWindow().getHeight() / 2);
+        Vector2D pos = new Vector2D((float) getEngine().getWindow().getWidth() / 2, (float) getEngine().getWindow().getHeight() / 2);
 
         GL11.glBegin(GL11.GL_TRIANGLES);
 
         GL11.glColor3f(1.0f, 0.0f, 0.0f);
-        GL11.glVertex2f(loc.x, loc.y - 150);
+        GL11.glVertex2f(pos.getX(), pos.getY() - 150);
 
         GL11.glColor3f(0.0f, 1.0f, 0.0f);
-        GL11.glVertex2f(loc.x - 150, loc.y + 150);
+        GL11.glVertex2f(pos.getX() - 150, pos.getY() + 150);
 
         GL11.glColor3f(0.0f, 0.0f, 1.0f);
-        GL11.glVertex2f(loc.x + 150, loc.y + 150);
+        GL11.glVertex2f(pos.getX() + 150, pos.getY() + 150);
 
         GL11.glEnd();
     }

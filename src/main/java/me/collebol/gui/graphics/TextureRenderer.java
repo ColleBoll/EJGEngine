@@ -1,7 +1,7 @@
 package me.collebol.gui.graphics;
 
 import me.collebol.EJGEngine;
-import me.collebol.utils.PanelLocation;
+import me.collebol.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 public class TextureRenderer {
@@ -26,11 +26,11 @@ public class TextureRenderer {
         this.height = e.getWindow().getTileSize();
     }
 
-    public void render(Texture texture, PanelLocation loc){
+    public void render(Texture texture, Vector2D position){
         texture.bind();
 
-        float startX = loc.x;
-        float startY = loc.y;
+        float startX = position.getX();
+        float startY = position.getY();
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
