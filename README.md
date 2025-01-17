@@ -1,6 +1,6 @@
 # EJGEngine
 
-EJGEngine is a game engine designed to be used on **Windows** or **macOS** devices. It is currently in an early development state, so the project structure may change frequently.
+**EJGEngine** is an ambitious, in-development game engine written entirely in Java. While still in its early stages, the goal of EJGEngine is to become a powerful and user-friendly platform that enables anyone — from beginners with minimal programming experience to seasoned developers — to create 2D games quickly and efficiently.
 
 ## Features
 
