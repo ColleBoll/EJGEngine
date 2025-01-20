@@ -1,6 +1,7 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
+import me.collebol.gui.graphics.Camera;
 import me.collebol.gui.graphics.TextureRenderer;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
@@ -15,18 +16,18 @@ public class MainWindow implements Runnable {
     private EJGEngine engine;
     private String title = "EJGEngine";
     private int refreshInterval = 1;
-    private int originalTileSize = 16;
+    private int tileSize = 16;
     private int scale = 3;
     private int maxTileWidth = 19;
     private int maxTileHeight = 13;
-    private int width = getTileSize() * maxTileWidth;
-    private int height = getTileSize() * maxTileHeight;
+    private int width = 960; //half fullHD
+    private int height = 540; //half fullHD
 
     private long window;
 
-    private HashMap<Integer, Panel> PANELS = new HashMap<>();
+    private HashMap<Integer, Panel> panels = new HashMap<>();
 
-    private Panel CURRENT_PANEL;
+    private Panel currentPanel;
 
     public MainWindow(EJGEngine e){
         this.engine = e;
@@ -63,7 +64,7 @@ public class MainWindow implements Runnable {
 
         GLFW.glfwSetWindowRefreshCallback(this.window, window -> {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            this.CURRENT_PANEL.paint();
+            this.currentPanel.paint();
             GLFW.glfwSwapBuffers(window);
         });
 
@@ -103,8 +104,8 @@ public class MainWindow implements Runnable {
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            this.CURRENT_PANEL.update(dt);
-            this.CURRENT_PANEL.paint();
+            this.currentPanel.update(dt);
+            this.currentPanel.paint();
 
             GLFW.glfwSwapBuffers(this.window);
 
@@ -124,7 +125,7 @@ public class MainWindow implements Runnable {
      * @param panel A panel in the main window
      */
     public void registerPanel(Panel panel){
-        this.PANELS.put(panel.index, panel);
+        this.panels.put(panel.index, panel);
     }
 
     /**
@@ -132,8 +133,8 @@ public class MainWindow implements Runnable {
      * @param i Panel index.
      */
     public void setPanel(int i){
-        if(this.PANELS.containsKey(i)){
-            this.CURRENT_PANEL = this.PANELS.get(i);
+        if(this.panels.containsKey(i)){
+            this.currentPanel = this.panels.get(i);
         }
     }
 
@@ -142,7 +143,7 @@ public class MainWindow implements Runnable {
      * @return The panel that is displaying!
      */
     public Panel getCurrentPanel(){
-        return this.CURRENT_PANEL;
+        return this.currentPanel;
     }
 
     public String getTitle() {
@@ -163,12 +164,12 @@ public class MainWindow implements Runnable {
         GLFW.glfwSwapInterval(getRefreshInterval());
     }
 
-    public int getOriginalTileSize() {
-        return originalTileSize;
+    public int getTileSize() {
+        return tileSize;
     }
 
-    public void setOriginalTileSize(int originalTileSize) {
-        this.originalTileSize = originalTileSize;
+    public void setTileSize(int tileSize) {
+        this.tileSize = tileSize;
     }
 
     public int getScale() {
@@ -177,10 +178,6 @@ public class MainWindow implements Runnable {
 
     public void setScale(int scale) {
         this.scale = scale;
-    }
-
-    public int getTileSize() {
-        return getOriginalTileSize() * getScale();
     }
 
     public int getMaxTileWidth() {

@@ -1,4 +1,4 @@
-package me.collebol.game.entity;
+package me.collebol.game.objects.entity;
 
 import me.collebol.game.GameObject;
 import me.collebol.utils.GameLocation;
