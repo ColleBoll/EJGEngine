@@ -6,37 +6,17 @@ import me.collebol.game.objects.entity.Player;
 public abstract class GameManager implements Runnable {
 
     private EJGEngine engine;
-    public EJGEngine getEngine() {
-        return this.engine;
-    }
-    public void setEngine(EJGEngine engine) {
-        this.engine = engine;
-    }
-
     private int ticks = 20;
-    public int getTicks() {
-        return this.ticks;
-    }
-    public void setTicks(int ticks) {
-        this.ticks = ticks;
-    }
-
     private Player player;
-    public Player getPlayer() {
-        return this.player;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    private Thread thread;
 
     public GameManager(EJGEngine engine){
         this.engine = engine;
     }
 
-    private Thread THREAD;
     public void startGameThread(){
-        this.THREAD = new Thread();
-        this.THREAD.start();
+        this.thread = new Thread();
+        this.thread.start();
     }
 
     @Override
@@ -46,11 +26,11 @@ public abstract class GameManager implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while (this.THREAD != null){
+        while (this.thread != null){
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
-            if(delta >= 1){
+            if(delta >= 1){ //everything in here will be updated at the ticks per second
                 update();
                 delta--;
             }
@@ -58,4 +38,28 @@ public abstract class GameManager implements Runnable {
     }
 
     public abstract void update();
+
+    public EJGEngine getEngine() {
+        return this.engine;
+    }
+
+    public void setEngine(EJGEngine engine) {
+        this.engine = engine;
+    }
+
+    public int getTicks() {
+        return this.ticks;
+    }
+
+    public void setTicks(int ticks) {
+        this.ticks = ticks;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }

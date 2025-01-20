@@ -1,6 +1,7 @@
 package me.collebol;
 
 
+import me.collebol.gui.graphics.ObjectRenderer;
 import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.Panel;
@@ -14,6 +15,7 @@ public abstract class EJGEngine {
     private MainWindow window;
     private HashMap<String, TextRenderer> textRenderers = new HashMap<>();
     private TextureRenderer textureRenderer;
+    private ObjectRenderer objectRenderer;
 
     public void start(){
         setup();
@@ -61,5 +63,13 @@ public abstract class EJGEngine {
 
     public void setTextureRenderer(TextureRenderer textureRenderer) {
         this.textureRenderer = textureRenderer;
+    }
+
+    public ObjectRenderer getObjectRenderer() {
+        return objectRenderer;
+    }
+
+    public void setObjectRenderer(ObjectRenderer objectRenderer) {
+        this.objectRenderer = objectRenderer;
     }
 }

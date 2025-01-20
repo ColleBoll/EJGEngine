@@ -22,15 +22,15 @@ public class TextureRenderer {
 
     public TextureRenderer(EJGEngine e){
         this.engine = e;
-        this.width = e.getWindow().getTileSize();
-        this.height = e.getWindow().getTileSize();
+        this.width = e.getWindow().getTileSize() * this.getEngine().getWindow().getCurrentPanel().getCamera().getZoom();
+        this.height = e.getWindow().getTileSize() * this.getEngine().getWindow().getCurrentPanel().getCamera().getZoom();;
     }
 
     public void render(Texture texture, Vector2D position){
         texture.bind();
 
-        float startX = position.getX();
-        float startY = position.getY();
+        float startX = position.getX() + this.getEngine().getWindow().getCurrentPanel().getCamera().getPosition().getX();
+        float startY = position.getY() + this.getEngine().getWindow().getCurrentPanel().getCamera().getPosition().getY();;
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
