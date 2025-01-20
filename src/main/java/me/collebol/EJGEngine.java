@@ -66,6 +66,7 @@ public abstract class EJGEngine {
     }
 
     public ObjectRenderer getObjectRenderer() {
+        if(this.objectRenderer == null) throw new RuntimeException("Set a ObjectRenderer before using!");
         return objectRenderer;
     }
 
