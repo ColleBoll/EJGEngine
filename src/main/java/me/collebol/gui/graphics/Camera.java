@@ -13,10 +13,30 @@ public class Camera {
 
     private Vector2D position;
     private float zoom;
+    private Vector2D origin;
 
     public Camera(Vector2D position, float zoom){
         this.position = position;
         this.zoom = zoom;
+        this.origin = new Vector2D(0, 0);
+    }
+
+    /**
+     * The origin of the Camera represents the reference point from which
+     * the camera's position and zoom are calculated.
+     * @return origin point as Vector
+     */
+    public Vector2D getOrigin() {
+        return origin;
+    }
+
+    /**
+     * The origin of the Camera represents the reference point from which
+     * the camera's position and zoom are calculated.
+     * @param origin as vector
+     */
+    public void setOrigin(Vector2D origin) {
+        this.origin = origin;
     }
 
     /**

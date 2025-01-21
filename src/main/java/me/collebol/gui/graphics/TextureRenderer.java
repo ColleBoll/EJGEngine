@@ -22,15 +22,18 @@ public class TextureRenderer {
 
     public TextureRenderer(EJGEngine e){
         this.engine = e;
-        this.width = e.getWindow().getTileSize() * this.getEngine().getWindow().getCurrentPanel().getCamera().getZoom();
-        this.height = e.getWindow().getTileSize() * this.getEngine().getWindow().getCurrentPanel().getCamera().getZoom();;
+        this.width = e.getWindow().getTileSize();
+        this.height = e.getWindow().getTileSize();
     }
 
-    public void render(Texture texture, Vector2D position){
+    public void render(Texture texture, Vector2D position, float scale){
         texture.bind();
 
-        float startX = position.getX() + this.getEngine().getWindow().getCurrentPanel().getCamera().getPosition().getX();
-        float startY = position.getY() + this.getEngine().getWindow().getCurrentPanel().getCamera().getPosition().getY();;
+        float startX = position.getX();
+        float startY = position.getY();
+
+        float tWidth = this.width * scale;
+        float tHeight = this.height * scale;
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
@@ -40,13 +43,13 @@ public class TextureRenderer {
         GL11.glVertex2f(startX, startY);
 
         GL11.glTexCoord2f(0, 1);
-        GL11.glVertex2f(startX, startY + this.height);
+        GL11.glVertex2f(startX, startY + tHeight);
 
         GL11.glTexCoord2f(1, 1);
-        GL11.glVertex2f(startX + this.width, startY + this.height);
+        GL11.glVertex2f(startX + tWidth, startY + tHeight);
 
         GL11.glTexCoord2f(1, 0);
-        GL11.glVertex2f(startX + this.width, startY);
+        GL11.glVertex2f(startX + tWidth, startY);
 
         GL11.glEnd();
     }

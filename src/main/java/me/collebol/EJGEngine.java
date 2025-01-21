@@ -1,11 +1,9 @@
 package me.collebol;
 
 
-import me.collebol.gui.graphics.ObjectRenderer;
+import me.collebol.gui.graphics.CameraRenderer;
 import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
-import me.collebol.gui.Panel;
-import me.collebol.gui.graphics.Texture;
 import me.collebol.gui.graphics.TextureRenderer;
 
 import java.util.HashMap;
@@ -15,7 +13,7 @@ public abstract class EJGEngine {
     private MainWindow window;
     private HashMap<String, TextRenderer> textRenderers = new HashMap<>();
     private TextureRenderer textureRenderer;
-    private ObjectRenderer objectRenderer;
+    private CameraRenderer cameraRenderer;
 
     public void start(){
         setup();
@@ -65,12 +63,12 @@ public abstract class EJGEngine {
         this.textureRenderer = textureRenderer;
     }
 
-    public ObjectRenderer getObjectRenderer() {
-        if(this.objectRenderer == null) throw new RuntimeException("Set a ObjectRenderer before using!");
-        return objectRenderer;
+    public CameraRenderer getCameraRenderer() {
+        if(this.cameraRenderer == null) throw new RuntimeException("Set a CameraRenderer before using!");
+        return cameraRenderer;
     }
 
-    public void setObjectRenderer(ObjectRenderer objectRenderer) {
-        this.objectRenderer = objectRenderer;
+    public void setCameraRenderer(CameraRenderer objectRenderer) {
+        this.cameraRenderer = objectRenderer;
     }
 }
