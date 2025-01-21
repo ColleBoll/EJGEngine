@@ -57,4 +57,8 @@ public class Texture {
     public void bind(){
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureObject);
     }
+
+    public int getIndex() {
+        return index;
+    }
 }
