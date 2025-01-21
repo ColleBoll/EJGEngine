@@ -43,6 +43,8 @@ public class TextureRenderer {
 
         GL11.glBegin(GL11.GL_QUADS);
 
+        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+
         GL11.glTexCoord2f(0, 0);
         GL11.glVertex2f(startX, startY);
 
