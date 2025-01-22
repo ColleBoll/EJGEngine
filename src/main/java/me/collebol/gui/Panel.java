@@ -2,6 +2,7 @@ package me.collebol.gui;
 
 import me.collebol.EJGEngine;
 import me.collebol.gui.graphics.Camera;
+import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.math.Vector2D;
 
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -25,19 +26,19 @@ public abstract class Panel {
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 5f),
                 13,
                 1,
-                NVG_ALIGN_RIGHT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_RIGHT,
                 0);
         getEngine().getTextRenderer("default").render("Window height: " + getEngine().getWindow().getHeight() + "px",
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 20f),
                 13,
                 1,
-                NVG_ALIGN_RIGHT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_RIGHT,
                 0);
         getEngine().getTextRenderer("default").render("FPS: " + Math.floor(1.0f / getDT()),
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 50f),
                 13,
                 1,
-                NVG_ALIGN_RIGHT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_RIGHT,
                 0);
     }
 

@@ -100,38 +100,44 @@ public class CameraRenderer {
                 new Vector2D(10f, 5f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
+        this.engine.getTextRenderer("default").render("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
                 new Vector2D(10f, 20f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
         this.engine.getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
                 new Vector2D(10f, 50f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera origin position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
+        this.engine.getTextRenderer("default").render("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
                 new Vector2D(10f, 65f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera zoom (scale): " + Math.floor(camera.getZoom()),
+        this.engine.getTextRenderer("default").render("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f,
                 new Vector2D(10f, 95f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
+                0);
+        this.engine.getTextRenderer("default").render("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f,
+                new Vector2D(10f, 110f),
+                13,
+                1,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
 
         this.engine.getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
                 new Vector2D(mousePos.getX(), mousePos.getY() - 15),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                TextRenderer.ALIGN_TOP_LEFT,
                 0);
     }
 
@@ -162,10 +168,11 @@ public class CameraRenderer {
 
         GL11.glTranslatef(camera.getOrigin().getX(), camera.getOrigin().getY(), 0);
 
-        GL11.glRotatef(camera.getRotation(), 0.0f, 0.0f, 1.0f); // Rotatie rond de Z-as
+        GL11.glRotatef(camera.getRotation(), 0.0f, 0.0f, 1.0f);
 
         GL11.glTranslatef(-camera.getOrigin().getX(), -camera.getOrigin().getY(), 0);
 
+        //Yellow grid
         GL11.glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 
         GL11.glBegin(GL11.GL_LINES);
@@ -179,6 +186,27 @@ public class CameraRenderer {
             GL11.glVertex2f(0, y);
             GL11.glVertex2f(screenWidth, y);
         }
+
+        GL11.glEnd();
+
+        //Blue lines
+        GL11.glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+
+        float squareSize = Math.min(screenWidth, screenHeight);
+
+        float halfSquare = squareSize / 2;
+        float squareLeft = originX - halfSquare;
+        float squareRight = originX + halfSquare;
+        float squareTop = originY - halfSquare;
+        float squareBottom = originY + halfSquare;
+
+        GL11.glBegin(GL11.GL_LINES);
+
+        GL11.glVertex2f(squareLeft, squareTop);
+        GL11.glVertex2f(squareRight, squareBottom);
+
+        GL11.glVertex2f(squareLeft, squareBottom);
+        GL11.glVertex2f(squareRight, squareTop);
 
         GL11.glEnd();
 

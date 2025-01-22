@@ -17,6 +17,12 @@ public class TextRenderer {
     private String name;
     private String fontPath;
 
+    public static int ALIGN_CENTER = NVG_ALIGN_CENTER;
+    public static int ALIGN_TOP_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_TOP;
+    public static int ALIGN_TOP_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_TOP;
+    public static int ALIGN_BOTTOM_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_BOTTOM;
+    public static int ALIGN_BOTTOM_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM;
+
     private EJGEngine getEngine(){
         return engine;
     }
