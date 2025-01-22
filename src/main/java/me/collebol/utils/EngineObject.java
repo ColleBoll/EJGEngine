@@ -29,7 +29,7 @@ public class EngineObject {
     }
 
     public int getTexture() {
-        return textureIndex;
+        return this.textureIndex;
     }
 
     public void setTexture(int index) {

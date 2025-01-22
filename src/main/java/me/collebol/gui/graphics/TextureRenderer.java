@@ -39,6 +39,8 @@ public class TextureRenderer {
         float tWidth = this.width * scale;
         float tHeight = this.height * scale;
 
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         GL11.glBegin(GL11.GL_QUADS);
@@ -58,6 +60,8 @@ public class TextureRenderer {
         GL11.glVertex2f(startX + tWidth, startY);
 
         GL11.glEnd();
+
+        GL11.glPopAttrib();
     }
 
     public void registerTexture(Texture texture){

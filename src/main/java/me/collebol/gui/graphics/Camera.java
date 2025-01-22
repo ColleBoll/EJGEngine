@@ -91,14 +91,14 @@ public class Camera {
      * This method will convert the position as Vector2D to the GameLocation where the origin point is pointed at.
      * @return GameLocation from vector
      */
-    public GameLocation getOriginGameLocation(){
+    public GameLocation getGameLocation(){
         if(this.position == null) throw new RuntimeException("Position is null. Set a position before using!");
         float x = ((this.position.getX() / this.engine.getWindow().getTileSize()) / this.zoom);
         float y = ((this.position.getY() / this.engine.getWindow().getTileSize()) / this.zoom);
         return new GameLocation(x, y);
     }
 
-    public void setOriginGameLocation(GameLocation location){
+    public void setGameLocation(GameLocation location){
         float x = (float) ((location.x * this.engine.getWindow().getTileSize()) * this.zoom);
         float y = (float) ((location.y * this.engine.getWindow().getTileSize()) * this.zoom);
         this.position = new Vector2D(x, y);

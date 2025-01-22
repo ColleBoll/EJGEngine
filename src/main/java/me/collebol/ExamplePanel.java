@@ -10,7 +10,7 @@ public class ExamplePanel extends Panel {
     }
 
     @Override
-    public void update(float dt) {
+    public void update() {
 
     }
 

@@ -16,7 +16,7 @@ public class MainWindow implements Runnable {
 
     private EJGEngine engine;
     private String title = "EJGEngine";
-    private int refreshInterval = 1;
+    private int refreshInterval = 3;
     private int tileSize = 16;
     private int scale = 3;
     private int maxTileWidth = 19;
@@ -62,7 +62,7 @@ public class MainWindow implements Runnable {
 
         GLFW.glfwSetWindowPos(this.window, 100, 100);
         GLFW.glfwMakeContextCurrent(this.window);
-        GLFW.glfwSwapInterval(getRefreshInterval()); //v-sync
+        GLFW.glfwSwapInterval(this.refreshInterval); //v-sync
         GLFW.glfwShowWindow(this.window);
 
         GLFW.glfwSetWindowRefreshCallback(this.window, window -> {
@@ -111,8 +111,11 @@ public class MainWindow implements Runnable {
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            this.currentPanel.update(dt);
-            this.currentPanel.paint();
+            if(dt >= 0){
+                this.currentPanel.update();
+                this.currentPanel.setDT(dt);
+                this.currentPanel.paint();
+            }
 
             GLFW.glfwSwapBuffers(this.window);
 
@@ -120,7 +123,20 @@ public class MainWindow implements Runnable {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+    }
 
+    /**
+     * There will be development tools rendered on the panel.
+     * Grid lines,
+     * Coordinates,
+     * Origin-point,
+     * Screen details
+     */
+    public void showDevelopmentTools(){
+        getEngine().getCameraRenderer().showGridLines();
+        getEngine().getCameraRenderer().showOriginPoint();
+        getEngine().getCameraRenderer().showCoordinates();
+        getCurrentPanel().showScreenDetails();
     }
 
     private EJGEngine getEngine(){
@@ -168,7 +184,7 @@ public class MainWindow implements Runnable {
 
     public void setRefreshInterval(int refreshInterval) {
         this.refreshInterval = refreshInterval;
-        GLFW.glfwSwapInterval(getRefreshInterval());
+        GLFW.glfwSwapInterval(this.refreshInterval);
     }
 
     public int getTileSize() {

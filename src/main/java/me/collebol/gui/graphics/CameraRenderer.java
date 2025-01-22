@@ -8,6 +8,9 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+
 /**
  * Render objects within the canvas of the camera. Change the position of the camera and the view will change.
  */
@@ -37,12 +40,12 @@ public class CameraRenderer {
         this.engine.getTextureRenderer().render(gameObject.getTexture(), v, camera.getZoom());
     }
 
-    public void renderText(String text, GameLocation location, float size, String font){
+    public void renderText(String text, GameLocation location, float size, String font, int align){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((location.x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getTextRenderer(font).render(text, v, size, camera.getZoom());
+        this.engine.getTextRenderer(font).render(text, v, size, camera.getZoom(), align);
     }
 
     public void showOriginPoint(){
@@ -71,16 +74,81 @@ public class CameraRenderer {
     public void showCoordinates(){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
-        GameLocation pointerLoc = camera.getOriginGameLocation();
+        GameLocation pointerLoc = camera.getGameLocation();
         GameLocation mouseLoc = this.engine.getWindow().getMouseHandler().getGameLocation();
 
-        this.engine.getTextRenderer("default").render("Mouse GameLocation: " + mouseLoc.x + " / " + mouseLoc.y,
+        Vector2D mousePos = this.engine.getWindow().getMouseHandler().getPosition();
+
+        this.engine.getTextRenderer("default").render("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]",
                 new Vector2D(10f, 5f),
-                15,
-                1);
-        this.engine.getTextRenderer("default").render("Origin-point GameLocation: " + pointerLoc.x + " / " + pointerLoc.y,
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+        this.engine.getTextRenderer("default").render("Camera origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
                 new Vector2D(10f, 20f),
-                15,
-                1);
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+        this.engine.getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
+                new Vector2D(10f, 50f),
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+        this.engine.getTextRenderer("default").render("Camera origin position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
+                new Vector2D(10f, 65f),
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+        this.engine.getTextRenderer("default").render("Camera zoom (scale): " + Math.floor(camera.getZoom()),
+                new Vector2D(10f, 95f),
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+
+        this.engine.getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
+                new Vector2D(mousePos.getX(), mousePos.getY() - 15),
+                13,
+                1,
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+    }
+
+    public void showGridLines() {
+        Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
+
+        float tileSize = this.engine.getWindow().getTileSize() * camera.getZoom();
+
+        float offsetX = camera.getPosition().getX();
+        float offsetY = camera.getPosition().getY();
+        float originX = camera.getOrigin().getX();
+        float originY = camera.getOrigin().getY();
+
+        float screenWidth = this.engine.getWindow().getWidth();
+        float screenHeight = this.engine.getWindow().getHeight();
+
+        float startX = -(offsetX % tileSize) + (originX % tileSize);
+        float startY = -(offsetY % tileSize) + (originY % tileSize);
+
+        if (startX > 0) {
+            startX -= tileSize;
+        }
+        if (startY > 0) {
+            startY -= tileSize;
+        }
+
+        GL11.glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+
+        GL11.glBegin(GL11.GL_LINES);
+
+        for (float x = startX; x <= screenWidth; x += tileSize) {
+            GL11.glVertex2f(x, 0);
+            GL11.glVertex2f(x, screenHeight);
+        }
+
+        for (float y = startY; y <= screenHeight; y += tileSize) {
+            GL11.glVertex2f(0, y);
+            GL11.glVertex2f(screenWidth, y);
+        }
+
+        GL11.glEnd();
     }
 }

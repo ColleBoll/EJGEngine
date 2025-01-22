@@ -36,7 +36,7 @@ public class TextRenderer {
         }
     }
 
-    public void render(String text, Vector2D position, float size, float scale) {
+    public void render(String text, Vector2D position, float size, float scale, int align) {
         nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
@@ -45,7 +45,7 @@ public class TextRenderer {
         nvgFontSize(this.vg, (size * scale));
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+        nvgTextAlign(this.vg, align);
         nvgText(this.vg, position.getX(), position.getY(), text);
 
         nvgEndFrame(this.vg);
