@@ -8,11 +8,20 @@ import org.lwjgl.system.MemoryUtil;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 
+/**
+ * This class contains all the methods to render text on a Panel.
+ */
 public class TextRenderer {
     private long vg;
     private EJGEngine engine;
     private String name;
     private String fontPath;
+
+    public static int ALIGN_CENTER = NVG_ALIGN_CENTER;
+    public static int ALIGN_TOP_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_TOP;
+    public static int ALIGN_TOP_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_TOP;
+    public static int ALIGN_BOTTOM_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_BOTTOM;
+    public static int ALIGN_BOTTOM_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM;
 
     private EJGEngine getEngine(){
         return engine;
@@ -36,17 +45,71 @@ public class TextRenderer {
         }
     }
 
-    public void render(String text, Vector2D position, float size, float scale) {
+    /**
+     * Render text on the Panel without origin-point
+     * @param text
+     * @param position the panel position
+     * @param size
+     * @param scale
+     * @param align
+     * @param rotation
+     */
+    public void render(String text, Vector2D position, float size, float scale, int align, float rotation) {
         nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
         nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);
 
+        nvgSave(this.vg);
+
+        nvgTranslate(this.vg, position.getX(), position.getY());
+
+        nvgRotate(this.vg, (float) Math.toRadians(rotation));
+
         nvgFontSize(this.vg, (size * scale));
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, NVG_ALIGN_CENTER);
-        nvgText(this.vg, position.getX(), position.getY(), text);
+        nvgTextAlign(this.vg, align);
+
+        nvgText(this.vg, 0, 0, text);
+
+        nvgRestore(this.vg);
+
+        nvgEndFrame(this.vg);
+    }
+
+    /**
+     * Render text on the Panel with origin-point
+     * @param text
+     * @param position
+     * @param size
+     * @param scale
+     * @param align
+     * @param rotation
+     * @param origin the point where the rotation is pointed at.
+     */
+    public void render(String text, Vector2D position, float size, float scale, int align, float rotation, Vector2D origin) {
+        nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
+
+        NVGColor color = NVGColor.create();
+        nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);
+
+        nvgSave(this.vg);
+
+        nvgTranslate(this.vg, origin.getX(), origin.getY());
+
+        nvgRotate(this.vg, (float) Math.toRadians(rotation));
+
+        nvgTranslate(this.vg, position.getX() - origin.getX(), position.getY() - origin.getY());
+
+        nvgFontSize(this.vg, (size * scale));
+        nvgFontFace(this.vg, this.name);
+        nvgFillColor(this.vg, color);
+        nvgTextAlign(this.vg, align);
+
+        nvgText(this.vg, 0, 0, text);
+
+        nvgRestore(this.vg);
 
         nvgEndFrame(this.vg);
     }

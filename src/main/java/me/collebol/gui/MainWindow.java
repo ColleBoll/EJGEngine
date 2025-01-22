@@ -3,6 +3,7 @@ package me.collebol.gui;
 import me.collebol.EJGEngine;
 import me.collebol.gui.graphics.Camera;
 import me.collebol.gui.graphics.TextureRenderer;
+import me.collebol.input.MouseHandler;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -15,7 +16,7 @@ public class MainWindow implements Runnable {
 
     private EJGEngine engine;
     private String title = "EJGEngine";
-    private int refreshInterval = 1;
+    private int refreshInterval = 3;
     private int tileSize = 16;
     private int scale = 3;
     private int maxTileWidth = 19;
@@ -24,6 +25,8 @@ public class MainWindow implements Runnable {
     private int height = 540; //half fullHD
 
     private long window;
+
+    private MouseHandler mouseHandler;
 
     private HashMap<Integer, Panel> panels = new HashMap<>();
 
@@ -59,7 +62,7 @@ public class MainWindow implements Runnable {
 
         GLFW.glfwSetWindowPos(this.window, 100, 100);
         GLFW.glfwMakeContextCurrent(this.window);
-        GLFW.glfwSwapInterval(getRefreshInterval()); //v-sync
+        GLFW.glfwSwapInterval(this.refreshInterval); //v-sync
         GLFW.glfwShowWindow(this.window);
 
         GLFW.glfwSetWindowRefreshCallback(this.window, window -> {
@@ -92,6 +95,10 @@ public class MainWindow implements Runnable {
 
         //Call the register method in the engine
         getEngine().register();
+
+        //register handlers
+        this.mouseHandler = new MouseHandler(engine);
+        this.mouseHandler.registerCallbacks(this.window);
     }
 
     private void loop(){
@@ -104,8 +111,11 @@ public class MainWindow implements Runnable {
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            this.currentPanel.update(dt);
-            this.currentPanel.paint();
+            if(dt >= 0){
+                this.currentPanel.update();
+                this.currentPanel.setDT(dt);
+                this.currentPanel.paint();
+            }
 
             GLFW.glfwSwapBuffers(this.window);
 
@@ -113,7 +123,20 @@ public class MainWindow implements Runnable {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+    }
 
+    /**
+     * There will be development tools rendered on the panel.
+     * Grid lines,
+     * Coordinates,
+     * Origin-point,
+     * Screen details
+     */
+    public void showDevelopmentTools(){
+        getEngine().getCameraRenderer().showGridLines();
+        getEngine().getCameraRenderer().showOriginPoint();
+        getEngine().getCameraRenderer().showCoordinates();
+        getCurrentPanel().showScreenDetails();
     }
 
     private EJGEngine getEngine(){
@@ -161,7 +184,7 @@ public class MainWindow implements Runnable {
 
     public void setRefreshInterval(int refreshInterval) {
         this.refreshInterval = refreshInterval;
-        GLFW.glfwSwapInterval(getRefreshInterval());
+        GLFW.glfwSwapInterval(this.refreshInterval);
     }
 
     public int getTileSize() {
@@ -210,5 +233,9 @@ public class MainWindow implements Runnable {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public MouseHandler getMouseHandler() {
+        return mouseHandler;
     }
 }
