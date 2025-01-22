@@ -14,7 +14,7 @@ public abstract class Panel {
     public Panel(int index, EJGEngine e){
         this.index = index;
         this.engine = e;
-        this.camera = new Camera(new Vector2D(0,0), 3f);
+        this.camera = new Camera(new Vector2D(0,0), 3f, engine);
     }
 
     public abstract void update(float dt);

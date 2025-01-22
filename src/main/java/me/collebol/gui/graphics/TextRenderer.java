@@ -45,7 +45,7 @@ public class TextRenderer {
         nvgFontSize(this.vg, (size * scale));
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, NVG_ALIGN_CENTER);
+        nvgTextAlign(this.vg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
         nvgText(this.vg, position.getX(), position.getY(), text);
 
         nvgEndFrame(this.vg);

@@ -67,4 +67,20 @@ public class CameraRenderer {
         }
         GL11.glEnd();
     }
+
+    public void showCoordinates(){
+        Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
+
+        GameLocation pointerLoc = camera.getOriginGameLocation();
+        GameLocation mouseLoc = this.engine.getWindow().getMouseHandler().getGameLocation();
+
+        this.engine.getTextRenderer("default").render("Mouse GameLocation: " + mouseLoc.x + " / " + mouseLoc.y,
+                new Vector2D(10f, 5f),
+                15,
+                1);
+        this.engine.getTextRenderer("default").render("Origin-point GameLocation: " + pointerLoc.x + " / " + pointerLoc.y,
+                new Vector2D(10f, 20f),
+                15,
+                1);
+    }
 }

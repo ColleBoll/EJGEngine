@@ -5,6 +5,7 @@ import me.collebol.gui.graphics.CameraRenderer;
 import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.graphics.TextureRenderer;
+import me.collebol.input.MouseHandler;
 
 import java.util.HashMap;
 
