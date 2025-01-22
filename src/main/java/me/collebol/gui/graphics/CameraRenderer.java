@@ -22,30 +22,47 @@ public class CameraRenderer {
         this.engine = e;
     }
 
+    /**
+     * Render GameObjects relative to the Camera.
+     * @param gameObjects
+     */
     public void renderObjects(List<GameObject> gameObjects){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         for(GameObject g : gameObjects){
             float x = (float) (((g.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
-            this.engine.getTextureRenderer().render(g.getTexture(), v, camera.getZoom());
+            this.engine.getTextureRenderer().render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
         }
     }
 
+    /**
+     * Render a GameObject relative to the Camera.
+     * @param gameObject
+     */
     public void renderObject(GameObject gameObject){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((gameObject.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getTextureRenderer().render(gameObject.getTexture(), v, camera.getZoom());
+        this.engine.getTextureRenderer().render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
     }
 
+    /**
+     * Render text relative to the camera.
+     * @param text
+     * @param location
+     * @param size
+     * @param font
+     * @param align
+     */
     public void renderText(String text, GameLocation location, float size, String font, int align){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((location.x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getTextRenderer(font).render(text, v, size, camera.getZoom(), align);
+
+        this.engine.getTextRenderer(font).render(text, v, size, camera.getZoom(), align, camera.getRotation(), camera.getOrigin());
     }
 
     public void showOriginPoint(){
@@ -83,33 +100,39 @@ public class CameraRenderer {
                 new Vector2D(10f, 5f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
         this.engine.getTextRenderer("default").render("Camera origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
                 new Vector2D(10f, 20f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
         this.engine.getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
                 new Vector2D(10f, 50f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
         this.engine.getTextRenderer("default").render("Camera origin position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
                 new Vector2D(10f, 65f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
         this.engine.getTextRenderer("default").render("Camera zoom (scale): " + Math.floor(camera.getZoom()),
                 new Vector2D(10f, 95f),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
 
         this.engine.getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
                 new Vector2D(mousePos.getX(), mousePos.getY() - 15),
                 13,
                 1,
-                NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+                NVG_ALIGN_LEFT | NVG_ALIGN_TOP,
+                0);
     }
 
     public void showGridLines() {
@@ -135,6 +158,14 @@ public class CameraRenderer {
             startY -= tileSize;
         }
 
+        GL11.glPushMatrix();
+
+        GL11.glTranslatef(camera.getOrigin().getX(), camera.getOrigin().getY(), 0);
+
+        GL11.glRotatef(camera.getRotation(), 0.0f, 0.0f, 1.0f); // Rotatie rond de Z-as
+
+        GL11.glTranslatef(-camera.getOrigin().getX(), -camera.getOrigin().getY(), 0);
+
         GL11.glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
 
         GL11.glBegin(GL11.GL_LINES);
@@ -150,5 +181,7 @@ public class CameraRenderer {
         }
 
         GL11.glEnd();
+
+        GL11.glPopMatrix();
     }
 }

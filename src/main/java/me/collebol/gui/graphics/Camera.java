@@ -1,6 +1,7 @@
 package me.collebol.gui.graphics;
 
 import me.collebol.EJGEngine;
+import me.collebol.math.CameraCalculator;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.GameLocation;
 
@@ -15,13 +16,18 @@ public class Camera {
     private Vector2D position;
     private float zoom;
     private Vector2D origin;
+    private float rotation;
+
+    private CameraCalculator calculator;
 
     private EJGEngine engine;
 
-    public Camera(Vector2D position, float zoom, EJGEngine e){
+    public Camera(Vector2D position, float zoom, float rotation, EJGEngine e){
         this.position = position;
         this.zoom = zoom;
+        this.rotation = rotation;
         this.origin = new Vector2D(0, 0);
+        this.calculator = new CameraCalculator(this, e);
         this.engine = e;
     }
 
@@ -87,6 +93,18 @@ public class Camera {
         this.zoom = zoom;
     }
 
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    public CameraCalculator calculate(){
+        return this.calculator;
+    }
+
     /**
      * This method will convert the position as Vector2D to the GameLocation where the origin point is pointed at.
      * @return GameLocation from vector
@@ -98,6 +116,10 @@ public class Camera {
         return new GameLocation(x, y);
     }
 
+    /**
+     * This method will set the GameLocation to a Panel (Vector2D) position where the origin point is pointed at.
+     * @param location the GameLocation the Camera must go to.
+     */
     public void setGameLocation(GameLocation location){
         float x = (float) ((location.x * this.engine.getWindow().getTileSize()) * this.zoom);
         float y = (float) ((location.y * this.engine.getWindow().getTileSize()) * this.zoom);

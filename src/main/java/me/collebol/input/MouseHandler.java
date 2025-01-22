@@ -66,12 +66,17 @@ public class MouseHandler {
         this.position = position;
     }
 
+    /**
+     * @return the GameLocation where to mouse is pointed at.
+     */
     public GameLocation getGameLocation(){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
+
+        GameLocation location = camera.calculate().getGameLocationFromVector2D(this.position);
 
         float x = ((this.position.getX() + camera.getPosition().getX() - camera.getOrigin().getX()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));
         float y = ((this.position.getY() + camera.getPosition().getY() - camera.getOrigin().getY()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));
         Vector2D v = new Vector2D(x, y);
-        return new GameLocation(v.getX(), v.getY());
+        return location;
     }
 }

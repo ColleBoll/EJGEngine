@@ -6,6 +6,9 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 
+/**
+ * This class contains everything you need to render Textures on a Panel.
+ */
 public class TextureRenderer {
 
     private EJGEngine engine;
@@ -29,7 +32,15 @@ public class TextureRenderer {
         this.height = e.getWindow().getTileSize();
     }
 
-    public void render(int index, Vector2D position, float scale){
+    /**
+     * Render a texture from a registered index.
+     * @param index register a texture first!
+     * @param position
+     * @param scale
+     * @param rotation
+     * @param origin
+     */
+    public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin) {
         Texture texture = getTexture(index);
         texture.bind();
 
@@ -39,8 +50,15 @@ public class TextureRenderer {
         float tWidth = this.width * scale;
         float tHeight = this.height * scale;
 
-        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+        GL11.glPushMatrix();
 
+        GL11.glTranslatef(origin.getX(), origin.getY(), 0);
+
+        GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f); // Rotatie rond de Z-as
+
+        GL11.glTranslatef(-origin.getX(), -origin.getY(), 0);
+
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         GL11.glBegin(GL11.GL_QUADS);
@@ -62,6 +80,8 @@ public class TextureRenderer {
         GL11.glEnd();
 
         GL11.glPopAttrib();
+
+        GL11.glPopMatrix();
     }
 
     public void registerTexture(Texture texture){
