@@ -1,11 +1,13 @@
 package me.collebol;
 
 
+import me.collebol.event.EventHandler;
 import me.collebol.gui.graphics.CameraRenderer;
 import me.collebol.gui.graphics.TextRenderer;
 import me.collebol.gui.MainWindow;
 import me.collebol.gui.graphics.TextureRenderer;
 import me.collebol.input.MouseHandler;
+import me.collebol.utils.Client;
 
 import java.util.HashMap;
 
@@ -15,6 +17,7 @@ public abstract class EJGEngine {
     private HashMap<String, TextRenderer> textRenderers = new HashMap<>();
     private TextureRenderer textureRenderer;
     private CameraRenderer cameraRenderer;
+    private EventHandler eventHandler = new EventHandler(this);
 
     public void start(){
         setup();
@@ -72,5 +75,13 @@ public abstract class EJGEngine {
 
     public void setCameraRenderer(CameraRenderer objectRenderer) {
         this.cameraRenderer = objectRenderer;
+    }
+
+    public EventHandler getEventHandler() {
+        return eventHandler;
+    }
+
+    public void setEventHandler(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
     }
 }

@@ -5,7 +5,7 @@ import me.collebol.math.Vector2D;
 import me.collebol.utils.EngineObject;
 import me.collebol.utils.GameLocation;
 
-public abstract class GameObject extends EngineObject {
+public class GameObject extends EngineObject {
 
     private Vector2D velocity;
     private GameLocation gameLocation;

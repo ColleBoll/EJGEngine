@@ -3,6 +3,7 @@ package me.collebol.gui;
 import me.collebol.EJGEngine;
 import me.collebol.gui.graphics.Camera;
 import me.collebol.gui.graphics.TextureRenderer;
+import me.collebol.input.KeyHandler;
 import me.collebol.input.MouseHandler;
 import me.collebol.utils.Time;
 import org.lwjgl.glfw.GLFW;
@@ -27,6 +28,7 @@ public class MainWindow implements Runnable {
     private long window;
 
     private MouseHandler mouseHandler;
+    private KeyHandler keyHandler;
 
     private HashMap<Integer, Panel> panels = new HashMap<>();
 
@@ -97,8 +99,11 @@ public class MainWindow implements Runnable {
         getEngine().register();
 
         //register handlers
-        this.mouseHandler = new MouseHandler(engine);
+        this.mouseHandler = new MouseHandler(this.engine);
         this.mouseHandler.registerCallbacks(this.window);
+
+        this.keyHandler = new KeyHandler(this.engine);
+        this.keyHandler.keyCallback(this.window);
     }
 
     private void loop(){
