@@ -29,5 +29,5 @@ public abstract class WorldGenerator {
         }
     }
 
-    public abstract void generateChunk();
+    public abstract Chunk generateChunk(Chunk chunk);
 }

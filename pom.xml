@@ -6,7 +6,7 @@
 
     <groupId>me.collebol</groupId>
     <artifactId>ejgengine</artifactId>
-    <version>v0.1.4-alpha.1</version>
+    <version>v0.1.4-alpha.2</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
