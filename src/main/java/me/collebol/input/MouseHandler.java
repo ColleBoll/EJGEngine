@@ -1,6 +1,8 @@
 package me.collebol.input;
 
 import me.collebol.EJGEngine;
+import me.collebol.event.client.ClientLeftClickEvent;
+import me.collebol.event.client.ClientRightClickEvent;
 import me.collebol.gui.graphics.Camera;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.GameLocation;
@@ -25,9 +27,20 @@ public class MouseHandler {
             public void invoke(long window, int button, int action, int mods) {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     leftPressed = (action == GLFW.GLFW_PRESS);
+                    if(action == GLFW.GLFW_PRESS){
+                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(position, true, engine);
+                    }else{
+                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(position, false, engine);
+                    }
+
                 }
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     rightPressed = (action == GLFW.GLFW_PRESS);
+                    if(action == GLFW.GLFW_PRESS){
+                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(position, true, engine);
+                    }else{
+                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(position, false, engine);
+                    }
                 }
             }
 

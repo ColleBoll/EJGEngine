@@ -18,7 +18,7 @@ public abstract class Panel {
     public Panel(int index, EJGEngine e){
         this.index = index;
         this.engine = e;
-        this.camera = new Camera(new Vector2D(0,0), 3f, 0, engine);
+        this.camera = new Camera(new Vector2D(0,0), 1f, 0, engine);
     }
 
     public void showScreenDetails(){
