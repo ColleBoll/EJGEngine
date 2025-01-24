@@ -1,20 +1,18 @@
-package me.collebol.gui.graphics;
+package me.collebol.gui.graphics.renderer;
 
 import me.collebol.EJGEngine;
 import me.collebol.game.GameObject;
+import me.collebol.gui.graphics.Camera;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.GameLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-
 /**
  * Render objects within the canvas of the camera. Change the position of the camera and the view will change.
  */
-public class CameraRenderer {
+public class CameraRenderer implements Renderer {
 
     private EJGEngine engine;
 
@@ -32,7 +30,7 @@ public class CameraRenderer {
             float x = (float) (((g.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
-            this.engine.getTextureRenderer().render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+            this.engine.getRenderRegister().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
         }
     }
 
@@ -45,7 +43,7 @@ public class CameraRenderer {
         float x = (float) (((gameObject.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getTextureRenderer().render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+        this.engine.getRenderRegister().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
     }
 
     /**
@@ -62,9 +60,14 @@ public class CameraRenderer {
         float y = (float) (((location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
 
-        this.engine.getTextRenderer(font).render(text, v, size, camera.getZoom(), align, camera.getRotation(), camera.getOrigin());
+        this.engine.getRenderRegister().getTextRenderer(font).render(text, v, size, camera.getZoom(), align, camera.getRotation(), camera.getOrigin());
     }
 
+    /**
+     * Renders the origin point of the camera on the screen.
+     *
+     * This method uses OpenGL to draw a red point at the camera's origin and a circle around it.
+     */
     public void showOriginPoint(){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         Vector2D origin = camera.getOrigin();
@@ -88,6 +91,13 @@ public class CameraRenderer {
         GL11.glEnd();
     }
 
+    /**
+     * Displays various coordinates and camera information on the screen.
+     *
+     * This method retrieves the current camera and mouse positions, and renders text on the screen
+     * showing the mouse game location, camera-origin game location, mouse panel position, camera-origin panel position,
+     * camera zoom level, and camera rotation.
+     */
     public void showCoordinates(){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
@@ -96,44 +106,44 @@ public class CameraRenderer {
 
         Vector2D mousePos = this.engine.getWindow().getMouseHandler().getPosition();
 
-        this.engine.getTextRenderer("default").render("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]",
+        this.engine.getRenderRegister().getTextRenderer("default").render("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]",
                 new Vector2D(10f, 5f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
+        this.engine.getRenderRegister().getTextRenderer("default").render("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
                 new Vector2D(10f, 20f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
+        this.engine.getRenderRegister().getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
                 new Vector2D(10f, 50f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
+        this.engine.getRenderRegister().getTextRenderer("default").render("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
                 new Vector2D(10f, 65f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f,
+        this.engine.getRenderRegister().getTextRenderer("default").render("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f,
                 new Vector2D(10f, 95f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
-        this.engine.getTextRenderer("default").render("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f,
+        this.engine.getRenderRegister().getTextRenderer("default").render("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f,
                 new Vector2D(10f, 110f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_LEFT,
                 0);
 
-        this.engine.getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
+        this.engine.getRenderRegister().getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
                 new Vector2D(mousePos.getX(), mousePos.getY() - 15),
                 13,
                 1,
@@ -141,6 +151,12 @@ public class CameraRenderer {
                 0);
     }
 
+    /**
+     * Renders grid lines on the screen based on the camera's position and zoom level.
+     *
+     * This method calculates the starting positions for the grid lines based on the camera's offset and origin.
+     * It then uses OpenGL to draw yellow grid lines across the screen and blue diagonal lines forming a square.
+     */
     public void showGridLines() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 

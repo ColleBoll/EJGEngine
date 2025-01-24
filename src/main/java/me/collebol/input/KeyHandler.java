@@ -18,7 +18,7 @@ public class KeyHandler {
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 if(action == GLFW.GLFW_PRESS){
                     keyPressed = true;
-                }else{
+                }else if(action == GLFW.GLFW_RELEASE){
                     keyPressed = false;
                 }
 
@@ -111,7 +111,7 @@ public class KeyHandler {
                 }
 
                 if (keyType != null) {
-                    engine.getEventHandler().callClientEvent(ClientKeyClickEvent.class).call(keyType, keyPressed, engine);
+                    engine.getEventHandler().callClientEvent(ClientKeyClickEvent.class).call(engine, keyPressed, keyType);
                 }
             }
         });

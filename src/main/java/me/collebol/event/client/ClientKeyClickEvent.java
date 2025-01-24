@@ -5,9 +5,9 @@ import me.collebol.event.ClientListener;
 import me.collebol.event.Event;
 import me.collebol.input.KeyType;
 
-public class ClientKeyClickEvent extends Event {
+import java.util.Map;
 
-    private EJGEngine engine;
+public class ClientKeyClickEvent extends Event {
 
     private KeyType keyType;
     private boolean press;
@@ -19,14 +19,6 @@ public class ClientKeyClickEvent extends Event {
     public ClientKeyClickEvent(KeyType keyType, boolean press) {
         this.keyType = keyType;
         this.press = press;
-    }
-
-    @Override
-    public void call(KeyType keyType, boolean press, EJGEngine engine) {
-        for(ClientListener listener : getListeners()){
-            ClientKeyClickEvent event = new ClientKeyClickEvent(keyType, press);
-            listener.onKeyClick(event, engine);
-        }
     }
 
     public boolean isPressed(){
@@ -47,5 +39,11 @@ public class ClientKeyClickEvent extends Event {
 
     public KeyType getKeyType() {
         return keyType;
+    }
+
+    @Override
+    public void setValues(Map<Class<?>, Object> params) {
+        keyType = (KeyType) params.get(KeyType.class);
+        press = (boolean) params.get(Boolean.class);
     }
 }

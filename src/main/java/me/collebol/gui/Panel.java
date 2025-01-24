@@ -2,10 +2,8 @@ package me.collebol.gui;
 
 import me.collebol.EJGEngine;
 import me.collebol.gui.graphics.Camera;
-import me.collebol.gui.graphics.TextRenderer;
+import me.collebol.gui.graphics.renderer.TextRenderer;
 import me.collebol.math.Vector2D;
-
-import static org.lwjgl.nanovg.NanoVG.*;
 
 public abstract class Panel {
 
@@ -22,19 +20,19 @@ public abstract class Panel {
     }
 
     public void showScreenDetails(){
-        getEngine().getTextRenderer("default").render("Window width: " + getEngine().getWindow().getWidth() + "px",
+        getEngine().getRenderRegister().getTextRenderer("default").render("Window width: " + getEngine().getWindow().getWidth() + "px",
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 5f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_RIGHT,
                 0);
-        getEngine().getTextRenderer("default").render("Window height: " + getEngine().getWindow().getHeight() + "px",
+        getEngine().getRenderRegister().getTextRenderer("default").render("Window height: " + getEngine().getWindow().getHeight() + "px",
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 20f),
                 13,
                 1,
                 TextRenderer.ALIGN_TOP_RIGHT,
                 0);
-        getEngine().getTextRenderer("default").render("FPS: " + Math.floor(1.0f / getDT()),
+        getEngine().getRenderRegister().getTextRenderer("default").render("FPS: " + Math.floor(1.0f / getDT()),
                 new Vector2D(getEngine().getWindow().getWidth() - 10f, 50f),
                 13,
                 1,

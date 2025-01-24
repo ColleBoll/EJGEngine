@@ -1,4 +1,4 @@
-package me.collebol.gui.graphics;
+package me.collebol.gui.graphics.renderer;
 
 import me.collebol.EJGEngine;
 import me.collebol.math.Vector2D;
@@ -11,7 +11,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
 /**
  * This class contains all the methods to render text on a Panel.
  */
-public class TextRenderer {
+public class TextRenderer implements Renderer {
     private long vg;
     private EJGEngine engine;
     private String name;
