@@ -35,8 +35,8 @@ public class CameraRenderer implements Renderer {
     public void renderObjects(List<GameObject> gameObjects){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         for(GameObject g : gameObjects){
-            float x = (float) (((g.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
-            float y = (float) (((g.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+            float x = (float) (((g.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+            float y = (float) (((g.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
             this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
         }
@@ -48,8 +48,8 @@ public class CameraRenderer implements Renderer {
      */
     public void renderObject(GameObject gameObject){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
-        float x = (float) (((gameObject.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
-        float y = (float) (((gameObject.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+        float x = (float) (((gameObject.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+        float y = (float) (((gameObject.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
         this.engine.getRenderers().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
     }
@@ -60,8 +60,8 @@ public class CameraRenderer implements Renderer {
      */
     public void renderText(TextBuilder textBuilder){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
-        float x = (float) (((textBuilder.location.x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
-        float y = (float) (((textBuilder.location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+        float x = (float) (((textBuilder.location.getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+        float y = (float) (((textBuilder.location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
         this.engine.getRenderers().getTextRenderer(textBuilder.font).render(
                 new TextRenderer.TextBuilder()
@@ -148,7 +148,7 @@ public class CameraRenderer implements Renderer {
         Vector2D mousePos = this.engine.getWindow().getMouseHandler().getPosition();
 
         this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
-                .text("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]")
+                .text("Mouse GameLocation [ X: " + mouseLoc.getX() + " / Y: " + mouseLoc.getY() + "]")
                 .position(new Vector2D(10f, 5f))
                 .size(13)
                 .scale(1)
@@ -157,7 +157,7 @@ public class CameraRenderer implements Renderer {
         );
 
         this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
-                .text("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]")
+                .text("Camera-origin GameLocation [ X: " + pointerLoc.getX() + " / Y: " + pointerLoc.getY() + "]")
                 .position(new Vector2D(10f, 20f))
                 .size(13)
                 .scale(1)
@@ -202,7 +202,7 @@ public class CameraRenderer implements Renderer {
         );
 
         this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
-                .text(mouseLoc.x + " / " + mouseLoc.y)
+                .text(mouseLoc.getX() + " / " + mouseLoc.getY())
                 .position(new Vector2D(mousePos.getX(), mousePos.getY() - 15))
                 .size(13)
                 .scale(1)

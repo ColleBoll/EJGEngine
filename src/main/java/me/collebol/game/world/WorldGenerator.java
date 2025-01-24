@@ -21,7 +21,7 @@ public abstract class WorldGenerator {
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(chunkFile))){
             for(GameObject tile : chunk.getTiles()){
-                writer.write(tile.getGameLocation().x + "," + tile.getGameLocation().y + "," + tile.getTexture());
+                writer.write(tile.getGameLocation().getX() + "," + tile.getGameLocation().getY() + "," + tile.getTexture());
                 writer.newLine();
             }
         }catch (IOException e){
