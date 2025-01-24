@@ -59,10 +59,12 @@ public class Camera {
 
     /**
      * Zoom the current canvas.
-     * @param factor the amount will be multiplied.
+     * @param factor the amount will be added.
      */
     public void zoom(float factor){
-        this.zoom *= factor;
+        GameLocation loc = this.getGameLocation();
+        this.zoom += factor;
+        this.setGameLocation(loc);
     }
 
     /**
@@ -121,8 +123,8 @@ public class Camera {
      * @param location the GameLocation the Camera must go to.
      */
     public void setGameLocation(GameLocation location){
-        float x = (float) ((location.x * this.engine.getWindow().getTileSize()) * this.zoom);
-        float y = (float) ((location.y * this.engine.getWindow().getTileSize()) * this.zoom);
+        float x = (float) ((location.getX() * this.engine.getWindow().getTileSize()) * this.zoom);
+        float y = (float) ((location.getY() * this.engine.getWindow().getTileSize()) * this.zoom);
         this.position = new Vector2D(x, y);
     }
 }

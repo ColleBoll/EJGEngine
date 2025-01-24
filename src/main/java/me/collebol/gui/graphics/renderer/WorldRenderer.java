@@ -1,14 +1,10 @@
-package me.collebol.gui.graphics;
+package me.collebol.gui.graphics.renderer;
 
 import me.collebol.EJGEngine;
-import me.collebol.game.GameObject;
 import me.collebol.game.world.Chunk;
 import me.collebol.game.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class WorldRenderer {
+public class WorldRenderer implements Renderer {
 
     private World world;
     private EJGEngine engine;
@@ -20,11 +16,11 @@ public class WorldRenderer {
 
     public void renderWorldChunks(){
         for(Chunk chunk : this.world.getChunks()){
-            this.engine.getCameraRenderer().renderObjects(chunk.getTiles());
+            this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
         }
     }
 
     public void renderChunkRelativeToCamera(Chunk chunk){
-        this.engine.getCameraRenderer().renderObjects(chunk.getTiles());
+        this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
     }
 }

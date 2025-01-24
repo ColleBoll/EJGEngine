@@ -1,32 +1,38 @@
-package me.collebol.gui.graphics;
+package me.collebol.gui.graphics.renderer;
 
 import me.collebol.EJGEngine;
+import me.collebol.gui.graphics.Texture;
 import me.collebol.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class contains everything you need to render Textures on a Panel.
  */
-public class TextureRenderer {
+public class TextureRenderer implements Renderer {
+
+    private String name;
 
     private EJGEngine engine;
     private float width;
     private float height;
-    private HashMap<Integer, Texture> textures = new HashMap<>();
+    private Map<Integer, Texture> textures = new HashMap<>();
 
     private EJGEngine getEngine(){
         return this.engine;
     }
 
-    public TextureRenderer(float width, float height, EJGEngine e){
+    public TextureRenderer(String name, float width, float height, EJGEngine e){
+        this.name = name;
         this.engine = e;
         this.width = width;
         this.height = height;
     }
 
-    public TextureRenderer(EJGEngine e){
+    public TextureRenderer(String name, EJGEngine e){
+        this.name = name;
         this.engine = e;
         this.width = e.getWindow().getTileSize();
         this.height = e.getWindow().getTileSize();
@@ -91,5 +97,9 @@ public class TextureRenderer {
     public Texture getTexture(int index){
         if(this.textures.get(index) == null) throw new RuntimeException("Invalid Index of textures: " + index + ". Register Texture before using!");
         return this.textures.get(index);
+    }
+
+    public String getName() {
+        return name;
     }
 }

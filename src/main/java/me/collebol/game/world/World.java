@@ -1,7 +1,7 @@
 package me.collebol.game.world;
 
 import me.collebol.EJGEngine;
-import me.collebol.gui.graphics.WorldRenderer;
+import me.collebol.gui.graphics.renderer.WorldRenderer;
 
 import java.io.File;
 import java.util.ArrayList;

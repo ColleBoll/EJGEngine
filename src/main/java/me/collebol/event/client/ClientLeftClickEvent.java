@@ -6,11 +6,10 @@ import me.collebol.event.Event;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.Client;
 
+import java.util.Map;
+
 public class ClientLeftClickEvent extends Event {
 
-    private EJGEngine engine;
-
-    private Client client;
     private Vector2D position;
     private boolean press;
 
@@ -19,21 +18,8 @@ public class ClientLeftClickEvent extends Event {
     }
 
     public ClientLeftClickEvent(Vector2D position, boolean press) {
-        this.client = client;
         this.position = position;
         this.press = press;
-    }
-
-    @Override
-    public void call(Vector2D position, boolean press, EJGEngine engine) {
-        for(ClientListener listener : getListeners()){
-            ClientLeftClickEvent event = new ClientLeftClickEvent(position, press);
-            listener.onLeftClick(event, this.engine);
-        }
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     public Vector2D getPosition() {
@@ -54,5 +40,11 @@ public class ClientLeftClickEvent extends Event {
         }else{
             return true;
         }
+    }
+
+    @Override
+    public void setValues(Map<Class<?>, Object> params) {
+        position = (Vector2D) params.get(Vector2D.class);
+        press = (boolean) params.get(Boolean.class);
     }
 }

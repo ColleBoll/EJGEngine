@@ -1,8 +1,6 @@
 package me.collebol.gui;
 
 import me.collebol.EJGEngine;
-import me.collebol.gui.graphics.Camera;
-import me.collebol.gui.graphics.TextureRenderer;
 import me.collebol.input.KeyHandler;
 import me.collebol.input.MouseHandler;
 import me.collebol.utils.Time;
@@ -138,9 +136,9 @@ public class MainWindow implements Runnable {
      * Screen details
      */
     public void showDevelopmentTools(){
-        getEngine().getCameraRenderer().showGridLines();
-        getEngine().getCameraRenderer().showOriginPoint();
-        getEngine().getCameraRenderer().showCoordinates();
+        getEngine().getRenderers().getCameraRenderer().showGridLines();
+        getEngine().getRenderers().getCameraRenderer().showOriginPoint();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates();
         getCurrentPanel().showScreenDetails();
     }
 

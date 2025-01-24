@@ -28,18 +28,18 @@ public class MouseHandler {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     leftPressed = (action == GLFW.GLFW_PRESS);
                     if(action == GLFW.GLFW_PRESS){
-                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(position, true, engine);
+                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, true, position);
                     }else{
-                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(position, false, engine);
+                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
                     }
 
                 }
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     rightPressed = (action == GLFW.GLFW_PRESS);
                     if(action == GLFW.GLFW_PRESS){
-                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(position, true, engine);
-                    }else{
-                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(position, false, engine);
+                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, true, position);
+                    }else if(action == GLFW.GLFW_RELEASE){
+                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
                     }
                 }
             }
