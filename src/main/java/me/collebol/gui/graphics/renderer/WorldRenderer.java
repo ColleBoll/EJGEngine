@@ -16,11 +16,11 @@ public class WorldRenderer implements Renderer {
 
     public void renderWorldChunks(){
         for(Chunk chunk : this.world.getChunks()){
-            this.engine.getRenderRegister().getCameraRenderer().renderObjects(chunk.getTiles());
+            this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
         }
     }
 
     public void renderChunkRelativeToCamera(Chunk chunk){
-        this.engine.getRenderRegister().getCameraRenderer().renderObjects(chunk.getTiles());
+        this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
     }
 }

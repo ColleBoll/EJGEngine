@@ -46,15 +46,10 @@ public class TextRenderer implements Renderer {
     }
 
     /**
-     * Render text on the Panel without origin-point
-     * @param text
-     * @param position the panel position
-     * @param size
-     * @param scale
-     * @param align
-     * @param rotation
+     * Render text on the Panel with origin-point
+     * @param textBuilder
      */
-    public void render(String text, Vector2D position, float size, float scale, int align, float rotation) {
+    public void render(TextBuilder textBuilder) {
         nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
@@ -62,56 +57,61 @@ public class TextRenderer implements Renderer {
 
         nvgSave(this.vg);
 
-        nvgTranslate(this.vg, position.getX(), position.getY());
+        nvgTranslate(this.vg, textBuilder.origin.getX(), textBuilder.origin.getY());
 
-        nvgRotate(this.vg, (float) Math.toRadians(rotation));
+        nvgRotate(this.vg, (float) Math.toRadians(textBuilder.rotation));
 
-        nvgFontSize(this.vg, (size * scale));
+        nvgTranslate(this.vg, textBuilder.position.getX() - textBuilder.origin.getX(), textBuilder.position.getY() - textBuilder.origin.getY());
+
+        nvgFontSize(this.vg, (textBuilder.size * textBuilder.scale));
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, align);
+        nvgTextAlign(this.vg, textBuilder.align);
 
-        nvgText(this.vg, 0, 0, text);
+        nvgText(this.vg, 0, 0, textBuilder.text);
 
         nvgRestore(this.vg);
 
         nvgEndFrame(this.vg);
     }
 
-    /**
-     * Render text on the Panel with origin-point
-     * @param text
-     * @param position
-     * @param size
-     * @param scale
-     * @param align
-     * @param rotation
-     * @param origin the point where the rotation is pointed at.
-     */
-    public void render(String text, Vector2D position, float size, float scale, int align, float rotation, Vector2D origin) {
-        nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
+    public static class TextBuilder {
+        private String text = "";
+        private Vector2D position = new Vector2D(0,0);
+        private float size = 10;
+        private float scale = 1;
+        private int align = TextRenderer.ALIGN_TOP_LEFT;
+        private float rotation = 0;
+        private Vector2D origin = new Vector2D(0,0);
 
-        NVGColor color = NVGColor.create();
-        nvgRGBA((byte) 255, (byte) 255, (byte) 255, (byte) 255, color);
-
-        nvgSave(this.vg);
-
-        nvgTranslate(this.vg, origin.getX(), origin.getY());
-
-        nvgRotate(this.vg, (float) Math.toRadians(rotation));
-
-        nvgTranslate(this.vg, position.getX() - origin.getX(), position.getY() - origin.getY());
-
-        nvgFontSize(this.vg, (size * scale));
-        nvgFontFace(this.vg, this.name);
-        nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, align);
-
-        nvgText(this.vg, 0, 0, text);
-
-        nvgRestore(this.vg);
-
-        nvgEndFrame(this.vg);
+        public TextBuilder text(String text){
+            this.text = text;
+            return this;
+        }
+        public TextBuilder position(Vector2D position){
+            this.position = position;
+            return this;
+        }
+        public TextBuilder size(float size){
+            this.size = size;
+            return this;
+        }
+        public TextBuilder scale(float scale){
+            this.scale = scale;
+            return this;
+        }
+        public TextBuilder align(int align){
+            this.align = align;
+            return this;
+        }
+        public TextBuilder rotation(float rotation){
+            this.rotation = rotation;
+            return this;
+        }
+        public TextBuilder origin(Vector2D origin){
+            this.origin = origin;
+            return this;
+        }
     }
 
     public void cleanup() {

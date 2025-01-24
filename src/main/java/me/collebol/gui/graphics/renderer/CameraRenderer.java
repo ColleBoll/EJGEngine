@@ -20,6 +20,14 @@ public class CameraRenderer implements Renderer {
         this.engine = e;
     }
 
+    public static class Builder {
+        private EJGEngine engine;
+        public Builder engine(EJGEngine e){
+            this.engine = e;return this;
+        }
+
+    }
+
     /**
      * Render GameObjects relative to the Camera.
      * @param gameObjects
@@ -30,7 +38,7 @@ public class CameraRenderer implements Renderer {
             float x = (float) (((g.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
-            this.engine.getRenderRegister().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+            this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
         }
     }
 
@@ -43,24 +51,57 @@ public class CameraRenderer implements Renderer {
         float x = (float) (((gameObject.getGameLocation().x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getRenderRegister().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+        this.engine.getRenderers().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
     }
 
     /**
      * Render text relative to the camera.
-     * @param text
-     * @param location
-     * @param size
-     * @param font
-     * @param align
+     * @param textBuilder
      */
-    public void renderText(String text, GameLocation location, float size, String font, int align){
+    public void renderText(TextBuilder textBuilder){
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
-        float x = (float) (((location.x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
-        float y = (float) (((location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+        float x = (float) (((textBuilder.location.x * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+        float y = (float) (((textBuilder.location.y * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
+        this.engine.getRenderers().getTextRenderer(textBuilder.font).render(
+                new TextRenderer.TextBuilder()
+                        .text(textBuilder.text)
+                        .position(v)
+                        .size(textBuilder.size)
+                        .scale(camera.getZoom())
+                        .align(textBuilder.align)
+                        .rotation(camera.getRotation())
+                        .origin(camera.getOrigin())
+        );
+    }
 
-        this.engine.getRenderRegister().getTextRenderer(font).render(text, v, size, camera.getZoom(), align, camera.getRotation(), camera.getOrigin());
+    public static class TextBuilder {
+        private String text = "";
+        private GameLocation location = new GameLocation(0,0);
+        private float size = 10;
+        private String font = "default";
+        private int align = TextRenderer.ALIGN_TOP_LEFT;
+
+        public TextBuilder text(String text){
+            this.text = text;
+            return this;
+        }
+        public TextBuilder location(GameLocation location){
+            this.location = location;
+            return this;
+        }
+        public TextBuilder size(float size){
+            this.size = size;
+            return this;
+        }
+        public TextBuilder font(String font){
+            this.font = font;
+            return this;
+        }
+        public TextBuilder align(int align){
+            this.align = align;
+            return this;
+        }
     }
 
     /**
@@ -106,49 +147,68 @@ public class CameraRenderer implements Renderer {
 
         Vector2D mousePos = this.engine.getWindow().getMouseHandler().getPosition();
 
-        this.engine.getRenderRegister().getTextRenderer("default").render("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]",
-                new Vector2D(10f, 5f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
-        this.engine.getRenderRegister().getTextRenderer("default").render("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]",
-                new Vector2D(10f, 20f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
-        this.engine.getRenderRegister().getTextRenderer("default").render("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]",
-                new Vector2D(10f, 50f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
-        this.engine.getRenderRegister().getTextRenderer("default").render("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]",
-                new Vector2D(10f, 65f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
-        this.engine.getRenderRegister().getTextRenderer("default").render("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f,
-                new Vector2D(10f, 95f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
-        this.engine.getRenderRegister().getTextRenderer("default").render("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f,
-                new Vector2D(10f, 110f),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Mouse GameLocation [ X: " + mouseLoc.x + " / Y: " + mouseLoc.y + "]")
+                .position(new Vector2D(10f, 5f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
 
-        this.engine.getRenderRegister().getTextRenderer("default").render(mouseLoc.x + " / " + mouseLoc.y,
-                new Vector2D(mousePos.getX(), mousePos.getY() - 15),
-                13,
-                1,
-                TextRenderer.ALIGN_TOP_LEFT,
-                0);
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Camera-origin GameLocation [ X: " + pointerLoc.x + " / Y: " + pointerLoc.y + "]")
+                .position(new Vector2D(10f, 20f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
+
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]")
+                .position(new Vector2D(10f, 50f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
+
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]")
+                .position(new Vector2D(10f, 65f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
+
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f)
+                .position(new Vector2D(10f, 95f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
+
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f)
+                .position(new Vector2D(10f, 110f))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
+
+        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+                .text(mouseLoc.x + " / " + mouseLoc.y)
+                .position(new Vector2D(mousePos.getX(), mousePos.getY() - 15))
+                .size(13)
+                .scale(1)
+                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .rotation(0)
+        );
     }
 
     /**

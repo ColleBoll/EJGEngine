@@ -46,7 +46,7 @@ public abstract class EJGEngine {
         this.eventHandler = eventHandler;
     }
 
-    public RenderRegisterHandler getRenderRegister() {
+    public RenderRegisterHandler getRenderers() {
         return renderRegisterHandler;
     }
 }

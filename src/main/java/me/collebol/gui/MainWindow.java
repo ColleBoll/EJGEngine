@@ -136,9 +136,9 @@ public class MainWindow implements Runnable {
      * Screen details
      */
     public void showDevelopmentTools(){
-        getEngine().getRenderRegister().getCameraRenderer().showGridLines();
-        getEngine().getRenderRegister().getCameraRenderer().showOriginPoint();
-        getEngine().getRenderRegister().getCameraRenderer().showCoordinates();
+        getEngine().getRenderers().getCameraRenderer().showGridLines();
+        getEngine().getRenderers().getCameraRenderer().showOriginPoint();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates();
         getCurrentPanel().showScreenDetails();
     }
 
