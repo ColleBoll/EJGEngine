@@ -9,7 +9,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +25,7 @@ public class TextureRenderer implements Renderer {
     private float width;
     private float height;
     private Map<Integer, Texture> textures = new HashMap<>();
+    private List<Light> lights = new ArrayList<>();
 
     private EJGEngine getEngine(){
         return this.engine;
@@ -99,9 +102,9 @@ public class TextureRenderer implements Renderer {
         GL11.glPopMatrix();
     }
 
-    public void applyLight(Light light, float scale, float[] ambientColor) {
+    public void applyLight(int index, Light light, float scale, float[] ambientColor) {
         GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_LIGHT0);
+        GL11.glEnable(GL11.GL_LIGHT0 + index);
 
         float lightX = light.getPosition().getX();
         float lightY = light.getPosition().getY();
@@ -109,17 +112,17 @@ public class TextureRenderer implements Renderer {
         FloatBuffer lightPos = BufferUtils.createFloatBuffer(4);
         lightPos.put(new float[] { lightX, lightY, light.getRadius() * scale, 1.0f });
         lightPos.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPos);
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_POSITION, lightPos);
 
         FloatBuffer lightColor = BufferUtils.createFloatBuffer(4);
         lightColor.put(light.getColor());
         lightColor.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightColor);
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_DIFFUSE, lightColor);
 
         FloatBuffer ambientCl = BufferUtils.createFloatBuffer(4);
         ambientCl.put(ambientColor);
         ambientCl.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0, GL11.GL_AMBIENT, ambientCl);
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_AMBIENT, ambientCl);
     }
 
     public void registerTexture(Texture texture){
