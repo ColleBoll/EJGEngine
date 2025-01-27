@@ -2,8 +2,6 @@ package me.collebol.gui.graphics;
 
 import me.collebol.math.Vector2D;
 
-import java.util.concurrent.CompletableFuture;
-
 public class Button {
 
     private Vector2D position;

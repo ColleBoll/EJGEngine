@@ -17,6 +17,8 @@ public class Camera {
     private float zoom;
     private Vector2D origin;
     private float rotation;
+    private float[] ambientLight;
+    private boolean lighting;
 
     private CameraCalculator calculator;
 
@@ -29,6 +31,8 @@ public class Camera {
         this.origin = new Vector2D(0, 0);
         this.calculator = new CameraCalculator(this, e);
         this.engine = e;
+        this.ambientLight = new float[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+        this.lighting = false;
     }
 
     /**
@@ -126,5 +130,21 @@ public class Camera {
         float x = (float) ((location.getX() * this.engine.getWindow().getTileSize()) * this.zoom);
         float y = (float) ((location.getY() * this.engine.getWindow().getTileSize()) * this.zoom);
         this.position = new Vector2D(x, y);
+    }
+
+    public float[] getAmbientLight() {
+        return ambientLight;
+    }
+
+    public void setAmbientLight(float[] ambientLight) {
+        this.ambientLight = ambientLight;
+    }
+
+    public boolean isLighting() {
+        return lighting;
+    }
+
+    public void setLighting(boolean lighting) {
+        this.lighting = lighting;
     }
 }
