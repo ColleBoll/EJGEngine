@@ -12,8 +12,8 @@ public abstract class World {
     private String name;
     private EJGEngine engine;
 
-    private List<Chunk> chunks;
-    private Chunk chunkFormat;
+    private List<Chunk> loadedChunks;
+    private Class<? extends Chunk> chunkFormat;
 
     private WorldLoader worldLoader;
     private WorldGenerator worldGenerator;
@@ -21,23 +21,24 @@ public abstract class World {
 
     private File worldFolder;
 
-    public World(String name, Chunk chunkFormat, EJGEngine e){
+    public World(String name, Class<? extends Chunk> chunkFormat, EJGEngine e){
         this.name = name;
         this.chunkFormat = chunkFormat;
-        this.chunks = new ArrayList<>();
+        this.loadedChunks = new ArrayList<>();
         this.engine = e;
         this.worldFolder = new File(e.getWindow().getTitle() + "/saves/" + name);
         this.worldRenderer = new WorldRenderer(this, e);
+        this.worldLoader = new WorldLoader(this, 4);
 
         if(!this.worldFolder.exists()){
             this.worldFolder.mkdirs();
         }
     }
 
-    public World(String name, Chunk chunkFormat, File worldFolder, EJGEngine e){
+    public World(String name, Class<? extends Chunk> chunkFormat, File worldFolder, EJGEngine e){
         this.name = name;
         this.chunkFormat = chunkFormat;
-        this.chunks = new ArrayList<>();
+        this.loadedChunks = new ArrayList<>();
         this.engine = e;
         this.worldFolder = worldFolder;
         this.worldRenderer = new WorldRenderer(this, e);
@@ -51,17 +52,22 @@ public abstract class World {
         return name;
     }
 
-    public Chunk getChunkFormat() {
+    public Class<?> getChunkFormat() {
         return chunkFormat;
     }
 
     public void addChunk(Chunk chunk){
         if(chunk == null) throw new RuntimeException("Chunk equals null. Please set data to the added chunk.");
-        this.chunks.add(chunk);
+        this.loadedChunks.add(chunk);
     }
 
     public List<Chunk> getChunks() {
-        return chunks;
+        return loadedChunks;
+    }
+
+    public void setChunks(List<Chunk> chunks){
+        if(chunks == null) return;
+        this.loadedChunks = chunks;
     }
 
     public WorldLoader getWorldLoader() {
@@ -78,7 +84,7 @@ public abstract class World {
         return worldRenderer;
     }
 
-    public void registerWorldLoader(WorldLoader worldLoader) {
+    public void setWorldLoader(WorldLoader worldLoader) {
         this.worldLoader = worldLoader;
     }
 

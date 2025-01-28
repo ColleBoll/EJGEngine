@@ -15,9 +15,9 @@ public class MainWindow implements Runnable {
 
     private EJGEngine engine;
     private String title = "EJGEngine";
-    private int refreshInterval = 3;
+    private int refreshInterval = 1;
     private int tileSize = 16;
-    private int scale = 3;
+    private int scale = 1;
     private int maxTileWidth = 19;
     private int maxTileHeight = 13;
     private int width = 960; //half fullHD
