@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldLoader {
 
@@ -20,14 +22,44 @@ public class WorldLoader {
         this.renderDistance = renderDistance;
     }
 
+    public List<Chunk> loadRenderDistanceChunkFileFromLocation(GameLocation gameLocation){
+        Chunk chunk = null;
+
+        try {
+            chunk = (Chunk) this.world.getChunkFormat().getConstructor(int.class, int.class).newInstance(0, 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int minChunkX = (int) gameLocation.getX() / chunk.getChunkSize() - this.renderDistance;
+        int maxChunkX = (int) gameLocation.getX() / chunk.getChunkSize() + this.renderDistance;
+        int minChunkY = (int) gameLocation.getY() / chunk.getChunkSize() - this.renderDistance;
+        int maxChunkY = (int) gameLocation.getY() / chunk.getChunkSize() + this.renderDistance;
+
+        List<Chunk> chunkList = new ArrayList<>();
+
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
+            for (int chunkY = minChunkY; chunkY <= maxChunkY; chunkY++) {
+                if(!(getChunkFile(chunkX, chunkY) == null)){
+                    Chunk cChunk = loadChunkTilesFromFile(chunkX, chunkY);
+                    chunkList.add(cChunk);
+                }
+            }
+        }
+        return chunkList;
+    }
+
+
     /**
-     * @param chunk
+     * @param chunkX
+     * @param chunkY
      * @return the given chunk with tiles from file.
      */
-    public Chunk loadChunkTilesFromFile(Chunk chunk){
-        File chunkFile = getChunkFile(chunk);
-
+    public Chunk loadChunkTilesFromFile(int chunkX, int chunkY){
+        File chunkFile = getChunkFile(chunkX, chunkY);
+        if(chunkFile == null) return null;
         try(BufferedReader reader = new BufferedReader(new FileReader(chunkFile))){
+            Chunk chunk = (Chunk) this.world.getChunkFormat().getConstructor(int.class, int.class).newInstance(chunkX, chunkY);
             String line;
             while((line = reader.readLine()) != null){
                 String[] tokens = line.split(",");
@@ -42,18 +74,19 @@ public class WorldLoader {
 
                 chunk.addTile(tile);
             }
-        }catch(IOException e){
+            return chunk;
+        }catch(Exception e){
             e.printStackTrace();
         }
-        return chunk;
+        return null;
     }
 
-    private File getChunkFile(Chunk chunk) {
+    private File getChunkFile(int chunkX, int chunkY) {
         File worldFoler = this.world.getWorldFolder();
         if(!worldFoler.exists()) throw new RuntimeException("Chunk world folder path does not exists. Please, make sure you give the right path to your chunk files. Given path: " + worldFoler.getAbsolutePath());
 
-        File chunkFile = new File(worldFoler, "chunk_" + chunk.getX() + "_" + chunk.getY() + ".dat");
-        if(!chunkFile.exists()) throw new RuntimeException("Chunk-file does not exists in the given world folder! Please, make sure to give a existing chunk-file! Given path: " + chunkFile.getAbsolutePath());
+        File chunkFile = new File(worldFoler, "chunk_" + chunkX + "_" + chunkY + ".dat");
+        if(!chunkFile.exists()) return null;
         return chunkFile;
     }
 

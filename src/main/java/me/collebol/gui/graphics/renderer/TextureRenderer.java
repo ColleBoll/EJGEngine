@@ -1,11 +1,17 @@
 package me.collebol.gui.graphics.renderer;
 
 import me.collebol.EJGEngine;
+import me.collebol.gui.graphics.Light;
 import me.collebol.gui.graphics.Texture;
 import me.collebol.math.Vector2D;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +25,7 @@ public class TextureRenderer implements Renderer {
     private float width;
     private float height;
     private Map<Integer, Texture> textures = new HashMap<>();
+    private List<Light> lights = new ArrayList<>();
 
     private EJGEngine getEngine(){
         return this.engine;
@@ -46,7 +53,12 @@ public class TextureRenderer implements Renderer {
      * @param rotation
      * @param origin
      */
-    public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin) {
+    public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
+        if(lighting){
+            GL11.glEnable(GL11.GL_LIGHTING);
+        }else{
+            GL11.glDisable(GL11.GL_LIGHTING);
+        }
         Texture texture = getTexture(index);
         texture.bind();
 
@@ -88,6 +100,29 @@ public class TextureRenderer implements Renderer {
         GL11.glPopAttrib();
 
         GL11.glPopMatrix();
+    }
+
+    public void applyLight(int index, Light light, float scale, float[] ambientColor) {
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_LIGHT0 + index);
+
+        float lightX = light.getPosition().getX();
+        float lightY = light.getPosition().getY();
+
+        FloatBuffer lightPos = BufferUtils.createFloatBuffer(4);
+        lightPos.put(new float[] { lightX, lightY, light.getRadius() * scale, 1.0f });
+        lightPos.flip();
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_POSITION, lightPos);
+
+        FloatBuffer lightColor = BufferUtils.createFloatBuffer(4);
+        lightColor.put(light.getColor());
+        lightColor.flip();
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_DIFFUSE, lightColor);
+
+        FloatBuffer ambientCl = BufferUtils.createFloatBuffer(4);
+        ambientCl.put(ambientColor);
+        ambientCl.flip();
+        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_AMBIENT, ambientCl);
     }
 
     public void registerTexture(Texture texture){

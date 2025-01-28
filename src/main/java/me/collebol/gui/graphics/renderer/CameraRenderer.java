@@ -3,6 +3,7 @@ package me.collebol.gui.graphics.renderer;
 import me.collebol.EJGEngine;
 import me.collebol.game.GameObject;
 import me.collebol.gui.graphics.Camera;
+import me.collebol.gui.graphics.Light;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.GameLocation;
 import org.lwjgl.opengl.GL11;
@@ -38,7 +39,7 @@ public class CameraRenderer implements Renderer {
             float x = (float) (((g.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
-            this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+            this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
         }
     }
 
@@ -51,7 +52,7 @@ public class CameraRenderer implements Renderer {
         float x = (float) (((gameObject.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getRenderers().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+        this.engine.getRenderers().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
     }
 
     /**
@@ -73,6 +74,24 @@ public class CameraRenderer implements Renderer {
                         .rotation(camera.getRotation())
                         .origin(camera.getOrigin())
         );
+    }
+
+    /**
+     * Render light relative to the camera.
+     * @param location the game location of the light
+     * @param radius radius of the light (how big)
+     * @param color the color of the light, example: new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }
+     */
+    public void renderLight(int index, GameLocation location, float radius, float[] color){
+        Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
+        float x = (float) (((location.getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+        float y = (float) (((location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+        Light light = new Light(new Light.LightBuilder()
+                .intensity(1.0f)
+                .color(color)
+                .radius(radius)
+                .position(new Vector2D(x, y)));
+        this.engine.getRenderers().getTextureRenderer("default").applyLight(index, light, camera.getZoom(), camera.getAmbientLight());
     }
 
     public static class TextBuilder {
@@ -241,6 +260,8 @@ public class CameraRenderer implements Renderer {
         }
 
         GL11.glPushMatrix();
+
+        GL11.glDisable(GL11.GL_LIGHTING);
 
         GL11.glTranslatef(camera.getOrigin().getX(), camera.getOrigin().getY(), 0);
 
