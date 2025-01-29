@@ -1,5 +1,6 @@
 package me.collebol.gui.graphics.renderer;
 
+import jdk.jfr.Description;
 import me.collebol.EJGEngine;
 import me.collebol.game.GameObject;
 import me.collebol.gui.graphics.Camera;
