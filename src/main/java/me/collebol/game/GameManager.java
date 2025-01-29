@@ -10,11 +10,11 @@ public abstract class GameManager implements Runnable {
     private Player player;
     private Thread thread;
 
-    public GameManager(EJGEngine engine){
+    public GameManager(EJGEngine engine) {
         this.engine = engine;
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
         this.thread = new Thread();
         this.thread.start();
     }
@@ -26,11 +26,11 @@ public abstract class GameManager implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while (this.thread != null){
+        while (this.thread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
-            if(delta >= 1){ //everything in here will be updated at the ticks per second
+            if (delta >= 1) { //everything in here will be updated at the ticks per second
                 update();
                 delta--;
             }

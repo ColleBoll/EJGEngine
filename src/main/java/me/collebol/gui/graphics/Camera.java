@@ -24,20 +24,21 @@ public class Camera {
 
     private EJGEngine engine;
 
-    public Camera(Vector2D position, float zoom, float rotation, EJGEngine e){
+    public Camera(Vector2D position, float zoom, float rotation, EJGEngine e) {
         this.position = position;
         this.zoom = zoom;
         this.rotation = rotation;
         this.origin = new Vector2D(0, 0);
         this.calculator = new CameraCalculator(this, e);
         this.engine = e;
-        this.ambientLight = new float[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+        this.ambientLight = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
         this.lighting = false;
     }
 
     /**
      * The origin of the Camera represents the reference point from which
      * the camera's position and zoom are calculated.
+     *
      * @return origin point as Vector
      */
     public Vector2D getOrigin() {
@@ -47,6 +48,7 @@ public class Camera {
     /**
      * The origin of the Camera represents the reference point from which
      * the camera's position and zoom are calculated.
+     *
      * @param origin as vector
      */
     public void setOrigin(Vector2D origin) {
@@ -55,17 +57,19 @@ public class Camera {
 
     /**
      * Add a amount to the current camera position
+     *
      * @param delta amount. X and Y
      */
-    public void move(Vector2D delta){
+    public void move(Vector2D delta) {
         this.position = this.position.add(delta);
     }
 
     /**
      * Zoom the current canvas.
+     *
      * @param factor the amount will be added.
      */
-    public void zoom(float factor){
+    public void zoom(float factor) {
         GameLocation loc = this.getGameLocation();
         this.zoom += factor;
         this.setGameLocation(loc);
@@ -107,16 +111,17 @@ public class Camera {
         this.rotation = rotation;
     }
 
-    public CameraCalculator calculate(){
+    public CameraCalculator calculate() {
         return this.calculator;
     }
 
     /**
      * This method will convert the position as Vector2D to the GameLocation where the origin point is pointed at.
+     *
      * @return GameLocation from vector
      */
-    public GameLocation getGameLocation(){
-        if(this.position == null) throw new RuntimeException("Position is null. Set a position before using!");
+    public GameLocation getGameLocation() {
+        if (this.position == null) throw new RuntimeException("Position is null. Set a position before using!");
         float x = ((this.position.getX() / this.engine.getWindow().getTileSize()) / this.zoom);
         float y = ((this.position.getY() / this.engine.getWindow().getTileSize()) / this.zoom);
         return new GameLocation(x, y);
@@ -124,9 +129,10 @@ public class Camera {
 
     /**
      * This method will set the GameLocation to a Panel (Vector2D) position where the origin point is pointed at.
+     *
      * @param location the GameLocation the Camera must go to.
      */
-    public void setGameLocation(GameLocation location){
+    public void setGameLocation(GameLocation location) {
         float x = (float) ((location.getX() * this.engine.getWindow().getTileSize()) * this.zoom);
         float y = (float) ((location.getY() * this.engine.getWindow().getTileSize()) * this.zoom);
         this.position = new Vector2D(x, y);

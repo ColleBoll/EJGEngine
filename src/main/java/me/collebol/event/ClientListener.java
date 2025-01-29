@@ -1,12 +1,8 @@
 package me.collebol.event;
 
-import me.collebol.EJGEngine;
-import me.collebol.event.Listener;
 import me.collebol.event.client.ClientKeyClickEvent;
 import me.collebol.event.client.ClientLeftClickEvent;
 import me.collebol.event.client.ClientRightClickEvent;
-
-import java.util.Map;
 
 public abstract class ClientListener implements Listener {
 

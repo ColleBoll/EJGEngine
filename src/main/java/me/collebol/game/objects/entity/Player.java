@@ -1,6 +1,6 @@
 package me.collebol.game.objects.entity;
 
-public abstract class Player extends Entity{
+public abstract class Player extends Entity {
 
 
 }

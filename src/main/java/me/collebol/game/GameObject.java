@@ -1,6 +1,5 @@
 package me.collebol.game;
 
-import me.collebol.gui.graphics.Texture;
 import me.collebol.math.Vector2D;
 import me.collebol.utils.EngineObject;
 import me.collebol.utils.GameLocation;
@@ -12,6 +11,7 @@ public class GameObject extends EngineObject {
 
     /**
      * Velocity is the speed in combination with the direction of motion of the object.
+     *
      * @return vector velocity
      */
     public Vector2D getVelocity() {
@@ -20,6 +20,7 @@ public class GameObject extends EngineObject {
 
     /**
      * Velocity is the speed in combination with the direction of motion of the object.
+     *
      * @param velocity vector with x and y its moving in
      */
     public void setVelocity(Vector2D velocity) {
@@ -28,6 +29,7 @@ public class GameObject extends EngineObject {
 
     /**
      * GameLocation is the location in game.
+     *
      * @return game location
      */
     public GameLocation getGameLocation() {
@@ -36,6 +38,7 @@ public class GameObject extends EngineObject {
 
     /**
      * GameLocation is the location in game.
+     *
      * @param gameLocation game location. not Vector2D.
      */
     public void setGameLocation(GameLocation gameLocation) {

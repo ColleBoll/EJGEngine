@@ -32,11 +32,11 @@ public class MainWindow implements Runnable {
 
     private Panel currentPanel;
 
-    public MainWindow(EJGEngine e){
+    public MainWindow(EJGEngine e) {
         this.engine = e;
     }
 
-    public void run(){
+    public void run() {
         init();
         loop();
 
@@ -44,10 +44,10 @@ public class MainWindow implements Runnable {
         GLFW.glfwTerminate();
     }
 
-    private void init(){
+    private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
-        if(!GLFW.glfwInit()){
+        if (!GLFW.glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW.");
         }
 
@@ -56,7 +56,7 @@ public class MainWindow implements Runnable {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
         this.window = GLFW.glfwCreateWindow(getWidth(), getHeight(), getTitle(), 0, 0);
-        if(this.window == 0){
+        if (this.window == 0) {
             throw new RuntimeException("Failed to create the GLFW window.");
         }
 
@@ -86,7 +86,7 @@ public class MainWindow implements Runnable {
 
         GL.createCapabilities();
 
-        GL11.glViewport(0, 0, getWidth(), getHeight());
+        //GL11.glViewport(0, 0, getWidth(), getHeight());
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         GL11.glOrtho(0, getWidth(), getHeight(), 0, -1, 1);
@@ -104,17 +104,17 @@ public class MainWindow implements Runnable {
         this.keyHandler.keyCallback(this.window);
     }
 
-    private void loop(){
+    private void loop() {
         float beginTime = Time.getTime();
         float endTime;
         float dt = -1.0f;
 
-        while (!GLFW.glfwWindowShouldClose(this.window)){
+        while (!GLFW.glfwWindowShouldClose(this.window)) {
             GLFW.glfwPollEvents();
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            if(dt >= 0){
+            if (dt >= 0) {
                 this.currentPanel.update();
                 this.currentPanel.setDT(dt);
                 this.currentPanel.paint();
@@ -135,40 +135,43 @@ public class MainWindow implements Runnable {
      * Origin-point,
      * Screen details
      */
-    public void showDevelopmentTools(){
+    public void showDevelopmentTools() {
         getEngine().getRenderers().getCameraRenderer().showGridLines();
         getEngine().getRenderers().getCameraRenderer().showOriginPoint();
         getEngine().getRenderers().getCameraRenderer().showCoordinates();
         getCurrentPanel().showScreenDetails();
     }
 
-    private EJGEngine getEngine(){
+    private EJGEngine getEngine() {
         return this.engine;
     }
 
     /**
      * Add a panel to the window where you can switch between.
+     *
      * @param panel A panel in the main window
      */
-    public void registerPanel(Panel panel){
+    public void registerPanel(Panel panel) {
         this.panels.put(panel.index, panel);
     }
 
     /**
      * Display the given panel.
+     *
      * @param i Panel index.
      */
-    public void setPanel(int i){
-        if(this.panels.containsKey(i)){
+    public void setPanel(int i) {
+        if (this.panels.containsKey(i)) {
             this.currentPanel = this.panels.get(i);
         }
     }
 
     /**
      * Gives the current panel of the window.
+     *
      * @return The panel that is displaying!
      */
-    public Panel getCurrentPanel(){
+    public Panel getCurrentPanel() {
         return this.currentPanel;
     }
 

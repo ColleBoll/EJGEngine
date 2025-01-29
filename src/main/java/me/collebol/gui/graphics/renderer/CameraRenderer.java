@@ -17,25 +17,28 @@ public class CameraRenderer implements Renderer {
 
     private EJGEngine engine;
 
-    public CameraRenderer(EJGEngine e){
+    public CameraRenderer(EJGEngine e) {
         this.engine = e;
     }
 
     public static class Builder {
         private EJGEngine engine;
-        public Builder engine(EJGEngine e){
-            this.engine = e;return this;
+
+        public Builder engine(EJGEngine e) {
+            this.engine = e;
+            return this;
         }
 
     }
 
     /**
      * Render GameObjects relative to the Camera.
+     *
      * @param gameObjects
      */
-    public void renderObjects(List<GameObject> gameObjects){
+    public void renderObjects(List<GameObject> gameObjects) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
-        for(GameObject g : gameObjects){
+        for (GameObject g : gameObjects) {
             float x = (float) (((g.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
@@ -45,9 +48,10 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Render a GameObject relative to the Camera.
+     *
      * @param gameObject
      */
-    public void renderObject(GameObject gameObject){
+    public void renderObject(GameObject gameObject) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((gameObject.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
@@ -57,9 +61,10 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Render text relative to the camera.
+     *
      * @param textBuilder
      */
-    public void renderText(TextBuilder textBuilder){
+    public void renderText(TextBuilder textBuilder) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((textBuilder.location.getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((textBuilder.location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
@@ -78,11 +83,12 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Render light relative to the camera.
+     *
      * @param location the game location of the light
-     * @param radius radius of the light (how big)
-     * @param color the color of the light, example: new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }
+     * @param radius   radius of the light (how big)
+     * @param color    the color of the light, example: new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }
      */
-    public void renderLight(int index, GameLocation location, float radius, float[] color){
+    public void renderLight(int index, GameLocation location, float radius, float[] color) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((location.getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
@@ -96,28 +102,32 @@ public class CameraRenderer implements Renderer {
 
     public static class TextBuilder {
         private String text = "";
-        private GameLocation location = new GameLocation(0,0);
+        private GameLocation location = new GameLocation(0, 0);
         private float size = 10;
         private String font = "default";
         private int align = TextRenderer.ALIGN_TOP_LEFT;
 
-        public TextBuilder text(String text){
+        public TextBuilder text(String text) {
             this.text = text;
             return this;
         }
-        public TextBuilder location(GameLocation location){
+
+        public TextBuilder location(GameLocation location) {
             this.location = location;
             return this;
         }
-        public TextBuilder size(float size){
+
+        public TextBuilder size(float size) {
             this.size = size;
             return this;
         }
-        public TextBuilder font(String font){
+
+        public TextBuilder font(String font) {
             this.font = font;
             return this;
         }
-        public TextBuilder align(int align){
+
+        public TextBuilder align(int align) {
             this.align = align;
             return this;
         }
@@ -125,10 +135,10 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Renders the origin point of the camera on the screen.
-     *
+     * <p>
      * This method uses OpenGL to draw a red point at the camera's origin and a circle around it.
      */
-    public void showOriginPoint(){
+    public void showOriginPoint() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         Vector2D origin = camera.getOrigin();
 
@@ -153,12 +163,12 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Displays various coordinates and camera information on the screen.
-     *
+     * <p>
      * This method retrieves the current camera and mouse positions, and renders text on the screen
      * showing the mouse game location, camera-origin game location, mouse panel position, camera-origin panel position,
      * camera zoom level, and camera rotation.
      */
-    public void showCoordinates(){
+    public void showCoordinates() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
         GameLocation pointerLoc = camera.getGameLocation();
@@ -232,7 +242,7 @@ public class CameraRenderer implements Renderer {
 
     /**
      * Renders grid lines on the screen based on the camera's position and zoom level.
-     *
+     * <p>
      * This method calculates the starting positions for the grid lines based on the camera's offset and origin.
      * It then uses OpenGL to draw yellow grid lines across the screen and blue diagonal lines forming a square.
      */

@@ -16,11 +16,11 @@ public class Texture {
     private int width;
     private int height;
 
-    public Texture(String filePath, int index){
+    public Texture(String filePath, int index) {
         this.index = index;
         BufferedImage bufferedImage;
-        try(InputStream inputStream = getClass().getResourceAsStream(filePath)) {
-            if(inputStream == null){
+        try (InputStream inputStream = getClass().getResourceAsStream(filePath)) {
+            if (inputStream == null) {
                 throw new IOException("Resource not found: " + filePath);
             }
             bufferedImage = ImageIO.read(inputStream);
@@ -49,12 +49,12 @@ public class Texture {
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
             GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.width, this.height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, pixels);
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException("Something went wrong making texture with index " + this.index + ", see:" + e);
         }
     }
 
-    public void bind(){
+    public void bind() {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureObject);
     }
 

@@ -4,12 +4,12 @@ public class Matrix3 {
 
     private double[][] matrix;
 
-    public Matrix3(){
+    public Matrix3() {
         matrix = new double[3][3];
         identity();
     }
 
-    public void identity(){
+    public void identity() {
         matrix[0][0] = 1;
         matrix[0][1] = 0;
         matrix[0][2] = 0;

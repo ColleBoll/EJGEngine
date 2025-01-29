@@ -6,7 +6,7 @@ public class Client {
 
     private Player player;
 
-    public Client(Player player){
+    public Client(Player player) {
         this.player = player;
     }
 }

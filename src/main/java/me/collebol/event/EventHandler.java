@@ -16,7 +16,7 @@ public class EventHandler {
     private ClientLeftClickEvent clientLeftClickEvent;
     private ClientKeyClickEvent clientKeyClickEvent;
 
-    public EventHandler(EJGEngine e){
+    public EventHandler(EJGEngine e) {
         this.engine = e;
 
         this.clientRightClickEvent = new ClientRightClickEvent();
@@ -32,19 +32,19 @@ public class EventHandler {
     public void registerClientEvent(ClientListener event) {
         try {
             Method onRightClickMethod = event.getClass().getMethod("onRightClick", ClientRightClickEvent.class);
-            if(onRightClickMethod.getDeclaringClass() != ClientListener.class){
+            if (onRightClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientRightClickEvent.registerEvent(event);
 
             }
             Method onLeftClickMethod = event.getClass().getMethod("onLeftClick", ClientLeftClickEvent.class);
-            if(onLeftClickMethod.getDeclaringClass() != ClientListener.class){
+            if (onLeftClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientLeftClickEvent.registerEvent(event);
             }
             Method onKeyClickMethod = event.getClass().getMethod("onKeyClick", ClientKeyClickEvent.class);
-            if(onKeyClickMethod.getDeclaringClass() != ClientListener.class){
+            if (onKeyClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientKeyClickEvent.registerEvent(event);
             }
-        }catch (NoSuchMethodException e){
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
@@ -55,14 +55,14 @@ public class EventHandler {
      * @param eventClass The class of the event to be returned.
      * @return The instance of the event if it matches one of the known client events, otherwise null.
      */
-    public Event callClientEvent(Class<? extends Event> eventClass){
-        if(eventClass.equals(ClientRightClickEvent.class)){
+    public Event callClientEvent(Class<? extends Event> eventClass) {
+        if (eventClass.equals(ClientRightClickEvent.class)) {
             return this.clientRightClickEvent;
         }
-        if(eventClass.equals(ClientLeftClickEvent.class)){
+        if (eventClass.equals(ClientLeftClickEvent.class)) {
             return this.clientLeftClickEvent;
         }
-        if(eventClass.equals(ClientKeyClickEvent.class)){
+        if (eventClass.equals(ClientKeyClickEvent.class)) {
             return this.clientKeyClickEvent;
         }
         return null;

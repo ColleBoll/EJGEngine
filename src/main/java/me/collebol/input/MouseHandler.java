@@ -17,7 +17,7 @@ public class MouseHandler {
 
     private EJGEngine engine;
 
-    public MouseHandler(EJGEngine e){
+    public MouseHandler(EJGEngine e) {
         this.engine = e;
     }
 
@@ -27,18 +27,18 @@ public class MouseHandler {
             public void invoke(long window, int button, int action, int mods) {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     leftPressed = (action == GLFW.GLFW_PRESS);
-                    if(action == GLFW.GLFW_PRESS){
+                    if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, true, position);
-                    }else{
+                    } else {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
                     }
 
                 }
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     rightPressed = (action == GLFW.GLFW_PRESS);
-                    if(action == GLFW.GLFW_PRESS){
+                    if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, true, position);
-                    }else if(action == GLFW.GLFW_RELEASE){
+                    } else if (action == GLFW.GLFW_RELEASE) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
                     }
                 }
@@ -82,7 +82,7 @@ public class MouseHandler {
     /**
      * @return the GameLocation where to mouse is pointed at.
      */
-    public GameLocation getGameLocation(){
+    public GameLocation getGameLocation() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
         GameLocation location = camera.calculate().getGameLocationFromVector2D(this.position);

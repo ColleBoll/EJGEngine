@@ -6,7 +6,6 @@ import me.collebol.gui.graphics.Texture;
 import me.collebol.math.Vector2D;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -27,18 +26,18 @@ public class TextureRenderer implements Renderer {
     private Map<Integer, Texture> textures = new HashMap<>();
     private List<Light> lights = new ArrayList<>();
 
-    private EJGEngine getEngine(){
+    private EJGEngine getEngine() {
         return this.engine;
     }
 
-    public TextureRenderer(String name, float width, float height, EJGEngine e){
+    public TextureRenderer(String name, float width, float height, EJGEngine e) {
         this.name = name;
         this.engine = e;
         this.width = width;
         this.height = height;
     }
 
-    public TextureRenderer(String name, EJGEngine e){
+    public TextureRenderer(String name, EJGEngine e) {
         this.name = name;
         this.engine = e;
         this.width = e.getWindow().getTileSize();
@@ -47,16 +46,17 @@ public class TextureRenderer implements Renderer {
 
     /**
      * Render a texture from a registered index.
-     * @param index register a texture first!
+     *
+     * @param index    register a texture first!
      * @param position
      * @param scale
      * @param rotation
      * @param origin
      */
     public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
-        if(lighting){
+        if (lighting) {
             GL11.glEnable(GL11.GL_LIGHTING);
-        }else{
+        } else {
             GL11.glDisable(GL11.GL_LIGHTING);
         }
         Texture texture = getTexture(index);
@@ -110,7 +110,7 @@ public class TextureRenderer implements Renderer {
         float lightY = light.getPosition().getY();
 
         FloatBuffer lightPos = BufferUtils.createFloatBuffer(4);
-        lightPos.put(new float[] { lightX, lightY, light.getRadius() * scale, 1.0f });
+        lightPos.put(new float[]{lightX, lightY, light.getRadius() * scale, 1.0f});
         lightPos.flip();
         GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_POSITION, lightPos);
 
@@ -125,12 +125,13 @@ public class TextureRenderer implements Renderer {
         GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_AMBIENT, ambientCl);
     }
 
-    public void registerTexture(Texture texture){
+    public void registerTexture(Texture texture) {
         this.textures.put(texture.getIndex(), texture);
     }
 
-    public Texture getTexture(int index){
-        if(this.textures.get(index) == null) throw new RuntimeException("Invalid Index of textures: " + index + ". Register Texture before using!");
+    public Texture getTexture(int index) {
+        if (this.textures.get(index) == null)
+            throw new RuntimeException("Invalid Index of textures: " + index + ". Register Texture before using!");
         return this.textures.get(index);
     }
 

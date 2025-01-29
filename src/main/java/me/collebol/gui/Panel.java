@@ -13,13 +13,13 @@ public abstract class Panel {
 
     private EJGEngine engine;
 
-    public Panel(int index, EJGEngine e){
+    public Panel(int index, EJGEngine e) {
         this.index = index;
         this.engine = e;
-        this.camera = new Camera(new Vector2D(0,0), 1f, 0, engine);
+        this.camera = new Camera(new Vector2D(0, 0), 1f, 0, engine);
     }
 
-    public void showScreenDetails(){
+    public void showScreenDetails() {
         getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
                 .text("Window width: " + getEngine().getWindow().getWidth() + "px")
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 5f))
@@ -27,7 +27,7 @@ public abstract class Panel {
                 .scale(1)
                 .align(TextRenderer.ALIGN_TOP_RIGHT)
                 .rotation(0)
-                );
+        );
         getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
                 .text("Window height: " + getEngine().getWindow().getHeight() + "px")
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 20f))
@@ -35,7 +35,7 @@ public abstract class Panel {
                 .scale(1)
                 .align(TextRenderer.ALIGN_TOP_RIGHT)
                 .rotation(0)
-                );
+        );
         getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
                 .text("FPS: " + Math.floor(1.0f / getDT()))
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 50f))
@@ -43,14 +43,14 @@ public abstract class Panel {
                 .scale(1)
                 .align(TextRenderer.ALIGN_TOP_RIGHT)
                 .rotation(0)
-                );
+        );
     }
 
     public abstract void update();
 
     public abstract void paint();
 
-    public EJGEngine getEngine(){
+    public EJGEngine getEngine() {
         return engine;
     }
 

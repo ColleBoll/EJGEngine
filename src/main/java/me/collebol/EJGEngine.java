@@ -11,7 +11,7 @@ public abstract class EJGEngine {
     private RenderRegisterHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
 
-    public void start(){
+    public void start() {
         setup();
         this.window = new MainWindow(this); //here the regiter() method will be called
         this.renderRegisterHandler = new RenderRegisterHandler(this);
@@ -32,6 +32,7 @@ public abstract class EJGEngine {
 
     /**
      * The window the game is displayed on.
+     *
      * @return window
      */
     public MainWindow getWindow() {

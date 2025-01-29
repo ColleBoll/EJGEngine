@@ -9,18 +9,18 @@ public class WorldRenderer implements Renderer {
     private World world;
     private EJGEngine engine;
 
-    public WorldRenderer(World world, EJGEngine e){
+    public WorldRenderer(World world, EJGEngine e) {
         this.world = world;
         this.engine = e;
     }
 
-    public void renderWorldChunks(){
-        for(Chunk chunk : this.world.getChunks()){
+    public void renderWorldChunks() {
+        for (Chunk chunk : this.world.getChunks()) {
             this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
         }
     }
 
-    public void renderChunkRelativeToCamera(Chunk chunk){
+    public void renderChunkRelativeToCamera(Chunk chunk) {
         this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
     }
 }

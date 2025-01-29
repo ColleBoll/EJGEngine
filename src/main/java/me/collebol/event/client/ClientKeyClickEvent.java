@@ -1,7 +1,5 @@
 package me.collebol.event.client;
 
-import me.collebol.EJGEngine;
-import me.collebol.event.ClientListener;
 import me.collebol.event.Event;
 import me.collebol.input.KeyType;
 

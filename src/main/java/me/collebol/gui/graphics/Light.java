@@ -9,7 +9,7 @@ public class Light {
     private float radius;
     private float[] color;
 
-    public Light(LightBuilder builder){
+    public Light(LightBuilder builder) {
         this.position = builder.position;
         this.intensity = builder.intensity;
         this.radius = builder.radius;
@@ -33,17 +33,17 @@ public class Light {
     }
 
     public static class LightBuilder {
-        private Vector2D position = new Vector2D(0,0);
+        private Vector2D position = new Vector2D(0, 0);
         private float intensity = 1.0f;
         private float radius = 10.0f;
-        private float[] color = new float[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+        private float[] color = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
 
-        public LightBuilder position(Vector2D position){
+        public LightBuilder position(Vector2D position) {
             this.position = position;
             return this;
         }
 
-        public LightBuilder intensity(float intensity){
+        public LightBuilder intensity(float intensity) {
             this.intensity = intensity;
             return this;
         }

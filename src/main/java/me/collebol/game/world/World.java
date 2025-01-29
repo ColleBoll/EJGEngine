@@ -21,7 +21,7 @@ public abstract class World {
 
     private File worldFolder;
 
-    public World(String name, Class<? extends Chunk> chunkFormat, EJGEngine e){
+    public World(String name, Class<? extends Chunk> chunkFormat, EJGEngine e) {
         this.name = name;
         this.chunkFormat = chunkFormat;
         this.loadedChunks = new ArrayList<>();
@@ -30,12 +30,12 @@ public abstract class World {
         this.worldRenderer = new WorldRenderer(this, e);
         this.worldLoader = new WorldLoader(this, 4);
 
-        if(!this.worldFolder.exists()){
+        if (!this.worldFolder.exists()) {
             this.worldFolder.mkdirs();
         }
     }
 
-    public World(String name, Class<? extends Chunk> chunkFormat, File worldFolder, EJGEngine e){
+    public World(String name, Class<? extends Chunk> chunkFormat, File worldFolder, EJGEngine e) {
         this.name = name;
         this.chunkFormat = chunkFormat;
         this.loadedChunks = new ArrayList<>();
@@ -43,7 +43,7 @@ public abstract class World {
         this.worldFolder = worldFolder;
         this.worldRenderer = new WorldRenderer(this, e);
 
-        if(!this.worldFolder.exists()){
+        if (!this.worldFolder.exists()) {
             this.worldFolder.mkdirs();
         }
     }
@@ -56,8 +56,8 @@ public abstract class World {
         return chunkFormat;
     }
 
-    public void addChunk(Chunk chunk){
-        if(chunk == null) throw new RuntimeException("Chunk equals null. Please set data to the added chunk.");
+    public void addChunk(Chunk chunk) {
+        if (chunk == null) throw new RuntimeException("Chunk equals null. Please set data to the added chunk.");
         this.loadedChunks.add(chunk);
     }
 
@@ -65,18 +65,20 @@ public abstract class World {
         return loadedChunks;
     }
 
-    public void setChunks(List<Chunk> chunks){
-        if(chunks == null) return;
+    public void setChunks(List<Chunk> chunks) {
+        if (chunks == null) return;
         this.loadedChunks = chunks;
     }
 
     public WorldLoader getWorldLoader() {
-        if(this.worldLoader == null) throw new RuntimeException("You have not registered the WorldLoader of your World yet! Please, make sure to register a WorldLoader!");
+        if (this.worldLoader == null)
+            throw new RuntimeException("You have not registered the WorldLoader of your World yet! Please, make sure to register a WorldLoader!");
         return worldLoader;
     }
 
     public WorldGenerator getWorldGenerator() {
-        if(this.worldLoader == null) throw new RuntimeException("You have not registered the WorldGenerator of your World yet! Please, make sure to register a WorldGenerator!");
+        if (this.worldLoader == null)
+            throw new RuntimeException("You have not registered the WorldGenerator of your World yet! Please, make sure to register a WorldGenerator!");
         return worldGenerator;
     }
 
@@ -88,7 +90,7 @@ public abstract class World {
         this.worldLoader = worldLoader;
     }
 
-    public void registerWorldGenerator(WorldGenerator worldGenerator){
+    public void registerWorldGenerator(WorldGenerator worldGenerator) {
         this.worldGenerator = worldGenerator;
     }
 

@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 public class KeyHandler {
     private EJGEngine engine;
     private boolean keyPressed;
+
     public KeyHandler(EJGEngine e) {
         this.engine = e;
     }
@@ -16,9 +17,9 @@ public class KeyHandler {
         GLFW.glfwSetKeyCallback(window, new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                if(action == GLFW.GLFW_PRESS){
+                if (action == GLFW.GLFW_PRESS) {
                     keyPressed = true;
-                }else if(action == GLFW.GLFW_RELEASE){
+                } else if (action == GLFW.GLFW_RELEASE) {
                     keyPressed = false;
                 }
 

@@ -1,8 +1,6 @@
 package me.collebol.game.world;
 
 import me.collebol.game.GameObject;
-import me.collebol.game.objects.entity.Entity;
-import me.collebol.game.objects.solids.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ public abstract class Chunk {
     private List<GameObject> tiles;
     private List<GameObject> entities;
 
-    public Chunk(int chunkSize, int x, int y){
+    public Chunk(int chunkSize, int x, int y) {
         this.chunkSize = chunkSize;
         this.x = x;
         this.y = y;
@@ -49,13 +47,15 @@ public abstract class Chunk {
         this.y = y;
     }
 
-    public void addTile(GameObject tile){
-        if(tile.getGameLocation() == null) throw new RuntimeException("Tile GameLocation is null. Please, set a location.");
+    public void addTile(GameObject tile) {
+        if (tile.getGameLocation() == null)
+            throw new RuntimeException("Tile GameLocation is null. Please, set a location.");
         this.tiles.add(tile);
     }
 
-    public void addEntity(GameObject entity){
-        if(entity.getGameLocation() == null) throw new RuntimeException("Entity GameLocation is null. Please, set a location.");
+    public void addEntity(GameObject entity) {
+        if (entity.getGameLocation() == null)
+            throw new RuntimeException("Entity GameLocation is null. Please, set a location.");
         this.entities.add(entity);
     }
 

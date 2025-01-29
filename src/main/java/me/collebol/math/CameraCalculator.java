@@ -12,7 +12,7 @@ public class CameraCalculator {
     private Camera camera;
     private EJGEngine engine;
 
-    public CameraCalculator(Camera camera, EJGEngine e){
+    public CameraCalculator(Camera camera, EJGEngine e) {
         this.camera = camera;
         this.engine = e;
     }
@@ -20,10 +20,11 @@ public class CameraCalculator {
     /**
      * This calculates method will calculate the current GameLocation on the given Vector2D cords.
      * If the camera moves or zooms in or rotates, the GameLocation will change.
+     *
      * @param position Panel position to calculate the current GameLocation on that Panel position.
      * @return The GameLocation on the given Panel position.
      */
-    public GameLocation getGameLocationFromVector2D(Vector2D position){
+    public GameLocation getGameLocationFromVector2D(Vector2D position) {
         float tileSize = this.engine.getWindow().getTileSize();
         float zoom = this.camera.getZoom();
         Vector2D cameraPos = this.camera.getPosition();

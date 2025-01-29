@@ -1,10 +1,7 @@
 package me.collebol.event.client;
 
-import me.collebol.EJGEngine;
-import me.collebol.event.ClientListener;
 import me.collebol.event.Event;
 import me.collebol.math.Vector2D;
-import me.collebol.utils.Client;
 
 import java.util.Map;
 

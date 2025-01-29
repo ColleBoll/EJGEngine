@@ -3,8 +3,6 @@ package me.collebol.event;
 import me.collebol.EJGEngine;
 import me.collebol.input.KeyType;
 import me.collebol.math.Vector2D;
-import me.collebol.utils.Client;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.HashMap;

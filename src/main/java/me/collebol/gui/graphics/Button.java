@@ -9,7 +9,7 @@ public class Button {
     private int height;
     private String text;
 
-    public Button(String text, Vector2D position, int width, int height){
+    public Button(String text, Vector2D position, int width, int height) {
         this.text = text;
         this.position = position;
         this.width = width;

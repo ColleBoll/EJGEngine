@@ -23,11 +23,11 @@ public class TextRenderer implements Renderer {
     public static int ALIGN_BOTTOM_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_BOTTOM;
     public static int ALIGN_BOTTOM_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM;
 
-    private EJGEngine getEngine(){
+    private EJGEngine getEngine() {
         return engine;
     }
 
-    public TextRenderer(String name, String fontPath, EJGEngine e){
+    public TextRenderer(String name, String fontPath, EJGEngine e) {
         this.engine = e;
         this.name = name;
         this.fontPath = fontPath;
@@ -47,6 +47,7 @@ public class TextRenderer implements Renderer {
 
     /**
      * Render text on the Panel with origin-point
+     *
      * @param textBuilder
      */
     public void render(TextBuilder textBuilder) {
@@ -77,38 +78,44 @@ public class TextRenderer implements Renderer {
 
     public static class TextBuilder {
         private String text = "";
-        private Vector2D position = new Vector2D(0,0);
+        private Vector2D position = new Vector2D(0, 0);
         private float size = 10;
         private float scale = 1;
         private int align = TextRenderer.ALIGN_TOP_LEFT;
         private float rotation = 0;
-        private Vector2D origin = new Vector2D(0,0);
+        private Vector2D origin = new Vector2D(0, 0);
 
-        public TextBuilder text(String text){
+        public TextBuilder text(String text) {
             this.text = text;
             return this;
         }
-        public TextBuilder position(Vector2D position){
+
+        public TextBuilder position(Vector2D position) {
             this.position = position;
             return this;
         }
-        public TextBuilder size(float size){
+
+        public TextBuilder size(float size) {
             this.size = size;
             return this;
         }
-        public TextBuilder scale(float scale){
+
+        public TextBuilder scale(float scale) {
             this.scale = scale;
             return this;
         }
-        public TextBuilder align(int align){
+
+        public TextBuilder align(int align) {
             this.align = align;
             return this;
         }
-        public TextBuilder rotation(float rotation){
+
+        public TextBuilder rotation(float rotation) {
             this.rotation = rotation;
             return this;
         }
-        public TextBuilder origin(Vector2D origin){
+
+        public TextBuilder origin(Vector2D origin) {
             this.origin = origin;
             return this;
         }

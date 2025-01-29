@@ -1,6 +1,5 @@
 package me.collebol.utils;
 
-import me.collebol.gui.graphics.Texture;
 import me.collebol.math.Vector2D;
 
 /**
@@ -14,6 +13,7 @@ public class EngineObject {
 
     /**
      * Position relative to the screen.
+     *
      * @return position as vector
      */
     public Vector2D getVector() {
@@ -22,6 +22,7 @@ public class EngineObject {
 
     /**
      * Position relative to the screen.
+     *
      * @param vector set the screen position of the object.
      */
     public void setVector(Vector2D vector) {
