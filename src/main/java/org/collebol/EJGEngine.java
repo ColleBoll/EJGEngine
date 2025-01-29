@@ -8,6 +8,7 @@ public abstract class EJGEngine {
 
     private MainWindow window;
 
+
     private RenderRegisterHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
 

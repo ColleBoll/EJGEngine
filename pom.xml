@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.collebol</groupId>
-    <artifactId>ejgengine</artifactId>
-    <version>v0.1.4</version>
+    <artifactId>EJGEngine</artifactId>
+    <version>v0.1.4-beta.2-SNAPSHOT</version>
 
     <licenses>
         <license>
@@ -22,14 +22,6 @@
         <lwjgl.version>3.3.6</lwjgl.version>
         <artifact.suffix></artifact.suffix> <!-- Placeholder voor suffix -->
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/ColleBoll/EJGEngine</url>
-        </repository>
-    </distributionManagement>
 
     <profiles>
         <!--        intel-->
@@ -75,28 +67,40 @@
     </profiles>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}${artifact.suffix}</finalName>
+<!--        <finalName>${project.artifactId}-${project.version}${artifact.suffix}</finalName>-->
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadoc</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -105,22 +109,42 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>sign</goal>
                         </goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <minimizeJar>true</minimizeJar>
-                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <version>3.5.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <createDependencyReducedPom>false</createDependencyReducedPom>-->
+<!--                            <minimizeJar>true</minimizeJar>-->
+<!--                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
