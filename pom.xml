@@ -4,28 +4,44 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.collebol</groupId>
-    <artifactId>ejgengine</artifactId>
-    <version>v0.1.4-beta.1</version>
+    <groupId>org.collebol</groupId>
+    <artifactId>EJGEngine</artifactId>
+    <version>v0.1.4</version>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <url>https://github.com/ColleBoll/EJGEngine</url>
+    <description>A 2D Game engine with OpenGL.</description>
+
+    <scm>
+        <url>https://github.com/ColleBoll/EJGEngine</url>
+        <connection>scm:git:git://github.com/ColleBoll/EJGEngine.git</connection>
+        <developerConnection>scm:git:ssh://github.com/ColleBoll/EJGEngine.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>org.collebol</id>
+            <name>ColleBol</name>
+            <email>contact@collebol.org</email>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lwjgl.version>3.3.6</lwjgl.version>
-        <artifact.suffix></artifact.suffix> <!-- Placeholder voor suffix -->
+        <artifact.suffix></artifact.suffix>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/ColleBoll/EJGEngine</url>
-        </repository>
-    </distributionManagement>
-
     <profiles>
-        <!--        intel-->
         <profile>
             <id>macos-x86_64</id>
             <activation>
@@ -35,11 +51,10 @@
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>-macos-x86_64</artifact.suffix>
+                <artifact.suffix>macos-x86_64</artifact.suffix>
                 <lwjgl.natives>natives-macos</lwjgl.natives>
             </properties>
         </profile>
-        <!--        Apple chip M-->
         <profile>
             <id>macos-aarch64</id>
             <activation>
@@ -49,7 +64,7 @@
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>-macos-aarch64</artifact.suffix>
+                <artifact.suffix>macos-aarch64</artifact.suffix>
                 <lwjgl.natives>natives-macos-arm64</lwjgl.natives>
             </properties>
         </profile>
@@ -61,30 +76,103 @@
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>-windows</artifact.suffix>
+                <artifact.suffix>windows</artifact.suffix>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
     </profiles>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}${artifact.suffix}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
+                        <id>windows</id>
                         <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
+                        <goals><goal>jar</goal></goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <minimizeJar>true</minimizeJar>
-                            <finalName>${project.artifactId}-${project.version}${artifact.suffix}-shaded</finalName>
+                            <classifier>windows</classifier>
                         </configuration>
+                    </execution>
+                    <execution>
+                        <id>macos-x86_64</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>macos-x86_64</classifier>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>macos-aarch64</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>macos-aarch64</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <id>deploy-all</id>
+                        <phase>deploy</phase>
+                        <goals><goal>deploy</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -93,7 +181,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- LWJGL dependencies -->
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId><version>${lwjgl.version}</version></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version></dependency>
@@ -102,7 +189,6 @@
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version></dependency>
 
-            <!-- Native LWJGL dependencies -->
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
@@ -114,7 +200,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- LWJGL dependencies -->
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId><version>${lwjgl.version}</version></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version></dependency>
@@ -123,7 +208,6 @@
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version></dependency>
 
-        <!-- Native LWJGL dependencies -->
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
         <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>

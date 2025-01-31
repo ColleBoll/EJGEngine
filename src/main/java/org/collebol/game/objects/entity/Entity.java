@@ -1,0 +1,19 @@
+package org.collebol.game.objects.entity;
+
+import org.collebol.game.GameObject;
+import org.collebol.utils.GameLocation;
+
+public abstract class Entity extends GameObject {
+
+    private GameLocation GAME_LOCATION;
+
+    public GameLocation getGameLocation() {
+        return this.GAME_LOCATION;
+    }
+
+    public void setGameLocation(GameLocation location) {
+        this.GAME_LOCATION = location;
+    }
+
+    public abstract void update();
+}
