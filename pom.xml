@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>v0.1.4-beta.3</version>
+    <version>v0.1.4-beta.5</version>
 
     <licenses>
         <license>
@@ -38,6 +38,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lwjgl.version>3.3.6</lwjgl.version>
+        <artifact.suffix></artifact.suffix>
     </properties>
 
     <profiles>
@@ -50,6 +51,7 @@
                 </os>
             </activation>
             <properties>
+                <artifact.suffix>macos-x86_64</artifact.suffix>
                 <lwjgl.natives>natives-macos</lwjgl.natives>
             </properties>
         </profile>
@@ -62,6 +64,7 @@
                 </os>
             </activation>
             <properties>
+                <artifact.suffix>macos-aarch64</artifact.suffix>
                 <lwjgl.natives>natives-macos-arm64</lwjgl.natives>
             </properties>
         </profile>
@@ -73,6 +76,7 @@
                 </os>
             </activation>
             <properties>
+                <artifact.suffix>windows</artifact.suffix>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
@@ -80,6 +84,49 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>windows</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>windows</classifier>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>macos-x86_64</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>macos-x86_64</classifier>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>macos-aarch64</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>macos-aarch64</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <id>deploy-all</id>
+                        <phase>deploy</phase>
+                        <goals><goal>deploy</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -141,6 +188,14 @@
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-openal</artifactId><version>${lwjgl.version}</version></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version></dependency>
             <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version></dependency>
+
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-assimp</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-nanovg</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-openal</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
+            <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version><classifier>${lwjgl.natives}</classifier></dependency>
         </dependencies>
     </dependencyManagement>
 
