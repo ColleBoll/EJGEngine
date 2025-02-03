@@ -11,6 +11,29 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 
+/**
+ * The MainWindow class represents the main window of the EJGEngine application.
+ * It is responsible for initializing and managing the window, handling input events,
+ * and rendering the panels.
+ *
+ * <p>This class provides methods to register and switch between different panels,
+ * set window properties such as title and size, and display development tools.</p>
+ *
+ * <p>By default, the Main class extended to {@link EJGEngine} instance has already a {@link MainWindow} object made.</p>
+ *
+ * <p>Usage:</p>
+ * <pre>
+ * {@code
+ * MainWindow mainWindow = new MainWindow(engine);
+ * mainWindow.run();
+ * }
+ * </pre>
+ *
+ * <p>For more information, please refer to the <a href="https://github.com/ColleBoll/EJGEngine/wiki">EJGEngine Wiki</a>.</p>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
+ */
 public class MainWindow implements Runnable {
 
     private EJGEngine engine;
@@ -32,10 +55,18 @@ public class MainWindow implements Runnable {
 
     private Panel currentPanel;
 
+    /**
+     * Constructs a MainWindow instance with the specified engine.
+     *
+     * @param e the EJGEngine instance
+     */
     public MainWindow(EJGEngine e) {
         this.engine = e;
     }
 
+    /**
+     * Runs the main loop of the window, initializing and rendering the panels.
+     */
     public void run() {
         init();
         loop();
@@ -136,9 +167,6 @@ public class MainWindow implements Runnable {
      *     <li>Origin-point</li>
      *     <li>Screen details</li>
      * </ul>
-     *
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void showDevelopmentTools() {
         getEngine().getRenderers().getCameraRenderer().showGridLines();
@@ -155,8 +183,6 @@ public class MainWindow implements Runnable {
      * Add a panel to the window where you can switch between.
      *
      * @param panel A panel in the main window
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void registerPanel(Panel panel) {
         this.panels.put(panel.index, panel);
@@ -166,8 +192,6 @@ public class MainWindow implements Runnable {
      * Display the given panel.
      *
      * @param i Panel index.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setPanel(int i) {
         if (this.panels.containsKey(i)) {
@@ -179,8 +203,6 @@ public class MainWindow implements Runnable {
      * Gives the current panel of the window.
      *
      * @return The panel that is displaying!
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Panel getCurrentPanel() {
         return this.currentPanel;

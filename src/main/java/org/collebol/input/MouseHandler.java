@@ -81,8 +81,6 @@ public class MouseHandler {
 
     /**
      * @return the GameLocation where to mouse is pointed at.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public GameLocation getGameLocation() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();

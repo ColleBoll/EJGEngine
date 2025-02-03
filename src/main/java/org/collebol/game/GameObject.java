@@ -13,8 +13,6 @@ public class GameObject extends EngineObject {
      * Velocity is the speed in combination with the direction of motion of the object.
      *
      * @return vector velocity
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Vector2D getVelocity() {
         return velocity;
@@ -24,8 +22,6 @@ public class GameObject extends EngineObject {
      * Velocity is the speed in combination with the direction of motion of the object.
      *
      * @param velocity vector with x and y its moving in
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setVelocity(Vector2D velocity) {
         this.velocity = velocity;
@@ -35,8 +31,6 @@ public class GameObject extends EngineObject {
      * GameLocation is the location in game.
      *
      * @return game location
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public GameLocation getGameLocation() {
         return gameLocation;
@@ -46,8 +40,6 @@ public class GameObject extends EngineObject {
      * GameLocation is the location in game.
      *
      * @param gameLocation game location. not Vector2D.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setGameLocation(GameLocation gameLocation) {
         this.gameLocation = gameLocation;

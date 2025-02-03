@@ -10,7 +10,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * This class contains all the methods to render text on a Panel.
- * @author ColleBol - contact@collebol.org
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since < 1.0
  */
 public class TextRenderer implements Renderer {

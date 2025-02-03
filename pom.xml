@@ -16,7 +16,7 @@
     </licenses>
 
     <url>https://github.com/ColleBoll/EJGEngine</url>
-    <description>A 2D Game engine with OpenGL.</description>
+    <description>A 2D game engine with OpenGL support based on LWJGL.</description>
 
     <scm>
         <url>https://github.com/ColleBoll/EJGEngine</url>
@@ -34,7 +34,6 @@
     </developers>
 
     <properties>
-        <project.version>${version}</project.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

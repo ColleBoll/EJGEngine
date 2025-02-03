@@ -28,8 +28,6 @@ public class EventHandler {
      * Registers a client event listener by checking if the listener has implemented specific event handling methods.
      *
      * @param event The client listener to be registered.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void registerClientEvent(ClientListener event) {
         try {

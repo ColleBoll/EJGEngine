@@ -4,6 +4,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract class representing a game world in the EJGEngine.
+ * This class is responsible for managing chunks, world loading, and world generation.
+ *
+ * <p>Usage:</p>
+ * <pre>
+ * {@code
+ * World myWorld = new MyWorld("worldName", MyChunk.class);
+ * myWorld.setWorldLoader(new MyWorldLoader(myWorld));
+ * myWorld.registerWorldGenerator(new MyWorldGenerator(myWorld));
+ * }
+ * </pre>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
+ */
 public abstract class World {
 
     private String name;
@@ -16,6 +32,12 @@ public abstract class World {
 
     private File worldFolder;
 
+    /**
+     * Constructs a World instance with the specified name and chunk format.
+     *
+     * @param name        the name of the world
+     * @param chunkFormat the class representing the chunk format
+     */
     public World(String name, Class<? extends Chunk> chunkFormat) {
         this.name = name;
         this.chunkFormat = chunkFormat;
@@ -28,6 +50,13 @@ public abstract class World {
         }
     }
 
+    /**
+     * Constructs a World instance with the specified name, chunk format, and world folder.
+     *
+     * @param name        the name of the world
+     * @param chunkFormat the class representing the chunk format
+     * @param worldFolder the folder where the world data is stored
+     */
     public World(String name, Class<? extends Chunk> chunkFormat, File worldFolder) {
         this.name = name;
         this.chunkFormat = chunkFormat;

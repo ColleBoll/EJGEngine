@@ -11,7 +11,7 @@ import org.collebol.utils.GameLocation;
  * The class provides methods to move the camera by a given delta and to zoom in or out by a given factor.
  * Additionally, it includes getter and setter methods for the position and zoom level.
  *
- * @author ColleBol - contact@collebol.org
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since < 1.0
  */
 public class Camera {
@@ -43,8 +43,6 @@ public class Camera {
      * the camera's position and zoom are calculated.
      *
      * @return origin point as Vector
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Vector2D getOrigin() {
         return origin;
@@ -55,8 +53,6 @@ public class Camera {
      * the camera's position and zoom are calculated.
      *
      * @param origin as vector
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setOrigin(Vector2D origin) {
         this.origin = origin;
@@ -66,8 +62,6 @@ public class Camera {
      * Add a amount to the current camera position
      *
      * @param delta amount. X and Y
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void move(Vector2D delta) {
         this.position = this.position.add(delta);
@@ -77,8 +71,6 @@ public class Camera {
      * Zoom the current canvas.
      *
      * @param factor the amount will be added.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void zoom(float factor) {
         GameLocation loc = this.getGameLocation();
@@ -88,8 +80,6 @@ public class Camera {
 
     /**
      * @return current vector position of the camera.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Vector2D getPosition() {
         return position;
@@ -97,8 +87,6 @@ public class Camera {
 
     /**
      * @param position as vector x and y.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setPosition(Vector2D position) {
         this.position = position;
@@ -106,8 +94,6 @@ public class Camera {
 
     /**
      * @return current zoom factor.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public float getZoom() {
         return zoom;
@@ -115,8 +101,6 @@ public class Camera {
 
     /**
      * @param zoom set zoom factor (float).
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setZoom(float zoom) {
         this.zoom = zoom;
@@ -138,8 +122,6 @@ public class Camera {
      * This method will convert the position as Vector2D to the GameLocation where the origin point is pointed at.
      *
      * @return GameLocation from vector
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public GameLocation getGameLocation() {
         if (this.position == null) throw new RuntimeException("Position is null. Set a position before using!");
@@ -152,8 +134,6 @@ public class Camera {
      * This method will set the GameLocation to a Panel (Vector2D) position where the origin point is pointed at.
      *
      * @param location the GameLocation the Camera must go to.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void setGameLocation(GameLocation location) {
         float x = (float) ((location.getX() * this.engine.getWindow().getTileSize()) * this.zoom);

@@ -28,8 +28,6 @@ public abstract class Event {
      *
      * @param engine The engine instance that is triggering the event.
      * @param params The parameters associated with the event. These can be of various types such as Vector2D, Boolean, or KeyType.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void call(EJGEngine engine, Object... params) {
         Map<Class<?>, Object> paramMap = new HashMap<>();

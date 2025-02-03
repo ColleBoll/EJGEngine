@@ -9,9 +9,12 @@ public abstract class ClientListener implements Listener {
     /**
      * Handles the event by determining its type and calling the appropriate method.
      *
-     * @param event The event to be handled. This can be an instance of ClientRightClickEvent, ClientLeftClickEvent, or ClientKeyClickEvent.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
+     * @param event The event to be handled. This can be an instance of:
+     *              <ul>
+     *                  <li>{@link ClientRightClickEvent}</li>
+     *                  <li>{@link ClientLeftClickEvent}</li>
+     *                  <li>{@link ClientKeyClickEvent}</li>
+     *              </ul>
      */
     public void handleEvent(Event event){
         if(event instanceof ClientRightClickEvent){onRightClick((ClientRightClickEvent) event);}

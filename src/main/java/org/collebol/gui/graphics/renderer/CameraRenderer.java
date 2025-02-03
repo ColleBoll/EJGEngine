@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Render objects within the canvas of the camera. Change the position of the camera and the view will change.
  *
- * @author ColleBol - contact@collebol.org
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since < 1.0
  */
 public class CameraRenderer implements Renderer {
@@ -38,8 +38,6 @@ public class CameraRenderer implements Renderer {
      * Render GameObjects relative to the Camera.
      *
      * @param gameObjects
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void renderObjects(List<GameObject> gameObjects) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -55,8 +53,6 @@ public class CameraRenderer implements Renderer {
      * Render a GameObject relative to the Camera.
      *
      * @param gameObject
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void renderObject(GameObject gameObject) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -70,8 +66,6 @@ public class CameraRenderer implements Renderer {
      * Render text relative to the camera.
      *
      * @param textBuilder
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void renderText(TextBuilder textBuilder) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -96,8 +90,6 @@ public class CameraRenderer implements Renderer {
      * @param location the game location of the light
      * @param radius   radius of the light (how big)
      * @param color    the color of the light, example: new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void renderLight(int index, GameLocation location, float radius, float[] color) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -148,8 +140,6 @@ public class CameraRenderer implements Renderer {
      * Renders the origin point of the camera on the screen.
      * <p>
      * This method uses OpenGL to draw a red point at the camera's origin and a circle around it.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void showOriginPoint() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -180,8 +170,6 @@ public class CameraRenderer implements Renderer {
      * This method retrieves the current camera and mouse positions, and renders text on the screen
      * showing the mouse game location, camera-origin game location, mouse panel position, camera-origin panel position,
      * camera zoom level, and camera rotation.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void showCoordinates() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
@@ -260,8 +248,6 @@ public class CameraRenderer implements Renderer {
      * <p>
      * This method calculates the starting positions for the grid lines based on the camera's offset and origin.
      * It then uses OpenGL to draw yellow grid lines across the screen and blue diagonal lines forming a square.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void showGridLines() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();

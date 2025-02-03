@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * This class contains everything you need to render Textures on a Panel.
- * @author ColleBol - contact@collebol.org
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since < 1.0
  */
 public class TextureRenderer implements Renderer {
@@ -54,8 +54,6 @@ public class TextureRenderer implements Renderer {
      * @param scale
      * @param rotation
      * @param origin
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
         if (lighting) {

@@ -1,5 +1,23 @@
 package org.collebol.game;
 
+/**
+ * Abstract class representing the game manager in the EJGEngine.
+ * This class is the core of the game side is responsible for managing the game loop and updating the game state and objects.
+ *
+ * <p>Usage:</p>
+ * <pre>
+ * {@code
+ * GameManager gameManager = new MyGameManager();
+ * gameManager.startGameThread(); //this will start the game
+ * }
+ * </pre>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @see GameRegister
+ * @see Runnable
+ * @see Thread
+ * @since < 1.0
+ */
 public abstract class GameManager implements Runnable {
 
     private int ticks = 20;

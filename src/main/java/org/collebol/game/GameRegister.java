@@ -12,6 +12,7 @@ import java.util.UUID;
  * The GameRegister class is responsible for managing players, entities, and worlds within the game.
  * It allows registration, retrieval, and removal of players, entities, and worlds.
  * It ensures that necessary validations are performed during these operations.
+ *
  * @author ColleBol - contact@collebol.org
  * @since < 1.0
  */
@@ -23,8 +24,6 @@ public class GameRegister {
 
     /**
      * Constructs a new GameRegister instance, initializing empty collections for players, entities, and worlds.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public GameRegister() {
         this.players = new HashMap<>();
@@ -37,8 +36,6 @@ public class GameRegister {
      *
      * @param player The player to be registered.
      * @throws RuntimeException if the player or player's UUID is null.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void registerPlayer(Player player) {
         if (player == null) throw new RuntimeException("Player can not be null!");
@@ -52,8 +49,6 @@ public class GameRegister {
      * @param uuid The UUID of the player to retrieve.
      * @return The player associated with the given UUID.
      * @throws RuntimeException if the UUID is null or no player is found for the given UUID.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Player getPlayer(UUID uuid) {
         if (uuid == null) throw new RuntimeException("UUID can not be null!");
@@ -67,8 +62,6 @@ public class GameRegister {
      * @param uuid The UUID of the player to remove.
      * @return The player that was removed.
      * @throws RuntimeException if the UUID is null.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Player removePlayer(UUID uuid) {
         if (uuid == null) throw new RuntimeException("UUID can not be null!");
@@ -80,8 +73,6 @@ public class GameRegister {
      *
      * @param entity The entity to be registered.
      * @throws RuntimeException if the entity is a player, or if the entity or its UUID is null.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void registerEntity(Entity entity) {
         if (entity instanceof Player)
@@ -96,8 +87,6 @@ public class GameRegister {
      * @param uuid The UUID of the entity to retrieve.
      * @return The entity associated with the given UUID.
      * @throws RuntimeException if the UUID is null or no entity is found for the given UUID.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Entity getEntity(UUID uuid) {
         if (uuid == null) throw new RuntimeException("UUID can not be null!");
@@ -111,8 +100,6 @@ public class GameRegister {
      * @param uuid The UUID of the entity to remove.
      * @return The entity that was removed.
      * @throws RuntimeException if the UUID is null.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public Entity removeEntity(UUID uuid) {
         if (uuid == null) throw new RuntimeException("UUID can not be null!");
@@ -124,8 +111,6 @@ public class GameRegister {
      *
      * @param world The world to be registered.
      * @throws RuntimeException if the world or its name is null, or if the world is already registered.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public void registerWorld(World world) {
         if (world == null || world.getName() == null) throw new RuntimeException("World values can not be null!");
@@ -139,8 +124,6 @@ public class GameRegister {
      * @param name The name of the world to retrieve.
      * @return The world associated with the given name.
      * @throws RuntimeException if the world name is null or no world is found for the given name.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public World getWorld(String name) {
         if (name == null) throw new RuntimeException("World name can not be null!");
@@ -154,8 +137,6 @@ public class GameRegister {
      * @param name The name of the world to remove.
      * @return The world that was removed.
      * @throws RuntimeException if the world name is null or no world is found for the given name.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public World removeWorld(String name) {
         if (name == null) throw new RuntimeException("World name can not be null!");

@@ -27,8 +27,6 @@ public class RenderRegisterHandler {
      * </ul>
      *
      * @param renderer The renderer to be registered.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public <T extends Renderer> void registerNewRenderer(T renderer) {
         if (renderer instanceof TextRenderer) {
@@ -56,8 +54,6 @@ public class RenderRegisterHandler {
      * @param name The name of the TextRenderer to retrieve.
      * @return The TextRenderer associated with the given name.
      * @throws RuntimeException if no TextRenderer is registered or if the specified name is not found.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public TextRenderer getTextRenderer(String name) {
         if (this.textRenderers.isEmpty())
@@ -77,8 +73,6 @@ public class RenderRegisterHandler {
      * @param name The name of the TextureRenderer to retrieve.
      * @return The TextureRenderer associated with the given name.
      * @throws RuntimeException if no TextureRenderer is registered or if the specified name is not found.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public TextureRenderer getTextureRenderer(String name) {
         if (this.textureRenderers.isEmpty())
@@ -95,8 +89,6 @@ public class RenderRegisterHandler {
      *
      * @return The CameraRenderer.
      * @throws RuntimeException if no CameraRenderer is registered.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public CameraRenderer getCameraRenderer() {
         if (this.cameraRenderer == null)
@@ -109,8 +101,6 @@ public class RenderRegisterHandler {
      *
      * @return The WorldRenderer.
      * @throws RuntimeException if no WorldRenderer is registered.
-     * @author ColleBol - contact@collebol.org
-     * @since < 1.0
      */
     public WorldRenderer getWorldRenderer() {
         if (this.worldRenderer == null)
