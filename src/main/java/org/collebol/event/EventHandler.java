@@ -7,6 +7,32 @@ import org.collebol.event.client.ClientRightClickEvent;
 
 import java.lang.reflect.Method;
 
+/**
+ * Class responsible for handling and registering client events in the EJGEngine.
+ * This class manages the registration of event listeners and the invocation of client events.
+ *
+ * <p>Usage:</p>
+ * <pre>
+ *     {@code
+ *     EventHandler eventHandler = new EventHandler(engine);
+ *     }
+ * </pre>
+ * <p>Register event:</p>
+ * <pre>
+ *     {@code
+ *     eventHandler.registerClientEvent(myEvent);
+ *     }
+ * </pre>
+ * <p>Call event:</p>
+ * <pre>
+ *     {@code
+ *     eventHandler.callClientEvent(Event.class);
+ *     }
+ * </pre>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
+ */
 public class EventHandler {
 
     private EJGEngine engine;

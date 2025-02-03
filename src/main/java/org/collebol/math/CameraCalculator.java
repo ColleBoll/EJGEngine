@@ -5,7 +5,10 @@ import org.collebol.gui.graphics.Camera;
 import org.collebol.utils.GameLocation;
 
 /**
- * You can calculate camera data in here.
+ * You can calculate camera data here.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
  */
 public class CameraCalculator {
 

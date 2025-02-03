@@ -1,29 +1,30 @@
 package org.collebol;
 
-import org.collebol.gui.graphics.renderer.CameraRenderer;
-import org.collebol.gui.graphics.renderer.Renderer;
-import org.collebol.gui.graphics.renderer.TextRenderer;
-import org.collebol.gui.graphics.renderer.TextureRenderer;
+import org.collebol.gui.graphics.renderer.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RenderRegisterHandler {
 
-    private EJGEngine engine;
-
     private Map<String, TextRenderer> textRenderers;
     private Map<String, TextureRenderer> textureRenderers;
     private CameraRenderer cameraRenderer;
+    private WorldRenderer worldRenderer;
 
-    public RenderRegisterHandler(EJGEngine e) {
-        this.engine = e;
+    public RenderRegisterHandler() {
         this.textRenderers = new HashMap<>();
         this.textureRenderers = new HashMap<>();
     }
 
     /**
      * Registers a new renderer. Depending on the type of the renderer, it adds it to the appropriate map or sets it as the camera renderer.
+     * <ul>
+     *     <li>{@link TextRenderer}</li>
+     *     <li>{@link TextureRenderer}</li>
+     *     <li>{@link CameraRenderer}</li>
+     *     <li>{@link WorldRenderer}</li>
+     * </ul>
      *
      * @param renderer The renderer to be registered.
      */
@@ -37,6 +38,9 @@ public class RenderRegisterHandler {
         }
         if (renderer instanceof CameraRenderer) {
             cameraRenderer = (CameraRenderer) renderer;
+        }
+        if (renderer instanceof WorldRenderer) {
+            worldRenderer = (WorldRenderer) renderer;
         }
     }
 
@@ -90,5 +94,17 @@ public class RenderRegisterHandler {
         if (this.cameraRenderer == null)
             throw new RuntimeException("You are trying to display something relative to your Camera using the CameraRenderer, but you have not set a CameraRenderer yet. Please, register a CameraRenderer in the register() method!");
         return cameraRenderer;
+    }
+
+    /**
+     * Retrieves the WorldRenderer. Throws an exception if no WorldRenderer is registered.
+     *
+     * @return The WorldRenderer.
+     * @throws RuntimeException if no WorldRenderer is registered.
+     */
+    public WorldRenderer getWorldRenderer() {
+        if (this.worldRenderer == null)
+            throw new RuntimeException("You are trying to display something using a WorldRenderer, but you have not set a WorldRenderer yet. Please, register a WorldRenderer in the register() method!");
+        return worldRenderer;
     }
 }

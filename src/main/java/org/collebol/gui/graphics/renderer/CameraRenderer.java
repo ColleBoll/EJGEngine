@@ -12,6 +12,9 @@ import java.util.List;
 
 /**
  * Render objects within the canvas of the camera. Change the position of the camera and the view will change.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
  */
 public class CameraRenderer implements Renderer {
 

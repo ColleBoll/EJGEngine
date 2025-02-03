@@ -4,6 +4,8 @@ package org.collebol.math;
  * This 2D game Vector represents a quantity with both direction and magnitude (length),
  * typically used for movement, velocity, and position. It is described by two components:
  * x (horizontal) and y (vertical).
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
  */
 public class Vector2D {
 

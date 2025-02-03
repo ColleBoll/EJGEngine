@@ -1,17 +1,31 @@
 package org.collebol.game;
 
-import org.collebol.EJGEngine;
-import org.collebol.game.objects.entity.Player;
-
+/**
+ * Abstract class representing the game manager in the EJGEngine.
+ * This class is the core of the game side is responsible for managing the game loop and updating the game state and objects.
+ *
+ * <p>Usage:</p>
+ * <pre>
+ * {@code
+ * GameManager gameManager = new MyGameManager();
+ * gameManager.startGameThread(); //this will start the game
+ * }
+ * </pre>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @see GameRegister
+ * @see Runnable
+ * @see Thread
+ * @since < 1.0
+ */
 public abstract class GameManager implements Runnable {
 
-    private EJGEngine engine;
     private int ticks = 20;
-    private Player player;
     private Thread thread;
+    private GameRegister gameRegister;
 
-    public GameManager(EJGEngine engine) {
-        this.engine = engine;
+    public GameManager() {
+        this.gameRegister = new GameRegister();
     }
 
     public void startGameThread() {
@@ -39,14 +53,6 @@ public abstract class GameManager implements Runnable {
 
     public abstract void update();
 
-    public EJGEngine getEngine() {
-        return this.engine;
-    }
-
-    public void setEngine(EJGEngine engine) {
-        this.engine = engine;
-    }
-
     public int getTicks() {
         return this.ticks;
     }
@@ -55,11 +61,12 @@ public abstract class GameManager implements Runnable {
         this.ticks = ticks;
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public void setGameRegister(GameRegister gameRegister) {
+        this.gameRegister = gameRegister;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public GameRegister getGameRegister() {
+        if (this.gameRegister == null) throw new RuntimeException("Please, set a GameRegister before using!");
+        return this.gameRegister;
     }
 }

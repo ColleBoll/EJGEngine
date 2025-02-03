@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>v0.1.4</version>
+    <version>0.1.5-alpha-1</version>
 
     <licenses>
         <license>
@@ -16,7 +16,7 @@
     </licenses>
 
     <url>https://github.com/ColleBoll/EJGEngine</url>
-    <description>A 2D Game engine with OpenGL.</description>
+    <description>A 2D game engine with OpenGL support based on LWJGL.</description>
 
     <scm>
         <url>https://github.com/ColleBoll/EJGEngine</url>

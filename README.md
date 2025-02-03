@@ -20,38 +20,18 @@
 > [!TIP]
 > Read the full documentation of the use on the [wiki](https://github.com/ColleBoll/EJGEngine/wiki).
 
-1. **Set up your Maven `settings.xml`:**
+1. **Add the EJGEngine dependency to your `pom.xml`:**
     ```xml
-    <settings>
-        <servers>
-            <server>
-                <id>github</id>
-                <username>YOUR-GITHUB-USERNAME</username>
-                <password>YOUR-GITHUB-TOKEN</password>
-            </server>
-        </servers>
-    </settings>
-    ```
-
-2. **Add the EJGEngine dependency to your `pom.xml`:**
-    ```xml
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/ColleBoll/EJGEngine</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
-            <groupId>me.collebol</groupId>
-            <artifactId>ejgengine</artifactId>
-            <version>v0.1.2-windows</version>
+            <groupId>org.collebol</groupId>
+            <artifactId>EJGEngine</artifactId>
+            <version>v0.1.4</version>
         </dependency>
     </dependencies>
     ```
 
-3. **Reload Maven:**
+2. **Reload Maven:**
     - Right-click `pom.xml` > Maven > Reload project
 
 ### Usage
@@ -69,6 +49,11 @@ public class Main extends EJGEngine {
     @Override
     public void setup() {
         
+    }
+
+    @Override
+    public void register() {
+
     }
 
     @Override

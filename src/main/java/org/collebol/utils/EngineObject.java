@@ -5,6 +5,9 @@ import org.collebol.math.Vector2D;
 /**
  * EngineObject represents an object in the game engine,
  * holding its position (as a Vector2D) and texture (for visual representation).
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
  */
 public class EngineObject {
 
