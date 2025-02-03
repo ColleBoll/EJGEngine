@@ -7,9 +7,23 @@ import org.collebol.utils.GameLocation;
 
 /**
  * The Camera class represents a camera in a 2D space.
- * It has a position (Vector2D) and a zoom level (float).
- * The class provides methods to move the camera by a given delta and to zoom in or out by a given factor.
- * Additionally, it includes getter and setter methods for the position and zoom level.
+ * It has a position ({@link Vector2D}), zoom level ({@code float}), origin-point ({@link Vector2D}), rotation ° ({@code float})
+ * ambientLight (default light {@code float array}) and a {@code boolean} if you want to use lighting.
+ *
+ * <p>The class provides methods to move the camera by a given delta and to zoom in or out by a given factor.
+ * Additionally, it includes getter and setter methods for the position and zoom level.</p>
+ *
+ * <p>Usage:</p>
+ * <pre>
+ *     {@code
+ *     Camera camera = new Camera(
+ *          new Vector(0, 0),
+ *          3, //zoom = scale
+ *          0, //rotation in °
+ *          engine //EJGEngine instance
+ *     );
+ *     }
+ * </pre>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since < 1.0

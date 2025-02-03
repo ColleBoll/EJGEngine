@@ -9,6 +9,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+/**
+ * The Texture class represents a texture in the EJGEngine.
+ * It is responsible for loading a texture file ({@code .png}) and creating a {@code OpenGL} texture from it.
+ * <p>Usage:</p>
+ * <pre>
+ *     {@code
+ *     Texture texture = new Texture(
+ *          "path/to/texture.png", //from resources
+ *          0 //index = unique texture number/id
+ *     );
+ *     }
+ * </pre>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since < 1.0
+ */
 public class Texture {
 
     private int index;
@@ -16,6 +32,12 @@ public class Texture {
     private int width;
     private int height;
 
+    /**
+     * This method you can construct your Texture object.
+     *
+     * @param filePath path to your {@code .png} file.
+     * @param index unique texture number/ID.
+     */
     public Texture(String filePath, int index) {
         this.index = index;
         BufferedImage bufferedImage;
