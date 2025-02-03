@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * This class contains everything you need to render Textures on a Panel.
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class TextureRenderer implements Renderer {
 

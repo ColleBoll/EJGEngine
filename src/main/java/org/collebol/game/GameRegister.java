@@ -14,7 +14,7 @@ import java.util.UUID;
  * It ensures that necessary validations are performed during these operations.
  *
  * @author ColleBol - contact@collebol.org
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class GameRegister {
 

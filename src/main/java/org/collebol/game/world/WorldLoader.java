@@ -26,7 +26,7 @@ import java.util.List;
  * @see Chunk
  * @see GameLocation
  * @see GameObject
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class WorldLoader {
 
