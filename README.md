@@ -52,6 +52,11 @@ public class Main extends EJGEngine {
     }
 
     @Override
+    public void register() {
+
+    }
+
+    @Override
     public void enable() {
         
     }
