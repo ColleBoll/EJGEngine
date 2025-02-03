@@ -16,7 +16,7 @@ package org.collebol.game;
  * @see GameRegister
  * @see Runnable
  * @see Thread
- * @since < 1.0
+ * @since 1.0-dev
  */
 public abstract class GameManager implements Runnable {
 

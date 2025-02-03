@@ -32,7 +32,7 @@ import java.util.HashMap;
  * <p>For more information, please refer to the <a href="https://github.com/ColleBoll/EJGEngine/wiki">EJGEngine Wiki</a>.</p>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class MainWindow implements Runnable {
 

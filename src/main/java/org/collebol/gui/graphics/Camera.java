@@ -26,7 +26,7 @@ import org.collebol.utils.GameLocation;
  * </pre>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class Camera {
 

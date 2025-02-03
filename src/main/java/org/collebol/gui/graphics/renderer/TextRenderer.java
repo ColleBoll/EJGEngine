@@ -11,7 +11,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
 /**
  * This class contains all the methods to render text on a Panel.
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class TextRenderer implements Renderer {
     private long vg;
