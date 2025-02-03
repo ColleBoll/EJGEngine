@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>v0.1.4</version>
+    <version>0.1.5-alpha-1</version>
 
     <licenses>
         <license>
@@ -34,6 +34,7 @@
     </developers>
 
     <properties>
+        <project.version>${version}</project.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

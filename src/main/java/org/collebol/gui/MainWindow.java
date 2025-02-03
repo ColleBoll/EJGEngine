@@ -130,10 +130,15 @@ public class MainWindow implements Runnable {
 
     /**
      * There will be development tools rendered on the panel.
-     * Grid lines,
-     * Coordinates,
-     * Origin-point,
-     * Screen details
+     * <ul>
+     *     <li>Grid lines</li>
+     *     <li>Coordinates</li>
+     *     <li>Origin-point</li>
+     *     <li>Screen details</li>
+     * </ul>
+     *
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public void showDevelopmentTools() {
         getEngine().getRenderers().getCameraRenderer().showGridLines();
@@ -150,6 +155,8 @@ public class MainWindow implements Runnable {
      * Add a panel to the window where you can switch between.
      *
      * @param panel A panel in the main window
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public void registerPanel(Panel panel) {
         this.panels.put(panel.index, panel);
@@ -159,6 +166,8 @@ public class MainWindow implements Runnable {
      * Display the given panel.
      *
      * @param i Panel index.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public void setPanel(int i) {
         if (this.panels.containsKey(i)) {
@@ -170,6 +179,8 @@ public class MainWindow implements Runnable {
      * Gives the current panel of the window.
      *
      * @return The panel that is displaying!
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public Panel getCurrentPanel() {
         return this.currentPanel;

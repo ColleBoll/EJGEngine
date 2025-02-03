@@ -15,7 +15,7 @@ public abstract class Event {
 
     private List<ClientListener> listeners = new ArrayList<>();
 
-    public void registerEvent(ClientListener listener){
+    public void registerEvent(ClientListener listener) {
         listeners.add(listener);
     }
 
@@ -28,28 +28,30 @@ public abstract class Event {
      *
      * @param engine The engine instance that is triggering the event.
      * @param params The parameters associated with the event. These can be of various types such as Vector2D, Boolean, or KeyType.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
-    public void call(EJGEngine engine, Object... params){
+    public void call(EJGEngine engine, Object... params) {
         Map<Class<?>, Object> paramMap = new HashMap<>();
-        for(Object param : params){
-            if(param instanceof Vector2D){
+        for (Object param : params) {
+            if (param instanceof Vector2D) {
                 paramMap.put(Vector2D.class, param);
-            }else if(param instanceof Boolean){
+            } else if (param instanceof Boolean) {
                 paramMap.put(Boolean.class, param);
-            }else if(param instanceof KeyType){
+            } else if (param instanceof KeyType) {
                 paramMap.put(KeyType.class, param);
             }
         }
         this.engine = engine;
         setValues(paramMap);
-        for(ClientListener listener : this.listeners){
+        for (ClientListener listener : this.listeners) {
             listener.handleEvent(this);
         }
     }
 
     public abstract void setValues(Map<Class<?>, Object> params);
 
-    public EJGEngine getEngine(){
+    public EJGEngine getEngine() {
         return this.engine;
     }
 }

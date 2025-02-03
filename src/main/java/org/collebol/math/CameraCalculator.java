@@ -23,6 +23,8 @@ public class CameraCalculator {
      *
      * @param position Panel position to calculate the current GameLocation on that Panel position.
      * @return The GameLocation on the given Panel position.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public GameLocation getGameLocationFromVector2D(Vector2D position) {
         float tileSize = this.engine.getWindow().getTileSize();

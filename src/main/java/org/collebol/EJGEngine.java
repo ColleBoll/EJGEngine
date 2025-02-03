@@ -14,7 +14,7 @@ public abstract class EJGEngine {
     public void start() {
         setup();
         this.window = new MainWindow(this); //here the regiter() method will be called
-        this.renderRegisterHandler = new RenderRegisterHandler(this);
+        this.renderRegisterHandler = new RenderRegisterHandler();
         this.window.registerPanel(new ExamplePanel(this));
         this.window.setPanel(0);
         enable();
@@ -30,11 +30,6 @@ public abstract class EJGEngine {
 
     public abstract void disable();
 
-    /**
-     * The window the game is displayed on.
-     *
-     * @return window
-     */
     public MainWindow getWindow() {
         return window;
     }

@@ -4,6 +4,8 @@ package org.collebol.math;
  * This 2D game Vector represents a quantity with both direction and magnitude (length),
  * typically used for movement, velocity, and position. It is described by two components:
  * x (horizontal) and y (vertical).
+ * @author ColleBol - contact@collebol.org
+ * @since < 1.0
  */
 public class Vector2D {
 
@@ -36,6 +38,8 @@ public class Vector2D {
      *
      * @param other the other vector you want to add up.
      * @return new vector with the combined vector values.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public Vector2D add(Vector2D other) {
         return new Vector2D(this.x + other.x, this.y + other.y);
@@ -46,6 +50,8 @@ public class Vector2D {
      *
      * @param other vector you want to subtract.
      * @return new vector. ( x - other ).
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public Vector2D subtract(Vector2D other) {
         return new Vector2D(this.x - other.x, this.y - other.y);
@@ -56,6 +62,8 @@ public class Vector2D {
      *
      * @param scalar the value you want to multiply with
      * @return new vector with multiplied values.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public Vector2D scale(float scalar) {
         return new Vector2D(this.x * scalar, this.y * scalar);
@@ -65,6 +73,8 @@ public class Vector2D {
      * Calculate the length (magnitude) of the vector.
      *
      * @return magnitude
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public float length() {
         return (float) Math.sqrt(this.x * this.x + this.y * this.y);

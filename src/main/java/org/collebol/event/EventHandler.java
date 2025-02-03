@@ -28,6 +28,8 @@ public class EventHandler {
      * Registers a client event listener by checking if the listener has implemented specific event handling methods.
      *
      * @param event The client listener to be registered.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public void registerClientEvent(ClientListener event) {
         try {
@@ -54,6 +56,8 @@ public class EventHandler {
      *
      * @param eventClass The class of the event to be returned.
      * @return The instance of the event if it matches one of the known client events, otherwise null.
+     * @author ColleBol - contact@collebol.org
+     * @since < 1.0
      */
     public Event callClientEvent(Class<? extends Event> eventClass) {
         if (eventClass.equals(ClientRightClickEvent.class)) {
