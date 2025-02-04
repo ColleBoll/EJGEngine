@@ -4,6 +4,7 @@ import org.collebol.EJGEngine;
 import org.collebol.game.GameObject;
 import org.collebol.gui.graphics.Camera;
 import org.collebol.gui.graphics.Light;
+import org.collebol.math.FrustumCulling;
 import org.collebol.math.Vector2D;
 import org.collebol.utils.GameLocation;
 import org.lwjgl.opengl.GL11;
@@ -45,6 +46,9 @@ public class CameraRenderer implements Renderer {
             float x = (float) (((g.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
+            if(!FrustumCulling.isInFrustum(camera, v, this.engine)){
+                continue;
+            }
             this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
         }
     }

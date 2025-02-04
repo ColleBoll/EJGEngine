@@ -9,13 +9,11 @@ import java.util.List;
  * This class is responsible for managing chunks, world loading, and world generation.
  *
  * <p>Usage:</p>
- * <pre>
- * {@code
- * World myWorld = new MyWorld("worldName", MyChunk.class);
- * myWorld.setWorldLoader(new MyWorldLoader(myWorld));
- * myWorld.registerWorldGenerator(new MyWorldGenerator(myWorld));
- * }
- * </pre>
+ * <blockquote><pre>
+ *     World myWorld = new MyWorld("worldName", MyChunk.class);
+ *     myWorld.setWorldLoader(new MyWorldLoader(myWorld));
+ *     myWorld.registerWorldGenerator(new MyWorldGenerator(myWorld));
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
@@ -29,6 +27,7 @@ public abstract class World {
 
     private WorldLoader worldLoader;
     private WorldGenerator worldGenerator;
+    private WorldFileManager worldFileManager;
 
     private File worldFolder;
 
@@ -44,9 +43,12 @@ public abstract class World {
         this.loadedChunks = new ArrayList<>();
         this.worldFolder = new File("EJGEngine/saves/" + name);
         this.worldLoader = new WorldLoader(this, 4);
+        this.worldFileManager = new WorldFileManager(this);
 
         if (!this.worldFolder.exists()) {
             this.worldFolder.mkdirs();
+            File c = new File(this.worldFolder, "chunks");
+            c.mkdirs();
         }
     }
 
@@ -116,5 +118,9 @@ public abstract class World {
 
     public void setWorldFolder(File worldFolder) {
         this.worldFolder = worldFolder;
+    }
+
+    public WorldFileManager getWorldFileManager() {
+        return worldFileManager;
     }
 }
