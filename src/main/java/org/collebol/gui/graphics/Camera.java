@@ -14,16 +14,14 @@ import org.collebol.utils.GameLocation;
  * Additionally, it includes getter and setter methods for the position and zoom level.</p>
  *
  * <p>Usage:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     Camera camera = new Camera(
  *          new Vector(0, 0),
  *          3, //zoom = scale
  *          0, //rotation in °
  *          engine //EJGEngine instance
  *     );
- *     }
- * </pre>
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev

@@ -8,17 +8,15 @@ import org.collebol.math.Vector2D;
  * This class provides getter methods for these properties, and it includes a LightBuilder class for the construction of a Light instance.
  *
  * <p>Building light:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     Light light = new Light(Light.LightBuilder()
- *          .position(new Vector2D(0, 0))
- *          .intensity(1f)
- *          .radius(10f)
- *          .color(new float[]{ 1.0f, 1.0f, 1.0f, 1.0f })
- *          //                   R     G     B
+ *         .position(new Vector2D(0, 0))
+ *         .intensity(1f)
+ *         .radius(10f)
+ *         .color(new float[]{ 1.0f, 1.0f, 1.0f, 1.0f })
+ *         //                   R     G     B
  *     );
- *     }
- * </pre>
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev

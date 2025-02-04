@@ -22,12 +22,10 @@ import java.util.HashMap;
  * <p>By default, the Main class extended to {@link EJGEngine} instance has already a {@link MainWindow} object made.</p>
  *
  * <p>Usage:</p>
- * <pre>
- * {@code
- * MainWindow mainWindow = new MainWindow(engine);
- * mainWindow.run();
- * }
- * </pre>
+ * <blockquote><pre>
+ *     MainWindow mainWindow = new MainWindow(engine);
+ *     mainWindow.run();
+ * </pre></blockquote>
  *
  * <p>For more information, please refer to the <a href="https://github.com/ColleBoll/EJGEngine/wiki">EJGEngine Wiki</a>.</p>
  *
