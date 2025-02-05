@@ -14,7 +14,7 @@ import org.collebol.gui.graphics.Camera;
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @see Camera
- * @since < 1.0
+ * @since 1.0-dev
  */
 public class FrustumCulling {
 
