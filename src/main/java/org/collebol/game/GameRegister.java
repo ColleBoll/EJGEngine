@@ -13,7 +13,7 @@ import java.util.UUID;
  * It allows registration, retrieval, and removal of players, entities, and worlds.
  * It ensures that necessary validations are performed during these operations.
  *
- * @author ColleBol - contact@collebol.org
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
 public class GameRegister {

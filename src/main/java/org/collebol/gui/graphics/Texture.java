@@ -13,14 +13,12 @@ import java.nio.ByteBuffer;
  * The Texture class represents a texture in the EJGEngine.
  * It is responsible for loading a texture file ({@code .png}) and creating a {@code OpenGL} texture from it.
  * <p>Usage:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     Texture texture = new Texture(
- *          "path/to/texture.png", //from resources
- *          0 //index = unique texture number/id
+ *         "path/to/texture.png", //from resources
+ *         0 //index = unique texture number/id
  *     );
- *     }
- * </pre>
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev

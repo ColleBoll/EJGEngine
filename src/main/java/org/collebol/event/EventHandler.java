@@ -12,23 +12,17 @@ import java.lang.reflect.Method;
  * This class manages the registration of event listeners and the invocation of client events.
  *
  * <p>Usage:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     EventHandler eventHandler = new EventHandler(engine);
- *     }
- * </pre>
+ * </pre></blockquote>
  * <p>Register event:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     eventHandler.registerClientEvent(myEvent);
- *     }
- * </pre>
+ * </pre></blockquote>
  * <p>Call event:</p>
- * <pre>
- *     {@code
+ * <blockquote><pre>
  *     eventHandler.callClientEvent(Event.class);
- *     }
- * </pre>
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev

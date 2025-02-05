@@ -3,7 +3,9 @@ package org.collebol.game.world;
 import org.collebol.game.GameObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Chunk {
 
@@ -12,14 +14,14 @@ public abstract class Chunk {
     private int x;
     private int y;
 
-    private List<GameObject> tiles;
+    private Map<Integer, List<GameObject>> tiles;
     private List<GameObject> entities;
 
     public Chunk(int chunkSize, int x, int y) {
         this.chunkSize = chunkSize;
         this.x = x;
         this.y = y;
-        this.tiles = new ArrayList<>();
+        this.tiles = new HashMap<>();
         this.entities = new ArrayList<>();
     }
 
@@ -50,7 +52,7 @@ public abstract class Chunk {
     public void addTile(GameObject tile) {
         if (tile.getGameLocation() == null)
             throw new RuntimeException("Tile GameLocation is null. Please, set a location.");
-        this.tiles.add(tile);
+        this.tiles.computeIfAbsent(tile.getTexture(), k -> new ArrayList<>()).add(tile);
     }
 
     public void addEntity(GameObject entity) {
@@ -60,6 +62,14 @@ public abstract class Chunk {
     }
 
     public List<GameObject> getTiles() {
+        List<GameObject> allTiles = new ArrayList<>();
+        for(List<GameObject> tileList : this.tiles.values()){
+            allTiles.addAll(tileList);
+        }
+        return allTiles;
+    }
+
+    public Map<Integer, List<GameObject>> getTilesAsMap(){
         return tiles;
     }
 

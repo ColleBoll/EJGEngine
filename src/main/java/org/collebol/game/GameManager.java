@@ -5,12 +5,10 @@ package org.collebol.game;
  * This class is the core of the game side is responsible for managing the game loop and updating the game state and objects.
  *
  * <p>Usage:</p>
- * <pre>
- * {@code
- * GameManager gameManager = new MyGameManager();
- * gameManager.startGameThread(); //this will start the game
- * }
- * </pre>
+ * <blockquote><pre>
+ *     GameManager gameManager = new MyGameManager();
+ *     gameManager.startGameThread(); //this will start the game
+ * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @see GameRegister

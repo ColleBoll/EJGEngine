@@ -4,11 +4,13 @@ import org.collebol.EJGEngine;
 import org.collebol.game.GameObject;
 import org.collebol.gui.graphics.Camera;
 import org.collebol.gui.graphics.Light;
+import org.collebol.math.FrustumCulling;
 import org.collebol.math.Vector2D;
 import org.collebol.utils.GameLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Render objects within the canvas of the camera. Change the position of the camera and the view will change.
@@ -45,7 +47,34 @@ public class CameraRenderer implements Renderer {
             float x = (float) (((g.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
             float y = (float) (((g.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
             Vector2D v = new Vector2D(x, y);
+            if (!FrustumCulling.isInFrustum(camera, v, this.engine)) {
+                continue;
+            }
             this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
+        }
+    }
+
+    /**
+     * Render a Map with a List of GameObjects as Batch. This will improve performance a lot.
+     *
+     * @param gameObjects
+     * @see Batch
+     * @see TextureRenderer#renderBatch(Batch, boolean)
+     */
+    public void renderBatchObjects(Map<Integer, List<GameObject>> gameObjects) {
+        Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
+        for (int i : gameObjects.keySet()) {
+            Batch batch = new Batch(i);
+            for (GameObject obj : gameObjects.get(i)) {
+                float x = (float) (((obj.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
+                float y = (float) (((obj.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
+                Vector2D v = new Vector2D(x, y);
+                if (!FrustumCulling.isInFrustum(camera, v, this.engine)) {
+                    continue;
+                }
+                batch.addItem(v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+            }
+            this.engine.getRenderers().getTextureRenderer("default").renderBatch(batch, camera.isLighting());
         }
     }
 

@@ -1,12 +1,6 @@
 package org.collebol.game.world;
 
-import org.collebol.game.GameObject;
 import org.collebol.game.objects.solids.Tile;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Abstract class representing a world generator in the EJGEngine.
@@ -32,25 +26,6 @@ public abstract class WorldGenerator {
 
     public WorldGenerator(World world) {
         this.world = world;
-    }
-
-    /**
-     * Save a {@link Chunk} in the given World directory: {@link World#getWorldFolder()}
-     *
-     * @param chunk The chunk you want to save
-     */
-    public void saveChunk(Chunk chunk) {
-        File chunkFile = new File(this.world.getWorldFolder(), "chunk_" + chunk.getX() + "_" + chunk.getY() + ".dat");
-        if (chunkFile.exists()) return;
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(chunkFile))) {
-            for (GameObject tile : chunk.getTiles()) {
-                writer.write(tile.getGameLocation().getX() + "," + tile.getGameLocation().getY() + "," + tile.getTexture());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
