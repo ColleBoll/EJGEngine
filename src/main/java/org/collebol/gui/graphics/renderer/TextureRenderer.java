@@ -75,7 +75,7 @@ public class TextureRenderer implements Renderer {
 
         GL11.glTranslatef(origin.getX(), origin.getY(), 0);
 
-        GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f); // Rotatie rond de Z-as
+        GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 
         GL11.glTranslatef(-origin.getX(), -origin.getY(), 0);
 
@@ -103,6 +103,80 @@ public class TextureRenderer implements Renderer {
         GL11.glPopAttrib();
 
         GL11.glPopMatrix();
+    }
+
+    /**
+     * Renders a batch of items using a specified texture.
+     * This method iterates through each item in the batch, applies transformations
+     * (translation, rotation, scaling), and renders the item as a textured quad.
+     *
+     * @param batch    the batch of items to be rendered
+     * @param lighting whether to enable lighting during rendering
+     */
+    public void renderBatch(Batch batch, boolean lighting) {
+        if (lighting) {
+            GL11.glEnable(GL11.GL_LIGHTING);
+        } else {
+            GL11.glDisable(GL11.GL_LIGHTING);
+        }
+        Texture texture = getTexture(batch.getTexture());
+        texture.bind();
+
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+
+        GL11.glBegin(GL11.GL_QUADS);
+
+        for (Batch.BatchItem item : batch.getItems()) {
+            float startX = item.position.getX();
+            float startY = item.position.getY();
+            float tWidth = this.width * item.scale;
+            float tHeight = this.height * item.scale;
+
+            double rad = Math.toRadians(item.rotation);
+            float cos = (float) Math.cos(rad);
+            float sin = (float) Math.sin(rad);
+
+            float v0x = startX;
+            float v0y = startY;
+
+            float v1x = startX;
+            float v1y = startY + tHeight;
+
+            float v2x = startX + tWidth;
+            float v2y = startY + tHeight;
+
+            float v3x = startX + tWidth;
+            float v3y = startY;
+
+            float rv0x = item.origin.getX() + (v0x - item.origin.getX()) * cos - (v0y - item.origin.getY()) * sin;
+            float rv0y = item.origin.getY() + (v0x - item.origin.getX()) * sin + (v0y - item.origin.getY()) * cos;
+
+            float rv1x = item.origin.getX() + (v1x - item.origin.getX()) * cos - (v1y - item.origin.getY()) * sin;
+            float rv1y = item.origin.getY() + (v1x - item.origin.getX()) * sin + (v1y - item.origin.getY()) * cos;
+
+            float rv2x = item.origin.getX() + (v2x - item.origin.getX()) * cos - (v2y - item.origin.getY()) * sin;
+            float rv2y = item.origin.getY() + (v2x - item.origin.getX()) * sin + (v2y - item.origin.getY()) * cos;
+
+            float rv3x = item.origin.getX() + (v3x - item.origin.getX()) * cos - (v3y - item.origin.getY()) * sin;
+            float rv3y = item.origin.getY() + (v3x - item.origin.getX()) * sin + (v3y - item.origin.getY()) * cos;
+
+            GL11.glTexCoord2f(0, 0);
+            GL11.glVertex2f(rv0x, rv0y);
+
+            GL11.glTexCoord2f(0, 1);
+            GL11.glVertex2f(rv1x, rv1y);
+
+            GL11.glTexCoord2f(1, 1);
+            GL11.glVertex2f(rv2x, rv2y);
+
+            GL11.glTexCoord2f(1, 0);
+            GL11.glVertex2f(rv3x, rv3y);
+        }
+
+        GL11.glEnd();
+        GL11.glPopAttrib();
     }
 
     public void applyLight(int index, Light light, float scale, float[] ambientColor) {

@@ -20,6 +20,12 @@ public class WorldRenderer implements Renderer {
         }
     }
 
+    public void renderWorldChunksAsBatch() {
+        for (Chunk chunk : this.world.getChunks()) {
+            this.engine.getRenderers().getCameraRenderer().renderBatchObjects(chunk.getTilesAsMap());
+        }
+    }
+
     public void renderChunkRelativeToCamera(Chunk chunk) {
         this.engine.getRenderers().getCameraRenderer().renderObjects(chunk.getTiles());
     }
