@@ -5,6 +5,20 @@ import org.collebol.gui.graphics.Camera;
 import org.collebol.gui.graphics.renderer.TextRenderer;
 import org.collebol.math.Vector2D;
 
+/**
+ * The Panel class represents a user interface panel in a window.
+ * It is an abstract class that provides the basic structure and functionality for a Panel.
+ *
+ * <p>Each panel has an index, a camera and references to a window.</p>
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     MyPanel panel = new MyPanel(index, engine);
+ *     engine.getWindow().registerPanel(panel); //register panel at the window.
+ * </pre></blockquote>
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public abstract class Panel {
 
     public int index;
@@ -13,12 +27,20 @@ public abstract class Panel {
 
     private EJGEngine engine;
 
+    /**
+     * Panel constructor.
+     * @param index the index of the panel.
+     * @param e the engine instance.
+     */
     public Panel(int index, EJGEngine e) {
         this.index = index;
         this.engine = e;
         this.camera = new Camera(new Vector2D(0, 0), 1f, 0, engine);
     }
 
+    /**
+     * Displays screen details, a tool for developing.
+     */
     public void showScreenDetails() {
         getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
                 .text("Window width: " + getEngine().getWindow().getWidth() + "px")
@@ -62,6 +84,10 @@ public abstract class Panel {
         this.camera = camera;
     }
 
+    /**
+     *
+     * @return delta tile
+     */
     public float getDT() {
         return DT;
     }

@@ -4,6 +4,20 @@ import org.collebol.math.Vector2D;
 import org.collebol.utils.EngineObject;
 import org.collebol.utils.GameLocation;
 
+/**
+ * The GameObject class represents a object in the game world.
+ * It extends the {@link EngineObject} class and includes properties for velocity and {@link GameLocation}.
+ *
+ * <p>This class is used to manage the state and behavior of a object in the game.</p>
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     GameObject object = new GameObject();
+ * </pre></blockquote>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class GameObject extends EngineObject {
 
     private Vector2D velocity;
