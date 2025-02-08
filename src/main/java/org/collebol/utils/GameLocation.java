@@ -1,5 +1,11 @@
 package org.collebol.utils;
 
+/**
+ * The GameLocation class represents the location of GameObject's in the game.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class GameLocation {
 
     private double x;

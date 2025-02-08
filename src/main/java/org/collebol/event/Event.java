@@ -9,6 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Event class is a abstract class that represents en event within the game engine.
+ * It manages the registration of client listeners and triggers the event, notifying all registered listeners.
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     Event event = new ConcreteEvent(); //subclasses
+ *     event.registerEvent(listener);
+ *     event.call(engine, params);
+ * </pre></blockquote>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public abstract class Event {
 
     private EJGEngine engine;
