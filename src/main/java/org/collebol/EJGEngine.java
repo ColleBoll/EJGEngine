@@ -1,6 +1,7 @@
 package org.collebol;
 
 
+import org.collebol.audio.SoundPlayer;
 import org.collebol.event.EventHandler;
 import org.collebol.gui.MainWindow;
 import org.collebol.gui.Panel;
@@ -24,6 +25,7 @@ public abstract class EJGEngine {
 
     private RenderRegisterHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
+    private SoundPlayer soundPlayer;
 
     /**
      * Starts the engine by performing the following steps:
@@ -42,6 +44,7 @@ public abstract class EJGEngine {
         setup();
         this.window = new MainWindow(this); //here the regiter() method will be called
         this.renderRegisterHandler = new RenderRegisterHandler();
+        this.soundPlayer = new SoundPlayer();
         this.window.registerPanel(new ExamplePanel(this));
         this.window.setPanel(0);
         enable();
@@ -74,11 +77,11 @@ public abstract class EJGEngine {
     public abstract void disable();
 
     public MainWindow getWindow() {
-        return window;
+        return this.window;
     }
 
     public EventHandler getEventHandler() {
-        return eventHandler;
+        return this.eventHandler;
     }
 
     public void setEventHandler(EventHandler eventHandler) {
@@ -86,6 +89,10 @@ public abstract class EJGEngine {
     }
 
     public RenderRegisterHandler getRenderers() {
-        return renderRegisterHandler;
+        return this.renderRegisterHandler;
+    }
+
+    public SoundPlayer getSoundPlayer(){
+        return this.soundPlayer;
     }
 }
