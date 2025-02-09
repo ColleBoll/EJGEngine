@@ -48,21 +48,21 @@ public class TextureRenderer implements Renderer {
     }
 
     /**
-     * Render a texture from a registered index.
+     * Render a texture from a registered id.
      *
-     * @param index    register a texture first!
+     * @param id    register a texture first!
      * @param position
      * @param scale
      * @param rotation
      * @param origin
      */
-    public void render(int index, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
+    public void render(int id, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
         if (lighting) {
             GL11.glEnable(GL11.GL_LIGHTING);
         } else {
             GL11.glDisable(GL11.GL_LIGHTING);
         }
-        Texture texture = getTexture(index);
+        Texture texture = getTexture(id);
         texture.bind();
 
         float startX = position.getX();
@@ -179,9 +179,9 @@ public class TextureRenderer implements Renderer {
         GL11.glPopAttrib();
     }
 
-    public void applyLight(int index, Light light, float scale, float[] ambientColor) {
+    public void applyLight(int id, Light light, float scale, float[] ambientColor) {
         GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_LIGHT0 + index);
+        GL11.glEnable(GL11.GL_LIGHT0 + id);
 
         float lightX = light.getPosition().getX();
         float lightY = light.getPosition().getY();
@@ -189,27 +189,27 @@ public class TextureRenderer implements Renderer {
         FloatBuffer lightPos = BufferUtils.createFloatBuffer(4);
         lightPos.put(new float[]{lightX, lightY, light.getRadius() * scale, 1.0f});
         lightPos.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_POSITION, lightPos);
+        GL11.glLightfv(GL11.GL_LIGHT0 + id, GL11.GL_POSITION, lightPos);
 
         FloatBuffer lightColor = BufferUtils.createFloatBuffer(4);
         lightColor.put(light.getColor());
         lightColor.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_DIFFUSE, lightColor);
+        GL11.glLightfv(GL11.GL_LIGHT0 + id, GL11.GL_DIFFUSE, lightColor);
 
         FloatBuffer ambientCl = BufferUtils.createFloatBuffer(4);
         ambientCl.put(ambientColor);
         ambientCl.flip();
-        GL11.glLightfv(GL11.GL_LIGHT0 + index, GL11.GL_AMBIENT, ambientCl);
+        GL11.glLightfv(GL11.GL_LIGHT0 + id, GL11.GL_AMBIENT, ambientCl);
     }
 
     public void registerTexture(Texture texture) {
-        this.textures.put(texture.getIndex(), texture);
+        this.textures.put(texture.getid(), texture);
     }
 
-    public Texture getTexture(int index) {
-        if (this.textures.get(index) == null)
-            throw new RuntimeException("Invalid Index of textures: " + index + ". Register Texture before using!");
-        return this.textures.get(index);
+    public Texture getTexture(int id) {
+        if (this.textures.get(id) == null)
+            throw new RuntimeException("Invalid id of textures: " + id + ". Register Texture before using!");
+        return this.textures.get(id);
     }
 
     public String getName() {

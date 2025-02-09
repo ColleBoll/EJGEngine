@@ -14,7 +14,7 @@ import java.util.Map;
  * <blockquote><pre>
  *     SoundPlayer soundPlayer = new SoundPlayer();
  *     soundPlayer.registerSound(sound);
- *     soundPlayer.playSound(sound.getIndex());
+ *     soundPlayer.playSound(sound.getid());
  * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
@@ -50,18 +50,18 @@ public class SoundPlayer {
      * @param sound the sound to be registerd.
      */
     public void registerSound(Sound sound) {
-        this.sounds.put(sound.getIndex(), sound);
+        this.sounds.put(sound.getid(), sound);
     }
 
     /**
-     * Play a registered sound by its index.
+     * Play a registered sound by its id.
      *
-     * @param index the index of the sound to be played.
+     * @param id the id of the sound to be played.
      */
-    public void playSound(int index) {
-        if (!this.sounds.containsKey(index))
-            throw new RuntimeException("Invalid Sound index: " + index + ". Register Sound before using!");
-        Sound sound = this.sounds.get(1);
+    public void playSound(int id) {
+        if (!this.sounds.containsKey(id))
+            throw new RuntimeException("Invalid Sound id: " + id + ". Register Sound before using!");
+        Sound sound = this.sounds.get(id);
         if (sound.getPath() == null)
             throw new RuntimeException("Sound path equals null. Please, set a sound path before using!");
         int pointer = sound.getSource();
@@ -78,11 +78,11 @@ public class SoundPlayer {
      * @param sound the modified sound.
      */
     public void playModifiedSound(ModifySound sound) {
-        if (!this.sounds.containsKey(sound.index))
-            throw new RuntimeException("Invalid Sound index: " + sound.index + ". Register Sound before using!");
-        if (this.sounds.get(sound.index).getPath() == null)
+        if (!this.sounds.containsKey(sound.id))
+            throw new RuntimeException("Invalid Sound id: " + sound.id + ". Register Sound before using!");
+        if (this.sounds.get(sound.id).getPath() == null)
             throw new RuntimeException("Sound path equals null. Please, set a sound path before using!");
-        int pointer = this.sounds.get(sound.index).getSource();
+        int pointer = this.sounds.get(sound.id).getSource();
         AL10.alSourcef(pointer, AL10.AL_GAIN, sound.volume);
         AL10.alSourcef(pointer, AL10.AL_PITCH, sound.pitch);
         AL10.alSourcef(pointer, AL10.AL_MAX_DISTANCE, sound.maxDistance);
@@ -94,18 +94,18 @@ public class SoundPlayer {
      * The ModifySound class is used to modify sound properties before playing.
      */
     public static class ModifySound {
-        private int index;
+        private int id;
         private float volume = 1.0f;
         private float pitch = 1.0f;
         private float maxDistance = 100.0f;
         private float rollOffFactor = 1.0f;
 
         /**
-         * @param index the index id of the sound you want to modify.
+         * @param id the id of the sound you want to modify.
          * @return
          */
-        public ModifySound index(int index) {
-            this.index = index;
+        public ModifySound id(int id) {
+            this.id = id;
             return this;
         }
 

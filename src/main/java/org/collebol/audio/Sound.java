@@ -16,7 +16,7 @@ import java.nio.ShortBuffer;
  * <blockquote><pre>
  *     Sound sound = new Sound(new Sound.SoundBuilder()
  *         .path("path/to/sound.ogg")
- *         .index(1)
+ *         .id(1)
  *         .volume(1.0f)
  *         .pitch(1.0f)
  *         .maxDistance(100.0f)
@@ -29,7 +29,7 @@ import java.nio.ShortBuffer;
  */
 public class Sound {
 
-    private int index;
+    private int id;
     private int sourcePointer;
     private String path;
     private float volume;
@@ -43,7 +43,7 @@ public class Sound {
      * @param builder sound builder.
      */
     public Sound(SoundBuilder builder) {
-        this.index = builder.index;
+        this.id = builder.id;
         this.path = builder.path;
         this.volume = builder.volume;
         this.pitch = builder.pitch;
@@ -83,7 +83,7 @@ public class Sound {
      */
     public static class SoundBuilder {
         private String path = null;
-        private int index;
+        private int id;
         private float volume = 1.0f;
         private float pitch = 1.0f;
         private float maxDistance = 100.0f;
@@ -99,11 +99,11 @@ public class Sound {
         }
 
         /**
-         * @param index unique id of the sound.
+         * @param id unique id of the sound.
          * @return instance.
          */
-        public SoundBuilder index(int index) {
-            this.index = index;
+        public SoundBuilder id(int id) {
+            this.id = id;
             return this;
         }
 
@@ -148,8 +148,8 @@ public class Sound {
         return this.sourcePointer;
     }
 
-    public int getIndex() {
-        return this.index;
+    public int getid() {
+        return this.id;
     }
 
     public String getPath() {

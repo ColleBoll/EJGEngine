@@ -120,7 +120,7 @@ public class CameraRenderer implements Renderer {
      * @param radius   radius of the light (how big)
      * @param color    the color of the light, example: new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }
      */
-    public void renderLight(int index, GameLocation location, float radius, float[] color) {
+    public void renderLight(int id, GameLocation location, float radius, float[] color) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
         float x = (float) (((location.getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
@@ -129,7 +129,7 @@ public class CameraRenderer implements Renderer {
                 .color(color)
                 .radius(radius)
                 .position(new Vector2D(x, y)));
-        this.engine.getRenderers().getTextureRenderer("default").applyLight(index, light, camera.getZoom(), camera.getAmbientLight());
+        this.engine.getRenderers().getTextureRenderer("default").applyLight(id, light, camera.getZoom(), camera.getAmbientLight());
     }
 
     public static class TextBuilder {
