@@ -9,11 +9,11 @@ import org.collebol.math.Vector2D;
  * The Panel class represents a user interface panel in a window.
  * It is an abstract class that provides the basic structure and functionality for a Panel.
  *
- * <p>Each panel has an index, a camera and references to a window.</p>
+ * <p>Each panel has an id, a camera and references to a window.</p>
  *
  * <p>Usage:</p>
  * <blockquote><pre>
- *     MyPanel panel = new MyPanel(index, engine);
+ *     MyPanel panel = new MyPanel(id, engine);
  *     engine.getWindow().registerPanel(panel); //register panel at the window.
  * </pre></blockquote>
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
@@ -21,7 +21,7 @@ import org.collebol.math.Vector2D;
  */
 public abstract class Panel {
 
-    public int index;
+    public int id;
     private Camera camera;
     private float DT;
 
@@ -29,11 +29,11 @@ public abstract class Panel {
 
     /**
      * Panel constructor.
-     * @param index the index of the panel.
+     * @param id the id of the panel.
      * @param e the engine instance.
      */
-    public Panel(int index, EJGEngine e) {
-        this.index = index;
+    public Panel(int id, EJGEngine e) {
+        this.id = id;
         this.engine = e;
         this.camera = new Camera(new Vector2D(0, 0), 1f, 0, engine);
     }

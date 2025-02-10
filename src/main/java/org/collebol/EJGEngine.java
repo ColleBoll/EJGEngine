@@ -24,6 +24,7 @@ public abstract class EJGEngine {
 
     private RenderRegisterHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
+    private SoundHandler soundHandler;
 
     /**
      * Starts the engine by performing the following steps:
@@ -42,6 +43,7 @@ public abstract class EJGEngine {
         setup();
         this.window = new MainWindow(this); //here the regiter() method will be called
         this.renderRegisterHandler = new RenderRegisterHandler();
+        this.soundHandler = new SoundHandler(this);
         this.window.registerPanel(new ExamplePanel(this));
         this.window.setPanel(0);
         enable();
@@ -73,19 +75,38 @@ public abstract class EJGEngine {
      */
     public abstract void disable();
 
+    /**
+     * @return the main window of the engine
+     */
     public MainWindow getWindow() {
-        return window;
+        return this.window;
     }
 
+    /**
+     * @return the event handler associated with the engine
+     */
     public EventHandler getEventHandler() {
-        return eventHandler;
+        return this.eventHandler;
     }
 
+    /**
+     * @param eventHandler the event handler to be set
+     */
     public void setEventHandler(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
     }
 
+    /**
+     * @return the render register handler responsible for managing renderers
+     */
     public RenderRegisterHandler getRenderers() {
-        return renderRegisterHandler;
+        return this.renderRegisterHandler;
+    }
+
+    /**
+     * @return the sound handler responsible for managing sound players and camera sound players
+     */
+    public SoundHandler getSoundHandler(){
+        return this.soundHandler;
     }
 }

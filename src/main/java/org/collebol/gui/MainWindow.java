@@ -183,13 +183,13 @@ public class MainWindow implements Runnable {
      * @param panel A panel in the main window
      */
     public void registerPanel(Panel panel) {
-        this.panels.put(panel.index, panel);
+        this.panels.put(panel.id, panel);
     }
 
     /**
      * Display the given panel.
      *
-     * @param i Panel index.
+     * @param i Panel id.
      */
     public void setPanel(int i) {
         if (this.panels.containsKey(i)) {

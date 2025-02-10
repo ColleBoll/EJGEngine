@@ -102,7 +102,7 @@ public abstract class Chunk {
 
     /**
      *
-     * @return a map of tiles grouped by their texture index.
+     * @return a map of tiles grouped by their texture id.
      */
     public Map<Integer, List<GameObject>> getTilesAsMap() {
         return tiles;

@@ -72,4 +72,16 @@ public class Vector2D {
     public float length() {
         return (float) Math.sqrt(this.x * this.x + this.y * this.y);
     }
+
+    /**
+     * Calculate the distance between another vector.
+     *
+     * @param other the other vector
+     * @return the distance between the two points.
+     */
+    public float distance(Vector2D other) {
+        float dx = other.x - this.x;
+        float dy = other.y - this.y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
 }

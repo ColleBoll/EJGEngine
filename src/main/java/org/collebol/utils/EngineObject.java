@@ -12,7 +12,7 @@ import org.collebol.math.Vector2D;
 public class EngineObject {
 
     private Vector2D vector;
-    private int textureIndex;
+    private int textureid;
 
     /**
      * Position relative to the screen.
@@ -33,10 +33,10 @@ public class EngineObject {
     }
 
     public int getTexture() {
-        return this.textureIndex;
+        return this.textureid;
     }
 
-    public void setTexture(int index) {
-        this.textureIndex = index;
+    public void setTexture(int id) {
+        this.textureid = id;
     }
 }

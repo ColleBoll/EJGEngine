@@ -16,7 +16,7 @@ import java.nio.ByteBuffer;
  * <blockquote><pre>
  *     Texture texture = new Texture(
  *         "path/to/texture.png", //from resources
- *         0 //index = unique texture number/id
+ *         0 //id = unique texture number/id
  *     );
  * </pre></blockquote>
  *
@@ -25,7 +25,7 @@ import java.nio.ByteBuffer;
  */
 public class Texture {
 
-    private int index;
+    private int id;
     private int textureObject;
     private int width;
     private int height;
@@ -34,10 +34,10 @@ public class Texture {
      * This method you can construct your Texture object.
      *
      * @param filePath path to your {@code .png} file.
-     * @param index unique texture number/ID.
+     * @param id    unique texture number/ID.
      */
-    public Texture(String filePath, int index) {
-        this.index = index;
+    public Texture(String filePath, int id) {
+        this.id = id;
         BufferedImage bufferedImage;
         try (InputStream inputStream = getClass().getResourceAsStream(filePath)) {
             if (inputStream == null) {
@@ -70,7 +70,7 @@ public class Texture {
 
             GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.width, this.height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, pixels);
         } catch (IOException e) {
-            throw new RuntimeException("Something went wrong making texture with index " + this.index + ", see:" + e);
+            throw new RuntimeException("Something went wrong making texture with id " + this.id + ", see:" + e);
         }
     }
 
@@ -78,7 +78,7 @@ public class Texture {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureObject);
     }
 
-    public int getIndex() {
-        return index;
+    public int getId() {
+        return id;
     }
 }

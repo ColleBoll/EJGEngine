@@ -12,7 +12,7 @@ import java.util.List;
  *
  * <p>Usage:</p>
  * <blockquote><pre>
- *     Batch batch = new Batch(textureIndex);
+ *     Batch batch = new Batch(textureid);
  *     batch.addItem(position, zoom, rotation, origin);
  * </pre></blockquote>
  *
@@ -24,8 +24,8 @@ public class Batch {
     private int texture;
     private List<BatchItem> items;
 
-    public Batch(int textureIndex) {
-        this.texture = textureIndex;
+    public Batch(int textureid) {
+        this.texture = textureid;
         this.items = new ArrayList<>();
     }
 
