@@ -75,22 +75,37 @@ public abstract class EJGEngine {
      */
     public abstract void disable();
 
+    /**
+     * @return the main window of the engine
+     */
     public MainWindow getWindow() {
         return this.window;
     }
 
+    /**
+     * @return the event handler associated with the engine
+     */
     public EventHandler getEventHandler() {
         return this.eventHandler;
     }
 
+    /**
+     * @param eventHandler the event handler to be set
+     */
     public void setEventHandler(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
     }
 
+    /**
+     * @return the render register handler responsible for managing renderers
+     */
     public RenderRegisterHandler getRenderers() {
         return this.renderRegisterHandler;
     }
 
+    /**
+     * @return the sound handler responsible for managing sound players and camera sound players
+     */
     public SoundHandler getSoundHandler(){
         return this.soundHandler;
     }
