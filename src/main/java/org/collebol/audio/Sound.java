@@ -1,5 +1,6 @@
 package org.collebol.audio;
 
+import org.collebol.math.Vector2D;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.system.MemoryStack;
@@ -32,9 +33,10 @@ public class Sound {
     private int id;
     private int sourcePointer;
     private String path;
+    private Vector2D position;
     private float volume;
     private float pitch;
-    private float maxDistance;
+    private float refDistance;
     private float rollOffFactor;
 
     /**
@@ -45,9 +47,10 @@ public class Sound {
     public Sound(SoundBuilder builder) {
         this.id = builder.id;
         this.path = builder.path;
+        this.position = builder.position;
         this.volume = builder.volume;
         this.pitch = builder.pitch;
-        this.maxDistance = builder.maxDistance;
+        this.refDistance = builder.refDistance;
         this.rollOffFactor = builder.rollOffFactor;
 
         ShortBuffer rawAudioBuffer;
@@ -84,9 +87,10 @@ public class Sound {
     public static class SoundBuilder {
         private String path = null;
         private int id;
+        private Vector2D position = new Vector2D(0, 0);
         private float volume = 1.0f;
         private float pitch = 1.0f;
-        private float maxDistance = 100.0f;
+        private float refDistance = 1.0f;
         private float rollOffFactor = 1.0f;
 
         /**
@@ -104,6 +108,15 @@ public class Sound {
          */
         public SoundBuilder id(int id) {
             this.id = id;
+            return this;
+        }
+
+        /**
+         * @param position position where the sound must play from.
+         * @return instance.
+         */
+        public SoundBuilder position(Vector2D position){
+            this.position = position;
             return this;
         }
 
@@ -126,11 +139,11 @@ public class Sound {
         }
 
         /**
-         * @param distance default max distance where you can hear the source.
+         * @param refDistance default the distance where you can hear the sound at full volume.
          * @return instance
          */
-        public SoundBuilder maxDistance(float distance) {
-            this.maxDistance = distance;
+        public SoundBuilder refDistance(float refDistance) {
+            this.refDistance = refDistance;
             return this;
         }
 
@@ -148,7 +161,7 @@ public class Sound {
         return this.sourcePointer;
     }
 
-    public int getid() {
+    public int getId() {
         return this.id;
     }
 
@@ -164,11 +177,35 @@ public class Sound {
         return this.pitch;
     }
 
-    public float getMaxDistance() {
-        return this.maxDistance;
+    public float getRefDistance() {
+        return this.refDistance;
     }
 
     public float getRollOffFactor() {
         return this.rollOffFactor;
+    }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
+    }
+
+    public void setRefDistance(float refDistance) {
+        this.refDistance = refDistance;
+    }
+
+    public void setRollOffFactor(float rollOffFactor) {
+        this.rollOffFactor = rollOffFactor;
     }
 }

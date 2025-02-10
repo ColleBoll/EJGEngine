@@ -26,16 +26,6 @@ public class CameraRenderer implements Renderer {
         this.engine = e;
     }
 
-    public static class Builder {
-        private EJGEngine engine;
-
-        public Builder engine(EJGEngine e) {
-            this.engine = e;
-            return this;
-        }
-
-    }
-
     /**
      * Render GameObjects relative to the Camera.
      *

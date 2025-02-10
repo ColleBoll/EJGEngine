@@ -23,26 +23,19 @@ public class TextureRenderer implements Renderer {
 
     private String name;
 
-    private EJGEngine engine;
     private float width;
     private float height;
     private Map<Integer, Texture> textures = new HashMap<>();
     private List<Light> lights = new ArrayList<>();
 
-    private EJGEngine getEngine() {
-        return this.engine;
-    }
-
-    public TextureRenderer(String name, float width, float height, EJGEngine e) {
+    public TextureRenderer(String name, float width, float height) {
         this.name = name;
-        this.engine = e;
         this.width = width;
         this.height = height;
     }
 
     public TextureRenderer(String name, EJGEngine e) {
         this.name = name;
-        this.engine = e;
         this.width = e.getWindow().getTileSize();
         this.height = e.getWindow().getTileSize();
     }
@@ -203,7 +196,7 @@ public class TextureRenderer implements Renderer {
     }
 
     public void registerTexture(Texture texture) {
-        this.textures.put(texture.getid(), texture);
+        this.textures.put(texture.getId(), texture);
     }
 
     public Texture getTexture(int id) {

@@ -78,7 +78,7 @@ public class Texture {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureObject);
     }
 
-    public int getid() {
+    public int getId() {
         return id;
     }
 }
