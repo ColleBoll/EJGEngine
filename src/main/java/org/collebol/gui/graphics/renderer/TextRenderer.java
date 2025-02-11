@@ -48,7 +48,7 @@ public class TextRenderer implements Renderer {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
 
-        int font = nvgCreateFont(this.vg, this.name, extractResourceToTempFile("/font.ttf"));
+        int font = nvgCreateFont(this.vg, this.name, extractResourceToTempFile(this.fontPath));
         if (font == -1) {
             throw new RuntimeException("Could not add font.");
         }
