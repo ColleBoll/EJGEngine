@@ -6,6 +6,12 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.system.MemoryUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -42,7 +48,7 @@ public class TextRenderer implements Renderer {
             throw new RuntimeException("Could not initialize NanoVG.");
         }
 
-        int font = nvgCreateFont(this.vg, this.name, this.fontPath);
+        int font = nvgCreateFont(this.vg, this.name, extractResourceToTempFile("/font.ttf"));
         if (font == -1) {
             throw new RuntimeException("Could not add font.");
         }
@@ -121,6 +127,29 @@ public class TextRenderer implements Renderer {
         public TextBuilder origin(Vector2D origin) {
             this.origin = origin;
             return this;
+        }
+    }
+
+    private String extractResourceToTempFile(String resourcePath) {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                throw new IllegalArgumentException("Resource not found: " + resourcePath);
+            }
+
+            File tempFile = Files.createTempFile("font", ".ttf").toFile();
+            tempFile.deleteOnExit();
+
+            try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+
+            return tempFile.getAbsolutePath();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load resource: " + resourcePath, e);
         }
     }
 
