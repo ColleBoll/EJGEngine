@@ -5,14 +5,14 @@ import org.collebol.gui.graphics.renderer.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RenderRegisterHandler {
+public class RenderHandler {
 
     private Map<String, TextRenderer> textRenderers;
     private Map<String, TextureRenderer> textureRenderers;
     private CameraRenderer cameraRenderer;
     private WorldRenderer worldRenderer;
 
-    public RenderRegisterHandler() {
+    public RenderHandler() {
         this.textRenderers = new HashMap<>();
         this.textureRenderers = new HashMap<>();
     }
