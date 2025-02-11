@@ -69,15 +69,14 @@
             </properties>
         </profile>
         <profile>
-            <id>windows-x86_64</id>
+            <id>windows</id>
             <activation>
                 <os>
                     <family>windows</family>
-                    <arch>x86</arch>
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>windows-x86_64</artifact.suffix>
+                <artifact.suffix>windows</artifact.suffix>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
