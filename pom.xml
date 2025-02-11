@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>0.2.0-alpha-2</version>
+    <version>0.2.0-beta-1</version>
 
     <licenses>
         <license>
@@ -69,15 +69,14 @@
             </properties>
         </profile>
         <profile>
-            <id>windows-x86_64</id>
+            <id>windows</id>
             <activation>
                 <os>
                     <family>windows</family>
-                    <arch>x86</arch>
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>windows-x86_64</artifact.suffix>
+                <artifact.suffix>windows</artifact.suffix>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
