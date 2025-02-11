@@ -22,7 +22,7 @@ public abstract class EJGEngine {
 
     private MainWindow window;
 
-    private RenderRegisterHandler renderRegisterHandler;
+    private RenderHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
     private SoundHandler soundHandler;
 
@@ -31,7 +31,7 @@ public abstract class EJGEngine {
      * <ol>
      *   <li>Calls the {@link #setup()} method to perform any necessary initialization.</li>
      *   <li>Initializes the main window by creating an instance of {@link MainWindow}.</li>
-     *   <li>Creates an instance of {@link RenderRegisterHandler} to manage renderers.</li>
+     *   <li>Creates an instance of {@link RenderHandler} to manage renderers.</li>
      *   <li>Registers the initial panel by calling {@link MainWindow#registerPanel(Panel)}.</li>
      *   <li>Sets the initial panel to be displayed using {@link MainWindow#setPanel(int)}.</li>
      *   <li>Calls the {@link #enable()} method to enable any necessary features or components.</li>
@@ -42,7 +42,7 @@ public abstract class EJGEngine {
     public void start() {
         setup();
         this.window = new MainWindow(this); //here the regiter() method will be called
-        this.renderRegisterHandler = new RenderRegisterHandler();
+        this.renderRegisterHandler = new RenderHandler();
         this.soundHandler = new SoundHandler(this);
         this.window.registerPanel(new ExamplePanel(this));
         this.window.setPanel(0);
@@ -99,7 +99,7 @@ public abstract class EJGEngine {
     /**
      * @return the render register handler responsible for managing renderers
      */
-    public RenderRegisterHandler getRenderers() {
+    public RenderHandler getRenderers() {
         return this.renderRegisterHandler;
     }
 

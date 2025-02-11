@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>0.2.0-alpha-1</version>
+    <version>0.2.0-alpha-2</version>
 
     <licenses>
         <license>
@@ -69,14 +69,15 @@
             </properties>
         </profile>
         <profile>
-            <id>windows</id>
+            <id>windows-x86_64</id>
             <activation>
                 <os>
                     <family>windows</family>
+                    <arch>x86</arch>
                 </os>
             </activation>
             <properties>
-                <artifact.suffix>windows</artifact.suffix>
+                <artifact.suffix>windows-x86_64</artifact.suffix>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
@@ -86,31 +87,60 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>shade</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <finalName>${project.artifactId}-${project.version}-${artifact.suffix}</finalName>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>**/test-assets/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>windows</id>
+                        <id>default-jar</id>
                         <phase>package</phase>
                         <goals><goal>jar</goal></goals>
                         <configuration>
-                            <classifier>windows</classifier>
+                            <excludes>
+                                <exclude>**/test-assets/**</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>macos-x86_64</id>
+                        <id>resources-jar</id>
                         <phase>package</phase>
                         <goals><goal>jar</goal></goals>
                         <configuration>
-                            <classifier>macos-x86_64</classifier>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>macos-aarch64</id>
-                        <phase>package</phase>
-                        <goals><goal>jar</goal></goals>
-                        <configuration>
-                            <classifier>macos-aarch64</classifier>
+                            <archive>
+                                <manifestEntries>
+                                    <Class-Path></Class-Path>
+                                </manifestEntries>
+                            </archive>
+                            <includes>
+                                <include>**/test-assets/**</include>
+                            </includes>
+                            <classifier>resources</classifier>
                         </configuration>
                     </execution>
                 </executions>

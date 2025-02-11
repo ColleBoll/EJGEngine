@@ -6,8 +6,13 @@ import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.libc.LibCStdlib;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
+import java.nio.file.Files;
 
 /**
  * The Sound class represents an audio object which you can play.
@@ -62,7 +67,7 @@ public class Sound {
             IntBuffer channelsBuffer = stack.mallocInt(1);
             IntBuffer sampleRateBuffer = stack.callocInt(1);
 
-            rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(path, channelsBuffer, sampleRateBuffer);
+            rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(extractResourceToTempFile(this.path), channelsBuffer, sampleRateBuffer);
 
             channels = channelsBuffer.get(0);
             sampleRate = sampleRateBuffer.get(0);
@@ -154,6 +159,29 @@ public class Sound {
         public SoundBuilder rollOffFactor(float factor) {
             this.rollOffFactor = factor;
             return this;
+        }
+    }
+
+    private String extractResourceToTempFile(String resourcePath) {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                throw new IllegalArgumentException("Resource not found: " + resourcePath);
+            }
+
+            File tempFile = Files.createTempFile("sound", ".ogg").toFile();
+            tempFile.deleteOnExit();
+
+            try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+
+            return tempFile.getAbsolutePath();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load resource: " + resourcePath, e);
         }
     }
 
