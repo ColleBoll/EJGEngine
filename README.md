@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.collebol</groupId>
             <artifactId>EJGEngine</artifactId>
-            <version>v0.2.0</version>
+            <version>0.2.0</version>
         </dependency>
     </dependencies>
     ```
