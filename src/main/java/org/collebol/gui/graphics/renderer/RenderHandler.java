@@ -1,10 +1,22 @@
-package org.collebol;
-
-import org.collebol.gui.graphics.renderer.*;
+package org.collebol.gui.graphics.renderer;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The RenderHandler class is responsible for managing different types of renderers engine.
+ * It allows registering new renderers and retrieving them by name.
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     RenderHandler renderHandler = new RenderHandler();
+ *     renderHandler.registerNewRenderer(new Renderer("rendererName"));
+ *     Renderer renderer = renderHandler.get<>Renderer("rendererName");
+ * </pre></blockquote>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class RenderHandler {
 
     private Map<String, TextRenderer> textRenderers;
@@ -30,17 +42,21 @@ public class RenderHandler {
      */
     public <T extends Renderer> void registerNewRenderer(T renderer) {
         if (renderer instanceof TextRenderer) {
-            textRenderers.put(((TextRenderer) renderer).getName(), (TextRenderer) renderer);
+            if (this.textRenderers.containsKey(((TextRenderer) renderer).getName()))
+                throw new RuntimeException("TextRenderer with the name: " + ((TextRenderer) renderer).getName() + " already exists. Please, make sure to give it a original name!");
+            this.textRenderers.put(((TextRenderer) renderer).getName(), (TextRenderer) renderer);
             ((TextRenderer) renderer).setup();
         }
         if (renderer instanceof TextureRenderer) {
-            textureRenderers.put(((TextureRenderer) renderer).getName(), (TextureRenderer) renderer);
+            if (this.textureRenderers.containsKey(((TextureRenderer) renderer).getName()))
+                throw new RuntimeException("TextureRenderer with the name: " + ((TextureRenderer) renderer).getName() + " already exists. Please, make sure to give it a original name!");
+            this.textureRenderers.put(((TextureRenderer) renderer).getName(), (TextureRenderer) renderer);
         }
         if (renderer instanceof CameraRenderer) {
-            cameraRenderer = (CameraRenderer) renderer;
+            this.cameraRenderer = (CameraRenderer) renderer;
         }
         if (renderer instanceof WorldRenderer) {
-            worldRenderer = (WorldRenderer) renderer;
+            this.worldRenderer = (WorldRenderer) renderer;
         }
     }
 

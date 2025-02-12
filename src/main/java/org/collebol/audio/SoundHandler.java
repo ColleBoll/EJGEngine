@@ -1,8 +1,6 @@
-package org.collebol;
+package org.collebol.audio;
 
-import org.collebol.audio.AudioPlayer;
-import org.collebol.audio.CameraSoundPlayer;
-import org.collebol.audio.SoundPlayer;
+import org.collebol.EJGEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +28,7 @@ public class SoundHandler {
 
     /**
      * SoundHandler constructor.
+     *
      * @param e engine instance.
      */
     public SoundHandler(EJGEngine e) {
@@ -45,14 +44,18 @@ public class SoundHandler {
      * Registers a new audio player.
      *
      * @param audioPlayer the audio player to be registered
-     * @param <T> the type of the audio player
+     * @param <T>         the type of the audio player
      */
     public <T extends AudioPlayer> void registerNewPlayer(T audioPlayer) {
         if (audioPlayer instanceof SoundPlayer) {
-            soundPlayers.put(((SoundPlayer) audioPlayer).getName(), (SoundPlayer) audioPlayer);
+            if (this.soundPlayers.containsKey(((SoundPlayer) audioPlayer).getName()))
+                throw new RuntimeException("SoundPlayer with the name: " + ((SoundPlayer) audioPlayer).getName() + " already exists. Please, make sure to give it a original name!");
+            this.soundPlayers.put(((SoundPlayer) audioPlayer).getName(), (SoundPlayer) audioPlayer);
         }
         if (audioPlayer instanceof CameraSoundPlayer) {
-            cameraPlayers.put(((CameraSoundPlayer) audioPlayer).getName(), (CameraSoundPlayer) audioPlayer);
+            if (this.cameraPlayers.containsKey(((CameraSoundPlayer) audioPlayer).getName()))
+                throw new RuntimeException("CameraSoundPlayer with the name: " + ((CameraSoundPlayer) audioPlayer).getName() + " already exists. Please, make sure to give it a original name!");
+            this.cameraPlayers.put(((CameraSoundPlayer) audioPlayer).getName(), (CameraSoundPlayer) audioPlayer);
         }
     }
 

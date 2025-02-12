@@ -1,9 +1,11 @@
 package org.collebol;
 
 
+import org.collebol.audio.SoundHandler;
 import org.collebol.event.EventHandler;
 import org.collebol.gui.MainWindow;
 import org.collebol.gui.Panel;
+import org.collebol.gui.graphics.renderer.RenderHandler;
 
 /**
  * This abstract class representing the core engine for EJGEngine.
