@@ -11,7 +11,7 @@ import java.util.Map;
  * <blockquote><pre>
  *     RenderHandler renderHandler = new RenderHandler();
  *     renderHandler.registerNewRenderer(new Renderer("rendererName"));
- *     Renderer renderer = renderHandler.get<>Renderer("rendererName");
+ *     Renderer renderer = renderHandler.get the Renderer("rendererName");
  * </pre></blockquote>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
