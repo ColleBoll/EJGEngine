@@ -5,6 +5,13 @@ import org.collebol.math.Vector2D;
 
 import java.util.Map;
 
+/**
+ * The ClientRightClickEvent class represents an event triggered by a right mouse click.
+ * It contains information about whether the key was pressed or released.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ClientRightClickEvent extends Event {
 
     private Vector2D position;

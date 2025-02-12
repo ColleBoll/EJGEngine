@@ -5,6 +5,13 @@ import org.collebol.input.KeyType;
 
 import java.util.Map;
 
+/**
+ * The ClientKeyClickEvent class represents an event triggered by a key click.
+ * It contains information about the key type and whether the key was pressed or released.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ClientKeyClickEvent extends Event {
 
     private KeyType keyType;
