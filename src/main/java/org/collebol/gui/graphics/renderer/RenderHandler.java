@@ -60,10 +60,6 @@ public class RenderHandler {
         }
     }
 
-    public void registerTextureRenderer(TextureRenderer renderer) {
-        this.textureRenderers.put(renderer.getName(), renderer);
-    }
-
     /**
      * Retrieves a TextRenderer by its name. Throws an exception if no TextRenderer is registered or if the specified name is not found.
      *
