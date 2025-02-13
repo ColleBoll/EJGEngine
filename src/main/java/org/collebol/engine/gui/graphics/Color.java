@@ -30,5 +30,9 @@ public class Color {
     public static float[] TURQUOISE = new float[]{0.25f, 0.88f, 0.82f, 1.0f};
     public static float[] VIOLET = new float[]{0.56f, 0.0f, 1.0f, 1.0f};
 
+    public static float[] setOpacity(float[] color, float opacity){
+        return new float[]{ color[0], color[1], color[2], opacity };
+    }
+
 
 }

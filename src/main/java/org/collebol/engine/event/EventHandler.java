@@ -4,6 +4,7 @@ import org.collebol.engine.EJGEngine;
 import org.collebol.engine.event.client.ClientKeyClickEvent;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
+import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 
 import java.lang.reflect.Method;
 
@@ -36,12 +37,16 @@ public class EventHandler {
     private ClientLeftClickEvent clientLeftClickEvent;
     private ClientKeyClickEvent clientKeyClickEvent;
 
+    private ClientFieldClickEvent clientFieldClickEvent;
+
     public EventHandler(EJGEngine e) {
         this.engine = e;
 
         this.clientRightClickEvent = new ClientRightClickEvent();
         this.clientLeftClickEvent = new ClientLeftClickEvent();
         this.clientKeyClickEvent = new ClientKeyClickEvent();
+
+        this.clientFieldClickEvent = new ClientFieldClickEvent();
     }
 
     /**
@@ -64,6 +69,10 @@ public class EventHandler {
             if (onKeyClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientKeyClickEvent.registerEvent(event);
             }
+            Method onFieldClickMethod = event.getClass().getMethod("onFieldClick", ClientFieldClickEvent.class);
+            if (onFieldClickMethod.getDeclaringClass() != ClientListener.class){
+                this.clientFieldClickEvent.registerEvent(event);
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -84,6 +93,9 @@ public class EventHandler {
         }
         if (eventClass.equals(ClientKeyClickEvent.class)) {
             return this.clientKeyClickEvent;
+        }
+        if (eventClass.equals(ClientFieldClickEvent.class)) {
+            return this.clientFieldClickEvent;
         }
         return null;
     }

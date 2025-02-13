@@ -6,6 +6,7 @@ import org.collebol.engine.event.EventHandler;
 import org.collebol.engine.gui.MainWindow;
 import org.collebol.engine.gui.Panel;
 import org.collebol.engine.gui.graphics.renderer.RenderHandler;
+import org.collebol.engine.gui.graphics.ui.ComponentHandler;
 
 /**
  * This abstract class representing the core engine for EJGEngine.
@@ -27,6 +28,7 @@ public abstract class EJGEngine {
     private RenderHandler renderRegisterHandler;
     private EventHandler eventHandler = new EventHandler(this);
     private SoundHandler soundHandler;
+    private ComponentHandler componentHandler;
 
     /**
      * Starts the engine by performing the following steps:
@@ -46,6 +48,7 @@ public abstract class EJGEngine {
         this.window = new MainWindow(this); //here the regiter() method will be called
         this.renderRegisterHandler = new RenderHandler();
         this.soundHandler = new SoundHandler(this);
+        this.componentHandler = new ComponentHandler(this);
         this.window.registerPanel(new ExamplePanel(this));
         this.window.setPanel(0);
         enable();
@@ -108,7 +111,14 @@ public abstract class EJGEngine {
     /**
      * @return the sound handler responsible for managing sound players and camera sound players
      */
-    public SoundHandler getSoundHandler(){
+    public SoundHandler getSoundHandler() {
         return this.soundHandler;
+    }
+
+    /**
+     * @return the component handler responsible for managing components.
+     */
+    public ComponentHandler getComponentHandler() {
+        return this.componentHandler;
     }
 }

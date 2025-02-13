@@ -3,12 +3,17 @@ package org.collebol.engine.input;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
+import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.gui.graphics.Camera;
+import org.collebol.engine.gui.graphics.ui.Field;
 import org.collebol.engine.math.Vector2D;
 import org.collebol.engine.utils.GameLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MouseHandler {
 
@@ -29,8 +34,16 @@ public class MouseHandler {
                     leftPressed = (action == GLFW.GLFW_PRESS);
                     if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, true, position);
+                        Field field = getFieldUnderMouse();
+                        if(field != null){
+                            engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.LEFT_MOUSE);
+                        }
                     } else {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
+                        Field field = getFieldUnderMouse();
+                        if(field != null){
+                            engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.LEFT_MOUSE);
+                        }
                     }
 
                 }
@@ -38,8 +51,16 @@ public class MouseHandler {
                     rightPressed = (action == GLFW.GLFW_PRESS);
                     if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, true, position);
+                        Field field = getFieldUnderMouse();
+                        if(field != null){
+                            engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.RIGHT_MOUSE);
+                        }
                     } else if (action == GLFW.GLFW_RELEASE) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
+                        Field field = getFieldUnderMouse();
+                        if(field != null){
+                            engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.RIGHT_MOUSE);
+                        }
                     }
                 }
             }
@@ -91,5 +112,28 @@ public class MouseHandler {
         float y = ((this.position.getY() + camera.getPosition().getY() - camera.getOrigin().getY()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));
         Vector2D v = new Vector2D(x, y);
         return location;
+    }
+
+    /**
+     * Checks if there is a field below of the mouse.
+     * @return field if there is a field else null.
+     */
+    public Field getFieldUnderMouse(){
+        float mouseX = this.position.getX();
+        float mouseY = this.position.getY();
+
+        for(Field field : this.engine.getComponentHandler().getFields().values()){
+            float fieldX = field.getPosition().getX();
+            float fieldY = field.getPosition().getY();
+            float width = field.getWidth();
+            float height = field.getHeight();
+
+            if (mouseX >= fieldX && mouseX <= (fieldX + width) &&
+                    mouseY >= fieldY && mouseY <= (fieldY + height)) {
+                return field;
+            }
+        }
+
+        return null;
     }
 }

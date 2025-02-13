@@ -3,6 +3,7 @@ package org.collebol.engine.event;
 import org.collebol.engine.event.client.ClientKeyClickEvent;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
+import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 
 /**
  * The ClientListener class is an abstract class that implements the {@link Listener} interface.
@@ -41,6 +42,9 @@ public abstract class ClientListener implements Listener {
         if (event instanceof ClientKeyClickEvent) {
             onKeyClick((ClientKeyClickEvent) event);
         }
+        if (event instanceof ClientFieldClickEvent) {
+            onFieldClick((ClientFieldClickEvent) event);
+        }
     }
 
     public void onRightClick(ClientRightClickEvent event) {
@@ -50,5 +54,8 @@ public abstract class ClientListener implements Listener {
     }
 
     public void onKeyClick(ClientKeyClickEvent event) {
+    }
+
+    public void onFieldClick(ClientFieldClickEvent event) {
     }
 }
