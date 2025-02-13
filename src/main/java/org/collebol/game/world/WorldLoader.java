@@ -1,7 +1,7 @@
 package org.collebol.game.world;
 
 import org.collebol.game.GameObject;
-import org.collebol.utils.GameLocation;
+import org.collebol.engine.utils.GameLocation;
 
 import java.util.ArrayList;
 import java.util.List;
