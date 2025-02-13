@@ -5,6 +5,7 @@ import org.collebol.engine.event.client.ClientKeyClickEvent;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
+import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
 
 import java.lang.reflect.Method;
 
@@ -38,6 +39,7 @@ public class EventHandler {
     private ClientKeyClickEvent clientKeyClickEvent;
 
     private ClientFieldClickEvent clientFieldClickEvent;
+    private ClientFieldHoverEvent clientFieldHoverEvent;
 
     public EventHandler(EJGEngine e) {
         this.engine = e;
@@ -47,6 +49,7 @@ public class EventHandler {
         this.clientKeyClickEvent = new ClientKeyClickEvent();
 
         this.clientFieldClickEvent = new ClientFieldClickEvent();
+        this.clientFieldHoverEvent = new ClientFieldHoverEvent();
     }
 
     /**
@@ -59,7 +62,6 @@ public class EventHandler {
             Method onRightClickMethod = event.getClass().getMethod("onRightClick", ClientRightClickEvent.class);
             if (onRightClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientRightClickEvent.registerEvent(event);
-
             }
             Method onLeftClickMethod = event.getClass().getMethod("onLeftClick", ClientLeftClickEvent.class);
             if (onLeftClickMethod.getDeclaringClass() != ClientListener.class) {
@@ -70,8 +72,12 @@ public class EventHandler {
                 this.clientKeyClickEvent.registerEvent(event);
             }
             Method onFieldClickMethod = event.getClass().getMethod("onFieldClick", ClientFieldClickEvent.class);
-            if (onFieldClickMethod.getDeclaringClass() != ClientListener.class){
+            if (onFieldClickMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientFieldClickEvent.registerEvent(event);
+            }
+            Method onFieldHoverMethod = event.getClass().getMethod("onFieldHover", ClientFieldHoverEvent.class);
+            if (onFieldHoverMethod.getDeclaringClass() != ClientListener.class) {
+                this.clientFieldHoverEvent.registerEvent(event);
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -96,6 +102,9 @@ public class EventHandler {
         }
         if (eventClass.equals(ClientFieldClickEvent.class)) {
             return this.clientFieldClickEvent;
+        }
+        if (eventClass.equals(ClientFieldHoverEvent.class)) {
+            return this.clientFieldHoverEvent;
         }
         return null;
     }

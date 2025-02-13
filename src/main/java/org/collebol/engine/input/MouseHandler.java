@@ -4,16 +4,14 @@ import org.collebol.engine.EJGEngine;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
+import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
 import org.collebol.engine.gui.graphics.Camera;
 import org.collebol.engine.gui.graphics.ui.Field;
 import org.collebol.engine.math.Vector2D;
 import org.collebol.engine.utils.GameLocation;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 public class MouseHandler {
 
@@ -68,10 +66,28 @@ public class MouseHandler {
         });
 
         GLFW.glfwSetCursorPosCallback(window, new GLFWCursorPosCallback() {
+            private Field lastEnteredField = null;
+
             @Override
             public void invoke(long window, double xpos, double ypos) {
                 position.setX((float) xpos);
                 position.setY((float) ypos);
+
+                Field currentField = getFieldUnderMouse();
+
+                if (currentField != lastEnteredField) {
+                    if (lastEnteredField != null) { //exit
+                        engine.getEventHandler()
+                                .callClientEvent(ClientFieldHoverEvent.class)
+                                .call(engine, position, lastEnteredField, false);
+                    }
+                    if (currentField != null) { //enter
+                        engine.getEventHandler()
+                                .callClientEvent(ClientFieldHoverEvent.class)
+                                .call(engine, position, currentField, true);
+                    }
+                    lastEnteredField = currentField;
+                }
             }
         });
     }
