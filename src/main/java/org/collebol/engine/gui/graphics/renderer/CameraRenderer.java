@@ -18,7 +18,7 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CameraRenderer implements Renderer {
+public class CameraRenderer extends Renderer {
 
     private EJGEngine engine;
 

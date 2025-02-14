@@ -19,7 +19,7 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class TextureRenderer implements Renderer {
+public class TextureRenderer extends Renderer {
 
     private String name;
 

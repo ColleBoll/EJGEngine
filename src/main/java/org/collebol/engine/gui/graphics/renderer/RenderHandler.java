@@ -1,5 +1,7 @@
 package org.collebol.engine.gui.graphics.renderer;
 
+import org.collebol.engine.gui.graphics.renderer.ui.UIRenderer;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class RenderHandler {
     private Map<String, TextureRenderer> textureRenderers;
     private CameraRenderer cameraRenderer;
     private WorldRenderer worldRenderer;
+    private UIRenderer uiRenderer;
 
     public RenderHandler() {
         this.textRenderers = new HashMap<>();
@@ -36,6 +39,7 @@ public class RenderHandler {
      *     <li>{@link TextureRenderer}</li>
      *     <li>{@link CameraRenderer}</li>
      *     <li>{@link WorldRenderer}</li>
+     *     <li>{@link UIRenderer}</li>
      * </ul>
      *
      * @param renderer The renderer to be registered.
@@ -57,6 +61,9 @@ public class RenderHandler {
         }
         if (renderer instanceof WorldRenderer) {
             this.worldRenderer = (WorldRenderer) renderer;
+        }
+        if (renderer instanceof UIRenderer) {
+            this.uiRenderer = (UIRenderer) renderer;
         }
     }
 
@@ -118,5 +125,17 @@ public class RenderHandler {
         if (this.worldRenderer == null)
             throw new RuntimeException("You are trying to display something using a WorldRenderer, but you have not set a WorldRenderer yet. Please, register a WorldRenderer in the register() method!");
         return worldRenderer;
+    }
+
+    /**
+     * Retrieves the UIRenderer. Throws an exception if no UIRenderer is registered.
+     *
+     * @return the UIRenderer.
+     * @throws RuntimeException if no UIRenderer is registered.
+     */
+    public UIRenderer getUiRenderer() {
+        if (this.uiRenderer == null)
+            throw new RuntimeException("You are trying to display something using the UIRenderer, but you have not set a UIRenderer yet. Please, register a UIREnderer in the register() method!");
+        return uiRenderer;
     }
 }

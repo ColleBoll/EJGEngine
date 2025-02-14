@@ -1,22 +1,12 @@
-package org.collebol.engine.gui.graphics.ui;
+package org.collebol.engine.gui.graphics.ui.component;
 
 import org.collebol.engine.gui.graphics.Color;
-import org.collebol.engine.gui.graphics.ui.component.Component;
 import org.collebol.engine.math.Vector2D;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Field extends Component {
 
-public class Field {
-
-    private int id;
-    private Vector2D position;
-    private float width;
-    private float height;
     private boolean resizable;
     private boolean repositioning;
-
-    private List<Component> components;
 
     private float[] backgroundColor;
     private float borderSize;
@@ -24,10 +14,11 @@ public class Field {
     private float[] borderColor;
 
     public Field(FieldBuilder builder) {
-        this.id = builder.id;
-        this.position = builder.position;
-        this.width = builder.width;
-        this.height = builder.height;
+        setId(builder.id);
+        setPosition(builder.position);
+        setWidth(builder.width);
+        setHeight(builder.height);
+        setParentId(builder.parent);
         this.backgroundColor = builder.backgroundColor;
         this.borderSize = builder.borderSize;
         this.borderRadius = builder.borderRadius;
@@ -35,12 +26,12 @@ public class Field {
 
         this.resizable = false;
         this.repositioning = false;
-        this.components = new ArrayList<>();
     }
 
     public static class FieldBuilder {
         private int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
+        private int parent = 0;
         private float width = 100.0f;
         private float height = 100.0f;
         private float[] backgroundColor = Color.WHITE;
@@ -50,11 +41,6 @@ public class Field {
 
         public FieldBuilder(int id) {
             this.id = id;
-        }
-
-        public FieldBuilder id(int id){
-            this.id = id;
-            return this;
         }
         
         public FieldBuilder position(Vector2D position){
@@ -91,38 +77,11 @@ public class Field {
             this.borderColor = borderColor;
             return this;
         }
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
+        public FieldBuilder parent(int parentId){
+            this.parent = parentId;
+            return this;
+        }
     }
 
     public boolean isResizable() {
@@ -139,14 +98,6 @@ public class Field {
 
     public void setRepositioning(boolean repositioning) {
         this.repositioning = repositioning;
-    }
-
-    public List<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<Component> components) {
-        this.components = components;
     }
 
     public float[] getBackgroundColor() {

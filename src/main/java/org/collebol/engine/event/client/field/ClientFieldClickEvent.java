@@ -1,7 +1,8 @@
 package org.collebol.engine.event.client.field;
 
 import org.collebol.engine.event.Event;
-import org.collebol.engine.gui.graphics.ui.Field;
+import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.input.KeyType;
 import org.collebol.engine.math.Vector2D;
 
@@ -57,6 +58,6 @@ public class ClientFieldClickEvent extends Event {
         position = (Vector2D) params.get(Vector2D.class);
         keyType = (KeyType) params.get(KeyType.class);
         press = (boolean) params.get(Boolean.class);
-        field = (Field) params.get(Field.class);
+        field = (Field) params.get(Component.class);
     }
 }

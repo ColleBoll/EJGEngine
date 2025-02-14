@@ -99,28 +99,21 @@ public class Sound {
         private float rollOffFactor = 1.0f;
 
         /**
-         * @param path the place where the sound file is located.
-         * @return instance.
+         * SoundBuilder constructor.
+         *
+         * @param path the path to the sound file.
+         * @param id   the unique id of the sound.
          */
-        public SoundBuilder path(String path) {
+        public SoundBuilder(int id, String path) {
             this.path = path;
-            return this;
-        }
-
-        /**
-         * @param id unique id of the sound.
-         * @return instance.
-         */
-        public SoundBuilder id(int id) {
             this.id = id;
-            return this;
         }
 
         /**
          * @param position position where the sound must play from.
          * @return instance.
          */
-        public SoundBuilder position(Vector2D position){
+        public SoundBuilder position(Vector2D position) {
             this.position = position;
             return this;
         }

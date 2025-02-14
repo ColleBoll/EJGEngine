@@ -1,7 +1,8 @@
 package org.collebol.engine.event.client.field;
 
 import org.collebol.engine.event.Event;
-import org.collebol.engine.gui.graphics.ui.Field;
+import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.math.Vector2D;
 
 import java.util.Map;
@@ -48,7 +49,7 @@ public class ClientFieldHoverEvent extends Event {
     @Override
     public void setValues(Map<Class<?>, Object> params) {
         position = (Vector2D) params.get(Vector2D.class);
-        field = (Field) params.get(Field.class);
+        field = (Field) params.get(Component.class);
         entered = (boolean) params.get(Boolean.class);
     }
 }

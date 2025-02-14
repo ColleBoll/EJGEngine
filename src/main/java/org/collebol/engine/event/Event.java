@@ -1,7 +1,7 @@
 package org.collebol.engine.event;
 
 import org.collebol.engine.EJGEngine;
-import org.collebol.engine.gui.graphics.ui.Field;
+import org.collebol.engine.gui.graphics.ui.component.Component;
 import org.collebol.engine.input.KeyType;
 import org.collebol.engine.math.Vector2D;
 
@@ -53,8 +53,8 @@ public abstract class Event {
                 paramMap.put(Boolean.class, param);
             } else if (param instanceof KeyType) {
                 paramMap.put(KeyType.class, param);
-            } else if (param instanceof Field) {
-                paramMap.put(Field.class, param);
+            } else if (param instanceof Component) {
+                paramMap.put(Component.class, param);
             }
         }
         this.engine = engine;

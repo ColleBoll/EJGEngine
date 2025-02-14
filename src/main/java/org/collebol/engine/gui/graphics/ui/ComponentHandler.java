@@ -1,52 +1,63 @@
 package org.collebol.engine.gui.graphics.ui;
 
-import org.collebol.engine.EJGEngine;
-import org.collebol.engine.gui.graphics.ui.component.Button;
 import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.gui.graphics.ui.component.Field;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ComponentHandler {
 
-    private EJGEngine engine;
+    private final Map<Class<? extends Component>, Map<Integer, Component>> components;
+    private final HashMap<Integer, List<Integer>> subComponents;
 
-    private Map<Integer, Field> fields;
-
-    private Map<Integer, Button> buttons;
-
-    public ComponentHandler(EJGEngine e) {
-        this.engine = engine;
-        this.fields = new HashMap<>();
-        this.buttons = new HashMap<>();
+    public ComponentHandler() {
+        this.components = new HashMap<>();
+        this.subComponents = new HashMap<>();
     }
 
     public <T extends Component> void registerNewComponent(T component) {
-        if (component instanceof Button) {
-            if (this.buttons.containsKey(((Button) component).getId()))
-                throw new RuntimeException("Button with the id: " + ((Button) component).getId() + " already exists. Please, make sure to give it a original id!");
-            buttons.put(((Button) component).getId(), (Button) component);
+        if (!this.components.containsKey(component.getClass())) {
+            this.components.put(component.getClass(), new HashMap<>());
+        }
+
+        this.components.get(component.getClass()).put(component.getId(), component);
+
+        if (component.getParentId() != 0) {
+            if (!this.components.get(Field.class).containsKey(component.getParentId()))
+                throw new RuntimeException("Only Fields can be a Parent of a Component. Parent id not found at the registered Fields: " + component.getParentId());
+            if(!this.subComponents.containsKey(component.getParentId())){
+                this.subComponents.put(component.getParentId(), new ArrayList<>());
+            }
+            this.subComponents.get(component.getParentId()).add(component.getId());
         }
     }
 
-    public void registerNewField(Field field) {
-        if (field == null) throw new RuntimeException("Field equals null. Please, register a valid Field.");
-        if (this.fields.containsKey(field.getId()))
-            throw new RuntimeException("Field with the id: " + field.getId() + " already exists. Please, make sure to give it a original id!");
-        fields.put(field.getId(), field);
+    public Component getComponent(Class<? extends Component> cls, int id) {
+        if (this.components.isEmpty())
+            return null;
+        if (this.components.get(cls).isEmpty())
+            throw new RuntimeException("You are trying to get a " + cls.getName() + " but you have not set one yet! Please, make sure to register a " + cls.getName() + " before using!");
+        if (this.components.get(cls).get(id) == null)
+            throw new RuntimeException(cls.getName() + " Component not found: " + id);
+        return this.components.get(cls).get(id);
     }
 
-    public Field getField(int id){
-        if (this.fields.isEmpty())
-            throw new RuntimeException("You are trying to get a Field but you have not set one yet! Please, make sure to register a Field before using!");
-        if (this.fields.get(id) != null) {
-            return this.fields.get(id);
-        } else {
-            throw new RuntimeException("Field not found: " + id);
-        }
+    public <T extends Class<? extends Component>> Map<Integer, Component> getComponents(T cls) {
+        if (this.components.isEmpty()) return null;
+        return this.components.get(cls);
     }
 
-    public Map<Integer, Field> getFields() {
-        return fields;
+    public List<Integer> getSubComponents(int parentId) {
+        if (this.subComponents.get(parentId) == null) return null;
+        if (!this.subComponents.containsKey(parentId))
+            throw new RuntimeException("Parent ID not found: " + parentId + ". Be sure it is a registered Field ID. Only Fields can be a parent!");
+        return this.subComponents.get(parentId);
+    }
+
+    public Map<Class<? extends Component>, Map<Integer, Component>> getComponentsMap() {
+        return components;
     }
 }

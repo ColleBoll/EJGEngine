@@ -20,7 +20,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class TextRenderer implements Renderer {
+public class TextRenderer extends Renderer {
     private long vg;
     private EJGEngine engine;
     private String name;

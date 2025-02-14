@@ -142,9 +142,7 @@ public class SoundPlayer implements AudioPlayer {
     public static class ModifySound extends Sound {
 
         public ModifySound(int id, SoundPlayer soundPlayer) {
-            super(new SoundBuilder()
-                    .id(id)
-                    .path(soundPlayer.sounds.get(id).getPath())
+            super(new SoundBuilder(id, soundPlayer.sounds.get(id).getPath())
                     .position(soundPlayer.sounds.get(id).getPosition())
                     .volume(soundPlayer.sounds.get(id).getVolume())
                     .pitch(soundPlayer.sounds.get(id).getPitch())

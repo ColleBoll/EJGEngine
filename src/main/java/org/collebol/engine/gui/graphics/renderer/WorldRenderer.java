@@ -17,7 +17,7 @@ import org.collebol.game.world.World;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class WorldRenderer implements Renderer {
+public class WorldRenderer extends Renderer {
 
     private World world;
     private EJGEngine engine;
