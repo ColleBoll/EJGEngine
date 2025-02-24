@@ -1,6 +1,8 @@
 package org.collebol.engine.gui.graphics.ui.component;
 
 import org.collebol.engine.gui.graphics.Color;
+import org.collebol.engine.gui.graphics.ui.Component;
+import org.collebol.engine.gui.graphics.ui.ComponentHandler;
 import org.collebol.engine.math.Vector2D;
 
 public class Field extends Component {
@@ -13,12 +15,17 @@ public class Field extends Component {
     private float borderRadius;
     private float[] borderColor;
 
+    private ComponentHandler subComponents;
+
     public Field(FieldBuilder builder) {
+
+        this.subComponents = new ComponentHandler();
+
         setId(builder.id);
         setPosition(builder.position);
         setWidth(builder.width);
         setHeight(builder.height);
-        setParentId(builder.parent);
+
         this.backgroundColor = builder.backgroundColor;
         this.borderSize = builder.borderSize;
         this.borderRadius = builder.borderRadius;
@@ -31,7 +38,6 @@ public class Field extends Component {
     public static class FieldBuilder {
         private int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
-        private int parent = 0;
         private float width = 100.0f;
         private float height = 100.0f;
         private float[] backgroundColor = Color.WHITE;
@@ -75,11 +81,6 @@ public class Field extends Component {
         
         public FieldBuilder borderColor(float[] borderColor){
             this.borderColor = borderColor;
-            return this;
-        }
-
-        public FieldBuilder parent(int parentId){
-            this.parent = parentId;
             return this;
         }
     }
@@ -130,5 +131,9 @@ public class Field extends Component {
 
     public void setBorderColor(float[] borderColor) {
         this.borderColor = borderColor;
+    }
+
+    public ComponentHandler getSubComponents() {
+        return subComponents;
     }
 }

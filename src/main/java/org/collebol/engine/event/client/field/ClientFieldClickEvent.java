@@ -1,11 +1,13 @@
 package org.collebol.engine.event.client.field;
 
 import org.collebol.engine.event.Event;
-import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.input.KeyType;
+import org.collebol.engine.math.ComponentCalculator;
 import org.collebol.engine.math.Vector2D;
 
+import java.util.List;
 import java.util.Map;
 
 public class ClientFieldClickEvent extends Event {
@@ -14,6 +16,7 @@ public class ClientFieldClickEvent extends Event {
     private KeyType keyType;
     private boolean press;
     private Field field;
+    private List<Component> actionSubComponent;
 
     public ClientFieldClickEvent() {
     }
@@ -38,19 +41,19 @@ public class ClientFieldClickEvent extends Event {
     }
 
     public boolean isPressed(){
-        if(press){
-            return true;
-        }else{
-            return false;
-        }
+        return press;
     }
 
     public boolean isReleased(){
-        if(press){
-            return false;
-        }else{
-            return true;
-        }
+        return !press;
+    }
+
+    public boolean isSubCommandClicked(){
+        return actionSubComponent != null;
+    }
+
+    public List<Component> getClickedSubComponents() {
+        return actionSubComponent;
     }
 
     @Override
@@ -59,5 +62,7 @@ public class ClientFieldClickEvent extends Event {
         keyType = (KeyType) params.get(KeyType.class);
         press = (boolean) params.get(Boolean.class);
         field = (Field) params.get(Component.class);
+        List<Component> l = ComponentCalculator.checkIfSubComponent(field, position);
+        actionSubComponent = l;
     }
 }

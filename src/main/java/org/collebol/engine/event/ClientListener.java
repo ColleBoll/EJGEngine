@@ -5,6 +5,7 @@ import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
+import org.collebol.engine.event.client.field.ClientFieldSubHoverEvent;
 
 /**
  * The ClientListener class is an abstract class that implements the {@link Listener} interface.
@@ -31,6 +32,9 @@ public abstract class ClientListener implements Listener {
      *                  <li>{@link ClientRightClickEvent}</li>
      *                  <li>{@link ClientLeftClickEvent}</li>
      *                  <li>{@link ClientKeyClickEvent}</li>
+     *                  <li>{@link ClientFieldClickEvent}</li>
+     *                  <li>{@link ClientFieldHoverEvent}</li>
+     *                  <li>{@link ClientFieldSubHoverEvent}</li>
      *              </ul>
      */
     public void handleEvent(Event event) {
@@ -49,6 +53,9 @@ public abstract class ClientListener implements Listener {
         if (event instanceof ClientFieldHoverEvent) {
             onFieldHover((ClientFieldHoverEvent) event);
         }
+        if (event instanceof ClientFieldSubHoverEvent) {
+            onFieldSubHover((ClientFieldSubHoverEvent) event);
+        }
     }
 
     public void onRightClick(ClientRightClickEvent event) {
@@ -64,5 +71,8 @@ public abstract class ClientListener implements Listener {
     }
 
     public void onFieldHover(ClientFieldHoverEvent event) {
+    }
+
+    public void onFieldSubHover(ClientFieldSubHoverEvent event) {
     }
 }

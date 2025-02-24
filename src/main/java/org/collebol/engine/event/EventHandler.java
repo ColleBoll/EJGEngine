@@ -6,6 +6,7 @@ import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
+import org.collebol.engine.event.client.field.ClientFieldSubHoverEvent;
 
 import java.lang.reflect.Method;
 
@@ -40,6 +41,7 @@ public class EventHandler {
 
     private ClientFieldClickEvent clientFieldClickEvent;
     private ClientFieldHoverEvent clientFieldHoverEvent;
+    private ClientFieldSubHoverEvent clientFieldSubHoverEvent;
 
     public EventHandler(EJGEngine e) {
         this.engine = e;
@@ -50,6 +52,7 @@ public class EventHandler {
 
         this.clientFieldClickEvent = new ClientFieldClickEvent();
         this.clientFieldHoverEvent = new ClientFieldHoverEvent();
+        this.clientFieldSubHoverEvent = new ClientFieldSubHoverEvent();
     }
 
     /**
@@ -79,6 +82,10 @@ public class EventHandler {
             if (onFieldHoverMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientFieldHoverEvent.registerEvent(event);
             }
+            Method onFieldSubHoverMethod = event.getClass().getMethod("onFieldSubHover", ClientFieldSubHoverEvent.class);
+            if (onFieldSubHoverMethod.getDeclaringClass() != ClientListener.class) {
+                this.clientFieldSubHoverEvent.registerEvent(event);
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -105,6 +112,9 @@ public class EventHandler {
         }
         if (eventClass.equals(ClientFieldHoverEvent.class)) {
             return this.clientFieldHoverEvent;
+        }
+        if (eventClass.equals(ClientFieldSubHoverEvent.class)) {
+            return this.clientFieldSubHoverEvent;
         }
         return null;
     }

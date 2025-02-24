@@ -2,6 +2,7 @@ package org.collebol.engine.gui.graphics.renderer.ui;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.renderer.Renderer;
+import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.lwjgl.opengl.GL11;
 
@@ -34,16 +35,18 @@ public class FieldRenderer extends Renderer {
 
         GL11.glEnd();
 
-        if(this.engine.getComponentHandler().getSubComponents(field.getId()) != null){
-            for (int i : this.engine.getComponentHandler().getSubComponents(field.getId())){
-                this.engine.getRenderers().getUiRenderer().renderSubComponent(Field.class, i, field.getId());
+        if(field.getSubComponents().getComponents() != null){
+            for (Component c : field.getSubComponents().getComponents().values()) {
+                if(c instanceof Field){
+                    this.engine.getRenderers().getUiRenderer().renderSubComponent(Field.class, c.getId(), field.getId());
+                }
             }
         }
     }
 
     public void renderSubField(int id, int parentId){
         Field parent = (Field) this.engine.getComponentHandler().getComponent(Field.class, parentId);
-        Field field = (Field) this.engine.getComponentHandler().getComponent(Field.class, id);
+        Field field = (Field) parent.getSubComponents().getComponent(Field.class, id);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

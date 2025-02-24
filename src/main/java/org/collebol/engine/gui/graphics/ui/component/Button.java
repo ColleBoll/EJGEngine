@@ -1,8 +1,9 @@
 package org.collebol.engine.gui.graphics.ui.component;
 
+import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.math.Vector2D;
 
-public class Button extends Component{
+public class Button extends Component {
 
     private int id;
     private Vector2D position;

@@ -2,7 +2,7 @@ package org.collebol.engine.gui.graphics.renderer.ui;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.renderer.Renderer;
-import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 
 import java.util.HashMap;

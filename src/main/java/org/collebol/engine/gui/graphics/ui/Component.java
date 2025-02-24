@@ -1,4 +1,4 @@
-package org.collebol.engine.gui.graphics.ui.component;
+package org.collebol.engine.gui.graphics.ui;
 
 import org.collebol.engine.math.Vector2D;
 
@@ -8,7 +8,6 @@ public abstract class Component {
     private Vector2D position;
     private float width;
     private float height;
-    private int parentId = 0;
 
     public float getHeight() {
         return height;
@@ -40,13 +39,5 @@ public abstract class Component {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
     }
 }

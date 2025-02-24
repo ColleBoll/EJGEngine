@@ -5,17 +5,18 @@ import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
+import org.collebol.engine.event.client.field.ClientFieldSubHoverEvent;
 import org.collebol.engine.gui.graphics.Camera;
+import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
-import org.collebol.engine.gui.graphics.ui.component.Component;
+import org.collebol.engine.math.ComponentCalculator;
 import org.collebol.engine.math.Vector2D;
 import org.collebol.engine.utils.GameLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MouseHandler {
 
@@ -37,7 +38,7 @@ public class MouseHandler {
                     if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, true, position);
 
-                        for(Component c : getComponentUnderMouse()){
+                        for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.LEFT_MOUSE);
                             }
@@ -45,7 +46,7 @@ public class MouseHandler {
                     } else {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
 
-                        for(Component c : getComponentUnderMouse()){
+                        for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.LEFT_MOUSE);
                             }
@@ -58,7 +59,7 @@ public class MouseHandler {
                     if (action == GLFW.GLFW_PRESS) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, true, position);
 
-                        for(Component c : getComponentUnderMouse()){
+                        for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.RIGHT_MOUSE);
                             }
@@ -66,7 +67,7 @@ public class MouseHandler {
                     } else if (action == GLFW.GLFW_RELEASE) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
 
-                        for(Component c : getComponentUnderMouse()){
+                        for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.RIGHT_MOUSE);
                             }
@@ -79,14 +80,18 @@ public class MouseHandler {
 
         GLFW.glfwSetCursorPosCallback(window, new GLFWCursorPosCallback() {
             private List<Component> enteredComponentList = new ArrayList<>();
+            private List<Component> enteredSubComponentList = new ArrayList<>();
 
             @Override
             public void invoke(long window, double xpos, double ypos) {
                 position.setX((float) xpos);
                 position.setY((float) ypos);
 
-                List<Component> currentHoveredComp = getComponentUnderMouse();
+                List<Component> currentHoveredComp = ComponentCalculator.getComponentUnderMouse(position, engine);
 
+                List<Component> currentHoveredSubComp = new ArrayList<>();
+
+                //EXIT
                 for(Component component : new ArrayList<>(enteredComponentList)){
                     if(!currentHoveredComp.contains(component)){
                         if(component instanceof Field){
@@ -94,10 +99,24 @@ public class MouseHandler {
                                     .callClientEvent(ClientFieldHoverEvent.class)
                                     .call(engine, position, component, false);
                             enteredComponentList.remove(component);
-                            System.out.println("exit");
+                        }
+                    }
+                    //subcomponent field
+                    if(component instanceof Field){
+                        List<Component> l = ComponentCalculator.checkIfSubComponent((Field) component, position);
+                        if(l == null) l = new ArrayList<>();
+                        currentHoveredSubComp.addAll(l);
+                        for(Component sub : new ArrayList<>(enteredSubComponentList)){
+                            if(!currentHoveredSubComp.contains(sub)){
+                                engine.getEventHandler()
+                                        .callClientEvent(ClientFieldSubHoverEvent.class)
+                                        .call(engine, position, component, false, sub.getId());
+                                enteredSubComponentList.remove(sub);
+                            }
                         }
                     }
                 }
+                //ENTER
                 for(Component component : currentHoveredComp){
                     if(!enteredComponentList.contains(component)){
                         if(component instanceof Field){
@@ -105,7 +124,21 @@ public class MouseHandler {
                                     .callClientEvent(ClientFieldHoverEvent.class)
                                     .call(engine, position, component, true);
                             enteredComponentList.add(component);
-                            System.out.println("enter");
+                        }
+                    }
+                    //subcomponents field
+                    if(component instanceof Field){
+                        List<Component> l = ComponentCalculator.checkIfSubComponent((Field) component, position);
+                        if(l == null) return;
+                        if(l.isEmpty()) return;
+                        currentHoveredSubComp.addAll(l);
+                        for(Component sub : currentHoveredSubComp){
+                            if(!enteredSubComponentList.contains(sub)){
+                                engine.getEventHandler()
+                                        .callClientEvent(ClientFieldSubHoverEvent.class)
+                                        .call(engine, position, component, true, sub.getId());
+                                enteredSubComponentList.add(sub);
+                            }
                         }
                     }
                 }
@@ -149,32 +182,5 @@ public class MouseHandler {
         float y = ((this.position.getY() + camera.getPosition().getY() - camera.getOrigin().getY()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));
         Vector2D v = new Vector2D(x, y);
         return location;
-    }
-
-    /**
-     * Checks if there is a field below of the mouse.
-     * @return field if there is a field else null.
-     */
-    public List<Component> getComponentUnderMouse(){
-        float mouseX = this.position.getX();
-        float mouseY = this.position.getY();
-
-        List<Component> componentList = new ArrayList<>();
-        List<Class<? extends Component>> clses = this.engine.getComponentHandler().getComponentsMap().keySet().stream().toList();
-        for (Class<? extends Component> cls : clses){
-            for(Component field : this.engine.getComponentHandler().getComponents(cls).values()){
-                float fieldX = field.getPosition().getX();
-                float fieldY = field.getPosition().getY();
-                float width = field.getWidth();
-                float height = field.getHeight();
-
-                if (mouseX >= fieldX && mouseX <= (fieldX + width) &&
-                        mouseY >= fieldY && mouseY <= (fieldY + height)) {
-
-                    componentList.add(field);
-                }
-            }
-        }
-        return componentList;
     }
 }
