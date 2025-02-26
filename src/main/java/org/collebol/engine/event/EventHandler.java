@@ -4,6 +4,8 @@ import org.collebol.engine.EJGEngine;
 import org.collebol.engine.event.client.ClientKeyClickEvent;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
+import org.collebol.engine.event.client.button.ClientButtonClickEvent;
+import org.collebol.engine.event.client.button.ClientButtonHoverEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
 import org.collebol.engine.event.client.field.ClientFieldSubHoverEvent;
@@ -42,6 +44,8 @@ public class EventHandler {
     private ClientFieldClickEvent clientFieldClickEvent;
     private ClientFieldHoverEvent clientFieldHoverEvent;
     private ClientFieldSubHoverEvent clientFieldSubHoverEvent;
+    private ClientButtonClickEvent clientButtonClickEvent;
+    private ClientButtonHoverEvent clientButtonHoverEvent;
 
     public EventHandler(EJGEngine e) {
         this.engine = e;
@@ -53,6 +57,8 @@ public class EventHandler {
         this.clientFieldClickEvent = new ClientFieldClickEvent();
         this.clientFieldHoverEvent = new ClientFieldHoverEvent();
         this.clientFieldSubHoverEvent = new ClientFieldSubHoverEvent();
+        this.clientButtonClickEvent = new ClientButtonClickEvent();
+        this.clientButtonHoverEvent = new ClientButtonHoverEvent();
     }
 
     /**
@@ -86,6 +92,14 @@ public class EventHandler {
             if (onFieldSubHoverMethod.getDeclaringClass() != ClientListener.class) {
                 this.clientFieldSubHoverEvent.registerEvent(event);
             }
+            Method onButtonClickMethod = event.getClass().getMethod("onButtonClick", ClientButtonClickEvent.class);
+            if (onButtonClickMethod.getDeclaringClass() != ClientListener.class) {
+                this.clientButtonClickEvent.registerEvent(event);
+            }
+            Method onButtonHoverMethod = event.getClass().getMethod("onButtonHover", ClientButtonHoverEvent.class);
+            if (onButtonHoverMethod.getDeclaringClass() != ClientListener.class) {
+                this.clientButtonHoverEvent.registerEvent(event);
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -115,6 +129,12 @@ public class EventHandler {
         }
         if (eventClass.equals(ClientFieldSubHoverEvent.class)) {
             return this.clientFieldSubHoverEvent;
+        }
+        if (eventClass.equals(ClientButtonClickEvent.class)) {
+            return this.clientButtonClickEvent;
+        }
+        if (eventClass.equals(ClientButtonHoverEvent.class)) {
+            return this.clientButtonHoverEvent;
         }
         return null;
     }

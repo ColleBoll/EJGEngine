@@ -2,7 +2,7 @@ package org.collebol.engine.gui;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Camera;
-import org.collebol.engine.gui.graphics.renderer.TextRenderer;
+import org.collebol.engine.gui.graphics.Text;
 import org.collebol.engine.math.Vector2D;
 
 /**
@@ -16,6 +16,7 @@ import org.collebol.engine.math.Vector2D;
  *     MyPanel panel = new MyPanel(id, engine);
  *     engine.getWindow().registerPanel(panel); //register panel at the window.
  * </pre></blockquote>
+ *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
@@ -29,8 +30,9 @@ public abstract class Panel {
 
     /**
      * Panel constructor.
+     *
      * @param id the id of the panel.
-     * @param e the engine instance.
+     * @param e  the engine instance.
      */
     public Panel(int id, EJGEngine e) {
         this.id = id;
@@ -42,30 +44,30 @@ public abstract class Panel {
      * Displays screen details, a tool for developing.
      */
     public void showScreenDetails() {
-        getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Window width: " + getEngine().getWindow().getWidth() + "px")
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 5f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_RIGHT)
+                .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
-        );
-        getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        ));
+        getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Window height: " + getEngine().getWindow().getHeight() + "px")
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 20f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_RIGHT)
+                .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
-        );
-        getEngine().getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        ));
+        getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("FPS: " + Math.floor(1.0f / getDT()))
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 50f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_RIGHT)
+                .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
-        );
+        ));
     }
 
     public abstract void update();
@@ -85,7 +87,6 @@ public abstract class Panel {
     }
 
     /**
-     *
      * @return delta tile
      */
     public float getDT() {

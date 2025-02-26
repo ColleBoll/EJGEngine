@@ -3,11 +3,14 @@ package org.collebol.engine.input;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.event.client.ClientLeftClickEvent;
 import org.collebol.engine.event.client.ClientRightClickEvent;
+import org.collebol.engine.event.client.button.ClientButtonClickEvent;
+import org.collebol.engine.event.client.button.ClientButtonHoverEvent;
 import org.collebol.engine.event.client.field.ClientFieldClickEvent;
 import org.collebol.engine.event.client.field.ClientFieldHoverEvent;
 import org.collebol.engine.event.client.field.ClientFieldSubHoverEvent;
 import org.collebol.engine.gui.graphics.Camera;
 import org.collebol.engine.gui.graphics.ui.Component;
+import org.collebol.engine.gui.graphics.ui.component.Button;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.math.ComponentCalculator;
 import org.collebol.engine.math.Vector2D;
@@ -42,6 +45,9 @@ public class MouseHandler {
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.LEFT_MOUSE);
                             }
+                            if(c instanceof Button button1){
+                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, true, position, button1, KeyType.LEFT_MOUSE);
+                            }
                         }
                     } else {
                         engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
@@ -49,6 +55,9 @@ public class MouseHandler {
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.LEFT_MOUSE);
+                            }
+                            if(c instanceof Button button1){
+                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, false, position, button1, KeyType.LEFT_MOUSE);
                             }
                         }
                     }
@@ -63,6 +72,9 @@ public class MouseHandler {
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.RIGHT_MOUSE);
                             }
+                            if(c instanceof Button button1){
+                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, true, position, button1, KeyType.RIGHT_MOUSE);
+                            }
                         }
                     } else if (action == GLFW.GLFW_RELEASE) {
                         engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
@@ -70,6 +82,9 @@ public class MouseHandler {
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
                                 engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.RIGHT_MOUSE);
+                            }
+                            if(c instanceof Button button1){
+                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, false, position, button1, KeyType.RIGHT_MOUSE);
                             }
                         }
                     }
@@ -100,6 +115,12 @@ public class MouseHandler {
                                     .call(engine, position, component, false);
                             enteredComponentList.remove(component);
                         }
+                        if(component instanceof Button){
+                            engine.getEventHandler()
+                                    .callClientEvent(ClientButtonHoverEvent.class)
+                                    .call(engine, position, component, false);
+                            enteredComponentList.remove(component);
+                        }
                     }
                     //subcomponent field
                     if(component instanceof Field){
@@ -125,11 +146,18 @@ public class MouseHandler {
                                     .call(engine, position, component, true);
                             enteredComponentList.add(component);
                         }
+                        if(component instanceof Button){
+                            engine.getEventHandler()
+                                    .callClientEvent(ClientButtonHoverEvent.class)
+                                    .call(engine, position, component, true);
+                            enteredComponentList.add(component);
+                        }
                     }
                     //subcomponents field
                     if(component instanceof Field){
+                        if(((Field) component).subComponents().getComponents() == null) return;
                         List<Component> l = ComponentCalculator.checkIfSubComponent((Field) component, position);
-                        if(l == null) return;
+                        if(l == null) l = new ArrayList<>();
                         if(l.isEmpty()) return;
                         currentHoveredSubComp.addAll(l);
                         for(Component sub : currentHoveredSubComp){

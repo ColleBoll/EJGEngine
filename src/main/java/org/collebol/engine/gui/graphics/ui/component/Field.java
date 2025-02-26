@@ -5,6 +5,23 @@ import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.ComponentHandler;
 import org.collebol.engine.math.Vector2D;
 
+/**
+ * The Field class represents a UI {@link Component}.
+ * A Field can hold multiple Components because it has it own {@link ComponentHandler}
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     Field field = new Field(new Field.FieldBuilder(1) // 1 = ID
+ *         .backgroundColor(Color.BLUE)
+ *         .position(new Vector2D(100, 100))
+ *         .width(200)
+ *         .height(400)
+ *     );
+ * </pre></blockquote>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class Field extends Component {
 
     private boolean resizable;
@@ -12,11 +29,15 @@ public class Field extends Component {
 
     private float[] backgroundColor;
     private float borderSize;
-    private float borderRadius;
     private float[] borderColor;
 
     private ComponentHandler subComponents;
 
+    /**
+     * Field constructor.
+     *
+     * @param builder A FieldBuilder
+     */
     public Field(FieldBuilder builder) {
 
         this.subComponents = new ComponentHandler();
@@ -28,7 +49,6 @@ public class Field extends Component {
 
         this.backgroundColor = builder.backgroundColor;
         this.borderSize = builder.borderSize;
-        this.borderRadius = builder.borderRadius;
         this.borderColor = builder.borderColor;
 
         this.resizable = false;
@@ -40,9 +60,9 @@ public class Field extends Component {
         private Vector2D position = new Vector2D(0.0f, 0.0f);
         private float width = 100.0f;
         private float height = 100.0f;
+
         private float[] backgroundColor = Color.WHITE;
-        private float borderSize = 1.0f;
-        private float borderRadius = 0f;
+        private float borderSize = 0f;
         private float[] borderColor = Color.GRAY;
 
         public FieldBuilder(int id) {
@@ -71,11 +91,6 @@ public class Field extends Component {
         
         public FieldBuilder borderSize(float borderSize){
             this.borderSize = borderSize;
-            return this;
-        }
-        
-        public FieldBuilder borderRadius(float borderRadius){
-            this.borderRadius = borderRadius;
             return this;
         }
         
@@ -117,14 +132,6 @@ public class Field extends Component {
         this.borderSize = borderSize;
     }
 
-    public float getBorderRadius() {
-        return borderRadius;
-    }
-
-    public void setBorderRadius(float borderRadius) {
-        this.borderRadius = borderRadius;
-    }
-
     public float[] getBorderColor() {
         return borderColor;
     }
@@ -133,7 +140,10 @@ public class Field extends Component {
         this.borderColor = borderColor;
     }
 
-    public ComponentHandler getSubComponents() {
+    /**
+     * @return A {@link ComponentHandler} containing all the subcomponents of this Field.
+     */
+    public ComponentHandler subComponents() {
         return subComponents;
     }
 }

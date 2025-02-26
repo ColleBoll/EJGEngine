@@ -1,7 +1,7 @@
 package org.collebol.engine.gui.graphics.renderer;
 
 import org.collebol.engine.EJGEngine;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.engine.gui.graphics.Text;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.system.MemoryUtil;
@@ -21,16 +21,11 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * @since 1.0-dev
  */
 public class TextRenderer extends Renderer {
+
     private long vg;
     private EJGEngine engine;
     private String name;
     private String fontPath;
-
-    public static int ALIGN_CENTER = NVG_ALIGN_CENTER;
-    public static int ALIGN_TOP_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_TOP;
-    public static int ALIGN_TOP_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_TOP;
-    public static int ALIGN_BOTTOM_LEFT = NVG_ALIGN_LEFT | NVG_ALIGN_BOTTOM;
-    public static int ALIGN_BOTTOM_RIGHT = NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM;
 
     private EJGEngine getEngine() {
         return engine;
@@ -57,9 +52,9 @@ public class TextRenderer extends Renderer {
     /**
      * Render text on the Panel with origin-point
      *
-     * @param textBuilder
+     * @param text
      */
-    public void render(TextBuilder textBuilder) {
+    public void render(Text text) {
         nvgBeginFrame(this.vg, getEngine().getWindow().getWidth(), getEngine().getWindow().getHeight(), 20);
 
         NVGColor color = NVGColor.create();
@@ -67,67 +62,22 @@ public class TextRenderer extends Renderer {
 
         nvgSave(this.vg);
 
-        nvgTranslate(this.vg, textBuilder.origin.getX(), textBuilder.origin.getY());
+        nvgTranslate(this.vg, text.getOrigin().getX(), text.getOrigin().getY());
 
-        nvgRotate(this.vg, (float) Math.toRadians(textBuilder.rotation));
+        nvgRotate(this.vg, (float) Math.toRadians(text.getRotation()));
 
-        nvgTranslate(this.vg, textBuilder.position.getX() - textBuilder.origin.getX(), textBuilder.position.getY() - textBuilder.origin.getY());
+        nvgTranslate(this.vg, text.getPosition().getX() - text.getOrigin().getX(), text.getPosition().getY() - text.getOrigin().getY());
 
-        nvgFontSize(this.vg, (textBuilder.size * textBuilder.scale));
+        nvgFontSize(this.vg, (text.getSize() * text.getScale()));
         nvgFontFace(this.vg, this.name);
         nvgFillColor(this.vg, color);
-        nvgTextAlign(this.vg, textBuilder.align);
+        nvgTextAlign(this.vg, text.getAlign());
 
-        nvgText(this.vg, 0, 0, textBuilder.text);
+        nvgText(this.vg, 0, 0, text.getText());
 
         nvgRestore(this.vg);
 
         nvgEndFrame(this.vg);
-    }
-
-    public static class TextBuilder {
-        private String text = "";
-        private Vector2D position = new Vector2D(0, 0);
-        private float size = 10;
-        private float scale = 1;
-        private int align = TextRenderer.ALIGN_TOP_LEFT;
-        private float rotation = 0;
-        private Vector2D origin = new Vector2D(0, 0);
-
-        public TextBuilder text(String text) {
-            this.text = text;
-            return this;
-        }
-
-        public TextBuilder position(Vector2D position) {
-            this.position = position;
-            return this;
-        }
-
-        public TextBuilder size(float size) {
-            this.size = size;
-            return this;
-        }
-
-        public TextBuilder scale(float scale) {
-            this.scale = scale;
-            return this;
-        }
-
-        public TextBuilder align(int align) {
-            this.align = align;
-            return this;
-        }
-
-        public TextBuilder rotation(float rotation) {
-            this.rotation = rotation;
-            return this;
-        }
-
-        public TextBuilder origin(Vector2D origin) {
-            this.origin = origin;
-            return this;
-        }
     }
 
     private String extractResourceToTempFile(String resourcePath) {

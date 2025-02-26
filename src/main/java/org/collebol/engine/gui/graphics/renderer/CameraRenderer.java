@@ -1,6 +1,7 @@
 package org.collebol.engine.gui.graphics.renderer;
 
 import org.collebol.engine.EJGEngine;
+import org.collebol.engine.gui.graphics.Text;
 import org.collebol.game.GameObject;
 import org.collebol.engine.gui.graphics.Camera;
 import org.collebol.engine.gui.graphics.Light;
@@ -92,7 +93,7 @@ public class CameraRenderer extends Renderer {
         float y = (float) (((textBuilder.location.getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
         this.engine.getRenderers().getTextRenderer(textBuilder.font).render(
-                new TextRenderer.TextBuilder()
+                new Text(new Text.TextBuilder()
                         .text(textBuilder.text)
                         .position(v)
                         .size(textBuilder.size)
@@ -100,7 +101,7 @@ public class CameraRenderer extends Renderer {
                         .align(textBuilder.align)
                         .rotation(camera.getRotation())
                         .origin(camera.getOrigin())
-        );
+                ));
     }
 
     /**
@@ -127,7 +128,7 @@ public class CameraRenderer extends Renderer {
         private GameLocation location = new GameLocation(0, 0);
         private float size = 10;
         private String font = "default";
-        private int align = TextRenderer.ALIGN_TOP_LEFT;
+        private int align = Text.ALIGN_TOP_LEFT;
 
         public TextBuilder text(String text) {
             this.text = text;
@@ -198,68 +199,68 @@ public class CameraRenderer extends Renderer {
 
         Vector2D mousePos = this.engine.getWindow().getMouseHandler().getPosition();
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Mouse GameLocation [ X: " + mouseLoc.getX() + " / Y: " + mouseLoc.getY() + "]")
                 .position(new Vector2D(10f, 5f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera-origin GameLocation [ X: " + pointerLoc.getX() + " / Y: " + pointerLoc.getY() + "]")
                 .position(new Vector2D(10f, 20f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]")
                 .position(new Vector2D(10f, 50f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]")
                 .position(new Vector2D(10f, 65f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f)
                 .position(new Vector2D(10f, 95f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f)
                 .position(new Vector2D(10f, 110f))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
 
-        this.engine.getRenderers().getTextRenderer("default").render(new TextRenderer.TextBuilder()
+        this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text(mouseLoc.getX() + " / " + mouseLoc.getY())
                 .position(new Vector2D(mousePos.getX(), mousePos.getY() - 15))
                 .size(13)
                 .scale(1)
-                .align(TextRenderer.ALIGN_TOP_LEFT)
+                .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
-        );
+        ));
     }
 
     /**
