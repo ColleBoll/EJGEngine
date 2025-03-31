@@ -1,4 +1,4 @@
-package org.collebol.engine.utils;
+package org.collebol.shared;
 
 import org.collebol.engine.math.Vector2D;
 

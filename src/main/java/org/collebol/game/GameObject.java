@@ -1,7 +1,7 @@
 package org.collebol.game;
 
 import org.collebol.engine.math.Vector2D;
-import org.collebol.engine.utils.EngineObject;
+import org.collebol.shared.EngineObject;
 import org.collebol.engine.utils.GameLocation;
 
 /**
