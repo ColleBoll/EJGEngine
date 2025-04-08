@@ -1,5 +1,5 @@
 package org.collebol.server;
 
 public enum ServerState {
-    STARTING, RUNNING
+    STARTING, RUNNING, STOPPED
 }

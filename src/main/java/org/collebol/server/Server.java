@@ -12,9 +12,9 @@ public abstract class Server implements AutoCloseable{
 
     private final String host;
     private final int port;
-    private final ServerSocket server;
-    private final ExecutorService pool = Executors.newCachedThreadPool();
-    private ServerState serverState;
+    private static ServerSocket server;
+    private static final ExecutorService pool = Executors.newCachedThreadPool();
+    private static ServerState serverState;
     private HashMap<UUID, ServerClient> clientList = new HashMap<>();
 
     public Server(String host, int port, ServerState serverState) throws IOException {
@@ -32,26 +32,53 @@ public abstract class Server implements AutoCloseable{
         ServerConsole.server("Server is running");
 
         serverState = ServerState.RUNNING;
-        while(serverState == ServerState.RUNNING){
-            try {
-                Socket clientSocket = server.accept();
-                pool.submit(() -> {
-                    try (ClientSession session = new ClientSession(clientSocket, this)) {
-                        ServerConsole.server("Connection has been made[" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
-                        session.handle();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+
+        ServerConsole.server("Server is starting at: " + host + ":" + port);
+
+        ServerConsole.consoleListener();
+
+        try {
+            while(serverState == ServerState.RUNNING){
+                try {
+                    Socket clientSocket = server.accept();
+                    pool.submit(() -> {
+                        try (ClientSession session = new ClientSession(clientSocket, this)) {
+                            ServerConsole.server("Connection has been made[" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
+                            session.handle();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                } catch (IOException e) {
+                    if (server.isClosed()) {
+                        break;
                     }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                    throw new RuntimeException(e);
+                }
             }
+        } finally {
+            stopping();
+            ServerConsole.server("Server is stopped!");
         }
     }
 
     public abstract void starting();
 
     public abstract void running();
+
+    public abstract void stopping();
+
+    public static void shutdown() {
+        try {
+            serverState = ServerState.STOPPED;
+            pool.shutdown();
+            if (server != null && !server.isClosed()) {
+                server.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void close() throws Exception {
