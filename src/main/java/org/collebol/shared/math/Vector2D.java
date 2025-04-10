@@ -1,4 +1,4 @@
-package org.collebol.engine.math;
+package org.collebol.shared.math;
 
 /**
  * This 2D game Vector represents a quantity with both direction and magnitude (length),

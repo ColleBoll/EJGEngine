@@ -1,6 +1,7 @@
 package org.collebol.engine.math;
 
 import org.collebol.engine.audio.Sound;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * The VolumeCalculator class is responsible for calculating the volume of a sound based on its position relative to the listener's position.

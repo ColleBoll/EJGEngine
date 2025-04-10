@@ -1,4 +1,4 @@
-package org.collebol.game.objects.entity;
+package org.collebol.shared.objects.entity;
 
 import java.util.UUID;
 

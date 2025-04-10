@@ -3,7 +3,7 @@ package org.collebol.engine.gui.graphics.renderer;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Light;
 import org.collebol.engine.gui.graphics.Texture;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 

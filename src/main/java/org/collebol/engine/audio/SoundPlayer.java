@@ -1,6 +1,6 @@
 package org.collebol.engine.audio;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.collebol.engine.math.VolumeCalculator;
 import org.lwjgl.openal.*;
 import org.lwjgl.system.MemoryUtil;

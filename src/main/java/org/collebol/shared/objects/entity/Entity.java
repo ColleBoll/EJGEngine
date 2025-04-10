@@ -1,7 +1,7 @@
-package org.collebol.game.objects.entity;
+package org.collebol.shared.objects.entity;
 
-import org.collebol.game.GameObject;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.objects.GameObject;
+import org.collebol.shared.GameLocation;
 
 import java.util.UUID;
 

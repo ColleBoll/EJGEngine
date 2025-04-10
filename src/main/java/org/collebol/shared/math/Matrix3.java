@@ -1,4 +1,4 @@
-package org.collebol.engine.math;
+package org.collebol.shared.math;
 
 public class Matrix3 {
 

@@ -1,8 +1,8 @@
-package org.collebol.game;
+package org.collebol.shared.objects;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.collebol.shared.EngineObject;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.GameLocation;
 
 /**
  * The GameObject class represents a object in the game world.

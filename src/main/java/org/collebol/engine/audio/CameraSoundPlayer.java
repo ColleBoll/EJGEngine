@@ -2,8 +2,8 @@ package org.collebol.engine.audio;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Camera;
-import org.collebol.engine.math.Vector2D;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.math.Vector2D;
+import org.collebol.shared.GameLocation;
 
 /**
  * The CameraSoundPlayer class is responsible for playing sounds relative to the camera's position.

@@ -1,6 +1,6 @@
 package org.collebol.game.world;
 
-import org.collebol.game.GameObject;
+import org.collebol.shared.objects.GameObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

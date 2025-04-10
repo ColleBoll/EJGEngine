@@ -1,6 +1,6 @@
 package org.collebol.engine.gui.graphics.renderer;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.collebol.engine.gui.graphics.ui;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * The Component class is an abstract class that represents a UI component in the game.

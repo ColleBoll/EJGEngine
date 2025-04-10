@@ -1,6 +1,6 @@
 package org.collebol.engine.utils;
 
-import org.collebol.game.objects.entity.Player;
+import org.collebol.shared.objects.entity.Player;
 
 public class Client {
 

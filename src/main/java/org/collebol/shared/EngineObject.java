@@ -1,6 +1,6 @@
 package org.collebol.shared;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * EngineObject represents an object in the game engine,

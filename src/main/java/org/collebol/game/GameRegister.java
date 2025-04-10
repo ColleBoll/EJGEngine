@@ -1,7 +1,7 @@
 package org.collebol.game;
 
-import org.collebol.game.objects.entity.Entity;
-import org.collebol.game.objects.entity.Player;
+import org.collebol.shared.objects.entity.Entity;
+import org.collebol.shared.objects.entity.Player;
 import org.collebol.game.world.World;
 
 import java.util.HashMap;

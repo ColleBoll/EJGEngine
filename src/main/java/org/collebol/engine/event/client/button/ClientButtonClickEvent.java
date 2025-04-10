@@ -4,7 +4,7 @@ import org.collebol.engine.event.Event;
 import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Button;
 import org.collebol.engine.input.KeyType;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 

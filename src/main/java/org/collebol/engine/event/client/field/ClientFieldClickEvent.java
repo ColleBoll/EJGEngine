@@ -5,7 +5,7 @@ import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.input.KeyType;
 import org.collebol.engine.math.ComponentCalculator;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.List;
 import java.util.Map;

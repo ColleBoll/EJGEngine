@@ -1,6 +1,6 @@
 package org.collebol.engine.audio;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.system.MemoryStack;

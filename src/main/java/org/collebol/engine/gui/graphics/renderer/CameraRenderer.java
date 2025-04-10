@@ -2,12 +2,12 @@ package org.collebol.engine.gui.graphics.renderer;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Text;
-import org.collebol.game.GameObject;
+import org.collebol.shared.objects.GameObject;
 import org.collebol.engine.gui.graphics.Camera;
 import org.collebol.engine.gui.graphics.Light;
 import org.collebol.engine.math.FrustumCulling;
-import org.collebol.engine.math.Vector2D;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.math.Vector2D;
+import org.collebol.shared.GameLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import org.collebol.engine.gui.graphics.Text;
 import org.collebol.engine.gui.graphics.renderer.Renderer;
 import org.collebol.engine.gui.graphics.ui.component.Button;
 import org.collebol.engine.gui.graphics.ui.component.Field;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 /**

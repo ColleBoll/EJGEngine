@@ -3,7 +3,7 @@ package org.collebol.engine.gui;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Camera;
 import org.collebol.engine.gui.graphics.Text;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * The Panel class represents a user interface panel in a window.

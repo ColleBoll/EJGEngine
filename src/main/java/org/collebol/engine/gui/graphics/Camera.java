@@ -2,8 +2,8 @@ package org.collebol.engine.gui.graphics;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.math.CameraCalculator;
-import org.collebol.engine.math.Vector2D;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.math.Vector2D;
+import org.collebol.shared.GameLocation;
 
 /**
  * The Camera class represents a camera in a 2D space.

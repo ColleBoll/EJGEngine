@@ -1,4 +1,4 @@
-package org.collebol.engine.utils;
+package org.collebol.shared;
 
 /**
  * The GameLocation class represents the location of GameObject's in the game.

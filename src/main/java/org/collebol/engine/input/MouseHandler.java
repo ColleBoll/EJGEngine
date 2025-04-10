@@ -13,8 +13,8 @@ import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Button;
 import org.collebol.engine.gui.graphics.ui.component.Field;
 import org.collebol.engine.math.ComponentCalculator;
-import org.collebol.engine.math.Vector2D;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.math.Vector2D;
+import org.collebol.shared.GameLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
@@ -204,7 +204,7 @@ public class MouseHandler {
     public GameLocation getGameLocation() {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
-        GameLocation location = camera.calculate().getGameLocationFromVector2D(this.position);
+        GameLocation location = camera.calculate().getGameLocationFromPanelPosition(this.position);
 
         float x = ((this.position.getX() + camera.getPosition().getX() - camera.getOrigin().getX()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));
         float y = ((this.position.getY() + camera.getPosition().getY() - camera.getOrigin().getY()) / (this.engine.getWindow().getTileSize() * camera.getZoom()));

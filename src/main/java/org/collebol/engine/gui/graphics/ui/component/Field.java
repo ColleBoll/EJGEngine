@@ -3,7 +3,7 @@ package org.collebol.engine.gui.graphics.ui.component;
 import org.collebol.engine.gui.graphics.Color;
 import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.ComponentHandler;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * The Field class represents a UI {@link Component}.

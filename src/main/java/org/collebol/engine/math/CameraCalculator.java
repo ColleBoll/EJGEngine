@@ -2,7 +2,8 @@ package org.collebol.engine.math;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Camera;
-import org.collebol.engine.utils.GameLocation;
+import org.collebol.shared.GameLocation;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * You can calculate camera data here.
@@ -27,7 +28,7 @@ public class CameraCalculator {
      * @param position Panel position to calculate the current GameLocation on that Panel position.
      * @return The GameLocation on the given Panel position.
      */
-    public GameLocation getGameLocationFromVector2D(Vector2D position) {
+    public GameLocation getGameLocationFromPanelPosition(Vector2D position) {
         float tileSize = this.engine.getWindow().getTileSize();
         float zoom = this.camera.getZoom();
         Vector2D cameraPos = this.camera.getPosition();
@@ -47,4 +48,33 @@ public class CameraCalculator {
 
         return new GameLocation(worldX, worldY);
     }
+
+    /**
+     * This method calculates the Panel position on screen from a given GameLocation.
+     * It takes into account the camera's position, zoom, and rotation.
+     *
+     * @param gameLocation The GameLocation to convert to a Panel position.
+     * @return The corresponding Panel position as a Vector2D.
+     */
+    public Vector2D getPanelPositionFromGameLocation(GameLocation gameLocation) {
+        float tileSize = this.engine.getWindow().getTileSize();
+        float zoom = this.camera.getZoom();
+        Vector2D cameraPos = this.camera.getPosition();
+        Vector2D cameraOrigin = this.camera.getOrigin();
+
+        float worldX = (float) (gameLocation.getX() * tileSize * zoom - cameraPos.getX());
+        float worldY = (float) (gameLocation.getY() * tileSize * zoom - cameraPos.getY());
+
+        float rotation = this.camera.getRotation();
+        float radians = (float) Math.toRadians(rotation);
+
+        float rotatedX = (float) (worldX * Math.cos(radians) - worldY * Math.sin(radians));
+        float rotatedY = (float) (worldX * Math.sin(radians) + worldY * Math.cos(radians));
+
+        float panelX = rotatedX + cameraOrigin.getX();
+        float panelY = rotatedY + cameraOrigin.getY();
+
+        return new Vector2D(panelX, panelY);
+    }
+
 }

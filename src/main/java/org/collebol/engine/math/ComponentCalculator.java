@@ -3,6 +3,7 @@ package org.collebol.engine.math;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.gui.graphics.ui.component.Field;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;

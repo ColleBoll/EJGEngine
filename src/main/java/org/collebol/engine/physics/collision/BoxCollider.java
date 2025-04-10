@@ -1,6 +1,6 @@
 package org.collebol.engine.physics.collision;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 public class BoxCollider extends Collider {
 

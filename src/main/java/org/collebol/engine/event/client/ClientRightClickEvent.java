@@ -1,7 +1,7 @@
 package org.collebol.engine.event.client;
 
 import org.collebol.engine.event.Event;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 

@@ -2,6 +2,7 @@ package org.collebol.engine.math;
 
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.Camera;
+import org.collebol.shared.math.Vector2D;
 
 /**
  * The FrustumCulling class provides a method to determine if a given position is within the camera's frustum.

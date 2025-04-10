@@ -1,6 +1,6 @@
 package org.collebol.engine.physics.collision;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.collebol.engine.physics.PhysicsComponent;
 
 public abstract class Collider extends PhysicsComponent {

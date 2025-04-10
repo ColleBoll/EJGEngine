@@ -1,6 +1,6 @@
 package org.collebol.engine.gui.graphics;
 
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 

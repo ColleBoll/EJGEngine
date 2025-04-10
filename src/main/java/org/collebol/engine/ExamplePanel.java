@@ -1,7 +1,7 @@
 package org.collebol.engine;
 
 import org.collebol.engine.gui.Panel;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 public class ExamplePanel extends Panel {

@@ -3,7 +3,7 @@ package org.collebol.engine.event;
 import org.collebol.engine.EJGEngine;
 import org.collebol.engine.gui.graphics.ui.Component;
 import org.collebol.engine.input.KeyType;
-import org.collebol.engine.math.Vector2D;
+import org.collebol.shared.math.Vector2D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
