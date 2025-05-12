@@ -80,6 +80,19 @@
                 <lwjgl.natives>natives-windows</lwjgl.natives>
             </properties>
         </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>arch</arch>
+                </os>
+            </activation>
+            <properties>
+                <artifact.suffix>linux</artifact.suffix>
+                <lwjgl.natives>natives-linux</lwjgl.natives>
+            </properties>
+        </profile>
     </profiles>
 
     <build>
