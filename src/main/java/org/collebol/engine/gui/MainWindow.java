@@ -76,6 +76,8 @@ public class MainWindow implements Runnable {
     private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
+        //test
+
         if (!GLFW.glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW.");
         }
