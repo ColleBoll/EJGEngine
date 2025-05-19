@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
+/**
+ * This class is responsible for managing every Client Session that has made a valid connection with the socket.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ClientSession implements AutoCloseable {
 
     private final Socket socket;

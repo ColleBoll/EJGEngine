@@ -8,6 +8,15 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This is the server side of the EJGEngine project. This is the base of an external server socket.
+ * You can use this for example to make a multiplayer option to run a part of the game external.
+ *
+ * <p>This class is responsible for setting up and running the server.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public abstract class Server implements AutoCloseable{
 
     private final String host;
@@ -24,6 +33,16 @@ public abstract class Server implements AutoCloseable{
         this.server = new ServerSocket(port);
     }
 
+    /**
+     * Starts the server by performing the following steps:
+     * <ol>
+     *     <li>Calls the {@link #starting()} method.</li>
+     *     <li>Calls the {@link #running()} method.</li>
+     *     <li>Sets the {@link #serverState} to {@link ServerState#RUNNING}.</li>
+     *     <li>Setting up the {@link ServerConsole#consoleListener()}</li>
+     *     <li>Opening the socket.</li>
+     * </ol>
+     */
     public void start(){
         starting();
         ServerConsole.server("Server is starting");
@@ -68,6 +87,9 @@ public abstract class Server implements AutoCloseable{
 
     public abstract void stopping();
 
+    /**
+     * Shutdown the server.
+     */
     public static void shutdown() {
         try {
             serverState = ServerState.STOPPED;

@@ -4,6 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * This ServerConsole class is responsible for managing the server console.
+ *
+ * <p>With different formats to put text into the console and a console listener.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ServerConsole {
 
     public static void consoleListener() {
