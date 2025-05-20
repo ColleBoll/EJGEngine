@@ -1,6 +1,6 @@
 package org.collebol.game.world;
 
-import org.collebol.game.objects.solids.Tile;
+import org.collebol.shared.objects.solids.Tile;
 
 /**
  * Abstract class representing a world generator in the EJGEngine.
