@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
 
     <licenses>
         <license>
@@ -84,8 +84,7 @@
             <id>linux</id>
             <activation>
                 <os>
-                    <family>linux</family>
-                    <arch>arch</arch>
+                    <family>unix</family>
                 </os>
             </activation>
             <properties>
