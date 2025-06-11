@@ -15,6 +15,7 @@
         </license>
     </licenses>
 
+    <name>EJGEngine</name>
     <url>https://github.com/ColleBoll/EJGEngine</url>
     <description>A 2D game engine with OpenGL support based on LWJGL.</description>
 
