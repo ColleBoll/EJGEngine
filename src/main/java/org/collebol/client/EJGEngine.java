@@ -2,7 +2,7 @@ package org.collebol.client;
 
 
 import org.collebol.client.audio.SoundHandler;
-import org.collebol.client.event.EventHandler;
+import org.collebol.client.event.ClientEventHandler;
 import org.collebol.client.gui.MainWindow;
 import org.collebol.client.gui.Panel;
 import org.collebol.client.gui.graphics.renderer.RenderHandler;
@@ -27,7 +27,7 @@ public abstract class EJGEngine {
     private MainWindow window;
 
     private RenderHandler renderRegisterHandler;
-    private EventHandler eventHandler = new EventHandler(this);
+    private ClientEventHandler eventHandler = new ClientEventHandler(this);
     private SoundHandler soundHandler;
     private ComponentHandler componentHandler;
 
@@ -95,14 +95,14 @@ public abstract class EJGEngine {
     /**
      * @return the event handler associated with the engine
      */
-    public EventHandler getEventHandler() {
+    public ClientEventHandler getEventHandler() {
         return this.eventHandler;
     }
 
     /**
      * @param eventHandler the event handler to be set
      */
-    public void setEventHandler(EventHandler eventHandler) {
+    public void setEventHandler(ClientEventHandler eventHandler) {
         this.eventHandler = eventHandler;
     }
 

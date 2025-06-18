@@ -1,6 +1,6 @@
 package org.collebol.client.event.client;
 
-import org.collebol.client.event.Event;
+import org.collebol.client.event.ClientEvent;
 import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientRightClickEvent extends Event {
+public class ClientRightClickEvent extends ClientEvent {
 
     private Vector2D position;
     private boolean press;

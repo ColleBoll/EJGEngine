@@ -24,7 +24,7 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public abstract class Event {
+public abstract class ClientEvent {
 
     private EJGEngine engine;
 

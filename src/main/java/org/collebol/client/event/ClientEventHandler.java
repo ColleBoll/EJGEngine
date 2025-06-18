@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class EventHandler {
+public class ClientEventHandler {
 
     private EJGEngine engine;
 
@@ -47,7 +47,7 @@ public class EventHandler {
     private ClientButtonClickEvent clientButtonClickEvent;
     private ClientButtonHoverEvent clientButtonHoverEvent;
 
-    public EventHandler(EJGEngine e) {
+    public ClientEventHandler(EJGEngine e) {
         this.engine = e;
 
         this.clientRightClickEvent = new ClientRightClickEvent();
@@ -111,7 +111,7 @@ public class EventHandler {
      * @param eventClass The class of the event to be returned.
      * @return The instance of the event if it matches one of the known client events, otherwise null.
      */
-    public Event callClientEvent(Class<? extends Event> eventClass) {
+    public ClientEvent callClientEvent(Class<? extends ClientEvent> eventClass) {
         if (eventClass.equals(ClientRightClickEvent.class)) {
             return this.clientRightClickEvent;
         }

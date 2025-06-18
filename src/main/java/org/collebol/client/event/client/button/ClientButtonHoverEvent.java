@@ -1,13 +1,13 @@
 package org.collebol.client.event.client.button;
 
-import org.collebol.client.event.Event;
+import org.collebol.client.event.ClientEvent;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
 import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 
-public class ClientButtonHoverEvent extends Event {
+public class ClientButtonHoverEvent extends ClientEvent {
 
     private Vector2D position;
     private Button button;

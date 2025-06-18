@@ -1,6 +1,6 @@
 package org.collebol.client.event.client.field;
 
-import org.collebol.client.event.Event;
+import org.collebol.client.event.ClientEvent;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.input.KeyType;
@@ -10,7 +10,7 @@ import org.collebol.shared.math.Vector2D;
 import java.util.List;
 import java.util.Map;
 
-public class ClientFieldClickEvent extends Event {
+public class ClientFieldClickEvent extends ClientEvent {
 
     private Vector2D position;
     private KeyType keyType;
