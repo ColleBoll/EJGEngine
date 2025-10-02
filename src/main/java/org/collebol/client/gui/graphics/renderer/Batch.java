@@ -24,6 +24,10 @@ public class Batch {
     private int texture;
     private List<BatchItem> items;
 
+    /**
+     *
+     * @param textureid the texture id that must be rendered!
+     */
     public Batch(int textureid) {
         this.texture = textureid;
         this.items = new ArrayList<>();

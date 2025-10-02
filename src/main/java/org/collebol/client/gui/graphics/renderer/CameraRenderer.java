@@ -10,6 +10,7 @@ import org.collebol.shared.math.Vector2D;
 import org.collebol.shared.GameLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,15 @@ public class CameraRenderer extends Renderer {
             if (!FrustumCulling.isInFrustum(camera, v, this.engine)) {
                 continue;
             }
-            this.engine.getRenderers().getTextureRenderer("default").render(g.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
+
+            // Sprite
+            int texId;
+            if (g.hasSprite()) {
+                texId = g.getTexture();
+            } else {
+                texId = g.getTexture();
+            }
+            this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
         }
     }
 
@@ -54,18 +63,40 @@ public class CameraRenderer extends Renderer {
      */
     public void renderBatchObjects(Map<Integer, List<GameObject>> gameObjects) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
-        for (int i : gameObjects.keySet()) {
-            Batch batch = new Batch(i);
-            for (GameObject obj : gameObjects.get(i)) {
+        // deel de map met game objects op en sorteer op Texture ID
+
+        // voorbeeld:
+        // texture id's: 6,5,7,4,2,1,4,9,5,6,1 --|-> (111) -> render alle items met hetzelfde texture ID als batch
+        //                                       |-> (2222)-> etc.
+        //                                       |-> (33)  -> etc.
+
+        Map<Integer, Batch> batches = new HashMap<>();
+
+        for (int i : gameObjects.keySet()) { // i = texture id
+
+            for (GameObject obj : gameObjects.get(i)) { // voor elk game object meet hetzelfde texture ID krijg de juiste paneel position ...
+                // en voeg het toe aan de Batch die Texture ID (i) heeft megekregen.
                 float x = (float) (((obj.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
                 float y = (float) (((obj.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
                 Vector2D v = new Vector2D(x, y);
                 if (!FrustumCulling.isInFrustum(camera, v, this.engine)) {
                     continue;
                 }
+
+                int texId;
+                if (obj.hasSprite()) {
+                    texId = obj.getSprite().getCurrentFrameId();
+                } else {
+                    texId = obj.getTexture();
+                }
+
+                Batch batch = batches.computeIfAbsent(texId, Batch::new);
                 batch.addItem(v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
             }
-            this.engine.getRenderers().getTextureRenderer("default").renderBatch(batch, camera.isLighting());
+        }
+        for (Batch batch : batches.values()) {
+            this.engine.getRenderers().getTextureRenderer("default")
+                    .renderBatch(batch, camera.isLighting());
         }
     }
 
@@ -79,7 +110,15 @@ public class CameraRenderer extends Renderer {
         float x = (float) (((gameObject.getGameLocation().getX() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getX()) + camera.getOrigin().getX());
         float y = (float) (((gameObject.getGameLocation().getY() * (this.engine.getWindow().getTileSize() * camera.getZoom())) - camera.getPosition().getY()) + camera.getOrigin().getY());
         Vector2D v = new Vector2D(x, y);
-        this.engine.getRenderers().getTextureRenderer("default").render(gameObject.getTexture(), v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
+
+        // Sprite
+        int texId;
+        if (gameObject.hasSprite()) {
+            texId = gameObject.getTexture();
+        } else {
+            texId = gameObject.getTexture();
+        }
+        this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
     }
 
     /**
