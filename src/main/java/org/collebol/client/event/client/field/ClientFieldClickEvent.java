@@ -48,7 +48,7 @@ public class ClientFieldClickEvent extends ClientEvent {
         return !press;
     }
 
-    public boolean isSubCommandClicked(){
+    public boolean isSubComponentClicked(){
         return actionSubComponent != null;
     }
 

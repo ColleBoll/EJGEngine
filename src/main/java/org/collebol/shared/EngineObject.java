@@ -13,6 +13,7 @@ public class EngineObject {
 
     private Vector2D vector;
     private int textureid;
+    private Sprite sprite;
 
     /**
      * Position relative to the screen.
@@ -39,4 +40,17 @@ public class EngineObject {
     public void setTexture(int id) {
         this.textureid = id;
     }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+    public boolean hasSprite() {
+        return this.sprite != null;
+    }
+    
 }
