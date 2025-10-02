@@ -16,6 +16,14 @@ import java.util.List;
  * instances. When a {@code GameObject} has a {@code Sprite}, the rendering system will
  * use the sprite's current frame instead of a static texture.</p>
  *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     Sprite sprite = new Sprite(new Sprite.SpriteBuilder()
+ *         .frames(new int[]{1, 2 etc.}) // The ID's of the textures
+ *         .duration(1f) // 1f for 1 sec. 0.25f for 1/4th of a sec etc.
+ *     );
+ * </pre></blockquote>
+ *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
