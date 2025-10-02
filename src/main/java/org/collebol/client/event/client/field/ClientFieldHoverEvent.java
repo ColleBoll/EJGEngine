@@ -1,13 +1,13 @@
 package org.collebol.client.event.client.field;
 
-import org.collebol.client.event.Event;
+import org.collebol.client.event.ClientEvent;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 
-public class ClientFieldHoverEvent extends Event {
+public class ClientFieldHoverEvent extends ClientEvent {
 
     private Vector2D position;
     private Field field;

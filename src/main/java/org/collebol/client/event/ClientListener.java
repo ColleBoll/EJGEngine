@@ -41,7 +41,7 @@ public abstract class ClientListener implements Listener {
      *                  <li>{@link ClientButtonHoverEvent}</li>
      *              </ul>
      */
-    public void handleEvent(Event event) {
+    public void handleEvent(ClientEvent event) {
         if (event instanceof ClientRightClickEvent) {
             onRightClick((ClientRightClickEvent) event);
         }
