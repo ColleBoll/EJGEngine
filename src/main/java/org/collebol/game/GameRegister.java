@@ -3,10 +3,9 @@ package org.collebol.game;
 import org.collebol.shared.objects.entity.Entity;
 import org.collebol.shared.objects.entity.Player;
 import org.collebol.game.world.World;
+import org.collebol.shared.physics.PhysicsManager;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The GameRegister class is responsible for managing players, entities, and worlds within the game.
@@ -22,6 +21,8 @@ public class GameRegister {
     private Map<UUID, Entity> entitys;
     private Map<String, World> worlds;
 
+    private PhysicsManager physicsManager;
+
     /**
      * Constructs a new GameRegister instance, initializing empty collections for players, entities, and worlds.
      */
@@ -29,6 +30,8 @@ public class GameRegister {
         this.players = new HashMap<>();
         this.entitys = new HashMap<>();
         this.worlds = new HashMap<>();
+
+        this.physicsManager = new PhysicsManager();
     }
 
     /**
@@ -41,6 +44,7 @@ public class GameRegister {
         if (player == null) throw new RuntimeException("Player can not be null!");
         if (player.getUuid() == null) throw new RuntimeException("Please make sure to set the player UUID!");
         this.players.put(player.getUuid(), player);
+        this.physicsManager.register(player);
     }
 
     /**
@@ -54,6 +58,11 @@ public class GameRegister {
         if (uuid == null) throw new RuntimeException("UUID can not be null!");
         if (!this.players.containsKey(uuid)) throw new RuntimeException("UUID or Player not found!");
         return this.players.get(uuid);
+    }
+
+    public List<Player> getPlayers() {
+        if (this.players.isEmpty()) return new ArrayList<>();
+        return new ArrayList<>(this.players.values());
     }
 
     /**
@@ -142,5 +151,9 @@ public class GameRegister {
         if (name == null) throw new RuntimeException("World name can not be null!");
         if (!this.worlds.containsKey(name)) throw new RuntimeException("Removable world not found!");
         return this.worlds.remove(name);
+    }
+
+    public PhysicsManager getPhysicsManager() {
+        return physicsManager;
     }
 }
