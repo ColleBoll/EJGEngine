@@ -88,6 +88,7 @@ public class GameRegister {
             throw new RuntimeException("To register a player use the registerPlayer() method!");
         if (entity == null || entity.getUuid() == null) throw new RuntimeException("Entity values can not be null!");
         this.entitys.put(entity.getUuid(), entity);
+        this.physicsManager.register(entity);
     }
 
     /**
