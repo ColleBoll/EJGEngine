@@ -3,6 +3,10 @@ package org.collebol.shared.objects;
 import org.collebol.shared.math.Vector2D;
 import org.collebol.shared.EngineObject;
 import org.collebol.shared.GameLocation;
+import org.collebol.shared.physics.PhysicsComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The GameObject class represents a object in the game world.
@@ -22,6 +26,7 @@ public class GameObject extends EngineObject {
 
     private Vector2D velocity;
     private GameLocation gameLocation;
+    private List<PhysicsComponent> physicsComponents = new ArrayList<>();
 
     /**
      * Velocity is the speed in combination with the direction of motion of the object.
@@ -57,5 +62,29 @@ public class GameObject extends EngineObject {
      */
     public void setGameLocation(GameLocation gameLocation) {
         this.gameLocation = gameLocation;
+    }
+
+    /**
+     * Physics components are components added to a GameObject to do stuff like:
+     * <p>If added Collider: The components cannot collide with other objects with colliders.</p>
+     *
+     * @return list of all components attached to Object
+     */
+    public List<PhysicsComponent> getPhysicsComponentsList() {
+        return physicsComponents;
+    }
+
+    public void addPhysicsComponent(PhysicsComponent component) {
+        if (component == null) return;
+        this.physicsComponents.add(component);
+    }
+
+    /**
+     * Sets the list of {@link PhysicsComponent} of this GameObject
+     *
+     * @param physicsComponents the list of components
+     */
+    public void setPhysicsComponents(List<PhysicsComponent> physicsComponents) {
+        this.physicsComponents = physicsComponents;
     }
 }

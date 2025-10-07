@@ -1,8 +1,17 @@
 package org.collebol.client.gui.graphics.renderer;
 
 import org.collebol.client.EJGEngine;
+import org.collebol.client.gui.graphics.Camera;
+import org.collebol.game.GameManager;
 import org.collebol.game.world.Chunk;
 import org.collebol.game.world.World;
+import org.collebol.shared.objects.GameObject;
+import org.collebol.shared.objects.entity.Player;
+import org.collebol.shared.physics.PhysicsComponent;
+import org.collebol.shared.physics.collision.BoxCollider;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 /**
  * The WorldRenderer class contains several methods to simply render world and chunks.
@@ -20,6 +29,7 @@ import org.collebol.game.world.World;
 public class WorldRenderer extends Renderer {
 
     private World world;
+    private GameManager gameManager;
     private EJGEngine engine;
 
     /**
@@ -28,8 +38,9 @@ public class WorldRenderer extends Renderer {
      * @param world the world to be rendered.
      * @param e     the engine instance.
      */
-    public WorldRenderer(World world, EJGEngine e) {
-        this.world = world;
+    public WorldRenderer(GameManager manager, String world, EJGEngine e) {
+        this.world = manager.getGameRegister().getWorld(world);
+        this.gameManager = manager;
         this.engine = e;
     }
 
@@ -49,7 +60,15 @@ public class WorldRenderer extends Renderer {
      */
     public void renderWorldChunksAsBatch() {
         for (Chunk chunk : this.world.getChunks()) {
+            // render chunks
             this.engine.getRenderers().getCameraRenderer().renderBatchObjects(chunk.getTilesAsMap());
+
+            // render players
+            if (this.gameManager.getGameRegister().getPlayers() == null) return;
+            for (Player player : this.gameManager.getGameRegister().getPlayers()) {
+                GameObject obj = player;
+                this.engine.getRenderers().getCameraRenderer().renderObject(obj);
+            }
         }
     }
 

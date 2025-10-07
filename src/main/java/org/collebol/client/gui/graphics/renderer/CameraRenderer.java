@@ -46,7 +46,7 @@ public class CameraRenderer extends Renderer {
             // Sprite
             int texId;
             if (g.hasSprite()) {
-                texId = g.getTexture();
+                texId = g.getSprite().getCurrentFrameId();
             } else {
                 texId = g.getTexture();
             }
@@ -114,7 +114,7 @@ public class CameraRenderer extends Renderer {
         // Sprite
         int texId;
         if (gameObject.hasSprite()) {
-            texId = gameObject.getTexture();
+            texId = gameObject.getSprite().getCurrentFrameId();
         } else {
             texId = gameObject.getTexture();
         }

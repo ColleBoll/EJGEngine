@@ -26,5 +26,5 @@ public abstract class Entity extends GameObject {
         return uuid;
     }
 
-    public abstract void update();
+    public abstract void update(float DT);
 }
