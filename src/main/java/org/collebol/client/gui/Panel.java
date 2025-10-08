@@ -25,6 +25,7 @@ public abstract class Panel {
     public int id;
     private Camera camera;
     private float DT;
+    private int currentFPS;
 
     private EJGEngine engine;
 
@@ -38,32 +39,33 @@ public abstract class Panel {
         this.id = id;
         this.engine = e;
         this.camera = new Camera(new Vector2D(0, 0), 1f, 0, engine);
+        this.currentFPS = (int) Math.floor(1.0f / getDT());
     }
 
     /**
      * Displays screen details, a tool for developing.
      */
-    public void showScreenDetails() {
+    public void showScreenDetails(float size) {
         getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Window width: " + getEngine().getWindow().getWidth() + "px")
-                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 5f))
-                .size(13)
+                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, -10f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
         ));
         getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Window height: " + getEngine().getWindow().getHeight() + "px")
-                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 20f))
-                .size(13)
+                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 10f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
         ));
         getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
-                .text("FPS: " + Math.floor(1.0f / getDT()))
-                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 50f))
-                .size(13)
+                .text("FPS: " + getCurrentFPS())
+                .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, 35f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_RIGHT)
                 .rotation(0)
@@ -95,5 +97,13 @@ public abstract class Panel {
 
     public void setDT(float DT) {
         this.DT = DT;
+    }
+
+    public int getCurrentFPS() {
+        return currentFPS;
+    }
+
+    public void setCurrentFPS(int currentFPS) {
+        this.currentFPS = currentFPS;
     }
 }

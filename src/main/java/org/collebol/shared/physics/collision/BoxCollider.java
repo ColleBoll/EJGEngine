@@ -1,5 +1,7 @@
 package org.collebol.shared.physics.collision;
 
+import org.collebol.shared.GameLocation;
+import org.collebol.shared.math.Vector2D;
 import org.collebol.shared.objects.GameObject;
 
 /**
@@ -35,11 +37,12 @@ public class BoxCollider extends Collider {
      * width and height.
      *
      * @param owner  the {@link GameObject} that owns this collider
-     * @param width  the width of the collider in world units (tileSize)
-     * @param height the height of the collider in world units (tileSize)
+     * @param originLocation the center point of the collider. (0.5 is half)
+     * @param width  the width of the collider in world units (tileSize, so 1 is one tile)
+     * @param height the height of the collider in world units (tileSize, so 1 is one tile)
      */
-    public BoxCollider(GameObject owner, double width, double height) {
-        super(owner);
+    public BoxCollider(GameObject owner, GameLocation originLocation, double width, double height) {
+        super(owner, originLocation);
         this.width = width;
         this.height = height;
     }
@@ -62,6 +65,17 @@ public class BoxCollider extends Collider {
             double ay = this.getLocation().getY();
             double bx = o.getLocation().getX();
             double by = o.getLocation().getY();
+
+            GameLocation aOrigin = this.getOriginLocation();
+            if (aOrigin == null) aOrigin = new GameLocation(0, 0);
+
+            GameLocation bOrigin = o.getOriginLocation();
+            if (bOrigin == null) bOrigin = new GameLocation(0, 0);
+
+            ax -= aOrigin.getX();
+            ay -= aOrigin.getY();
+            bx -= bOrigin.getX();
+            by -= bOrigin.getY();
 
             return ax < bx + o.width &&
                     ax + this.width > bx &&

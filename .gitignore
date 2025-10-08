@@ -5,6 +5,7 @@ target/
 
 /src/test/
 /EJGEngine/
+/out/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

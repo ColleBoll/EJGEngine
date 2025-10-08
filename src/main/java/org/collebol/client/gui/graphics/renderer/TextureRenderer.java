@@ -47,30 +47,33 @@ public class TextureRenderer extends Renderer {
      * @param position
      * @param scale
      * @param rotation
-     * @param origin
+     * @param rotationCenter
      */
-    public void render(int id, Vector2D position, float scale, float rotation, Vector2D origin, boolean lighting) {
+    public void render(int id, Vector2D position, float scale, float rotation, Vector2D rotationCenter, Vector2D originPosition, boolean lighting) {
         if (lighting) {
             GL11.glEnable(GL11.GL_LIGHTING);
         } else {
             GL11.glDisable(GL11.GL_LIGHTING);
         }
+
+        if (originPosition == null) originPosition = new Vector2D(0, 0);
+
         Texture texture = getTexture(id);
         texture.bind();
 
-        float startX = position.getX();
-        float startY = position.getY();
+        float startX = position.getX() - (originPosition.getX() * scale);
+        float startY = position.getY() - (originPosition.getY() * scale);
 
         float tWidth = this.width * scale;
         float tHeight = this.height * scale;
 
         GL11.glPushMatrix();
 
-        GL11.glTranslatef(origin.getX(), origin.getY(), 0);
+        GL11.glTranslatef(rotationCenter.getX(), rotationCenter.getY(), 0);
 
         GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 
-        GL11.glTranslatef(-origin.getX(), -origin.getY(), 0);
+        GL11.glTranslatef(-rotationCenter.getX(), -rotationCenter.getY(), 0);
 
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -122,8 +125,10 @@ public class TextureRenderer extends Renderer {
         GL11.glBegin(GL11.GL_QUADS);
 
         for (Batch.BatchItem item : batch.getItems()) {
-            float startX = item.position.getX();
-            float startY = item.position.getY();
+            if (item.originPosition == null) item.originPosition = new Vector2D(0, 0);
+
+            float startX = item.position.getX() - (item.originPosition.getX() * item.scale);
+            float startY = item.position.getY() - (item.originPosition.getY() * item.scale);
             float tWidth = this.width * item.scale;
             float tHeight = this.height * item.scale;
 
@@ -143,17 +148,17 @@ public class TextureRenderer extends Renderer {
             float v3x = startX + tWidth;
             float v3y = startY;
 
-            float rv0x = item.origin.getX() + (v0x - item.origin.getX()) * cos - (v0y - item.origin.getY()) * sin;
-            float rv0y = item.origin.getY() + (v0x - item.origin.getX()) * sin + (v0y - item.origin.getY()) * cos;
+            float rv0x = item.rotationCenter.getX() + (v0x - item.rotationCenter.getX()) * cos - (v0y - item.rotationCenter.getY()) * sin;
+            float rv0y = item.rotationCenter.getY() + (v0x - item.rotationCenter.getX()) * sin + (v0y - item.rotationCenter.getY()) * cos;
 
-            float rv1x = item.origin.getX() + (v1x - item.origin.getX()) * cos - (v1y - item.origin.getY()) * sin;
-            float rv1y = item.origin.getY() + (v1x - item.origin.getX()) * sin + (v1y - item.origin.getY()) * cos;
+            float rv1x = item.rotationCenter.getX() + (v1x - item.rotationCenter.getX()) * cos - (v1y - item.rotationCenter.getY()) * sin;
+            float rv1y = item.rotationCenter.getY() + (v1x - item.rotationCenter.getX()) * sin + (v1y - item.rotationCenter.getY()) * cos;
 
-            float rv2x = item.origin.getX() + (v2x - item.origin.getX()) * cos - (v2y - item.origin.getY()) * sin;
-            float rv2y = item.origin.getY() + (v2x - item.origin.getX()) * sin + (v2y - item.origin.getY()) * cos;
+            float rv2x = item.rotationCenter.getX() + (v2x - item.rotationCenter.getX()) * cos - (v2y - item.rotationCenter.getY()) * sin;
+            float rv2y = item.rotationCenter.getY() + (v2x - item.rotationCenter.getX()) * sin + (v2y - item.rotationCenter.getY()) * cos;
 
-            float rv3x = item.origin.getX() + (v3x - item.origin.getX()) * cos - (v3y - item.origin.getY()) * sin;
-            float rv3y = item.origin.getY() + (v3x - item.origin.getX()) * sin + (v3y - item.origin.getY()) * cos;
+            float rv3x = item.rotationCenter.getX() + (v3x - item.rotationCenter.getX()) * cos - (v3y - item.rotationCenter.getY()) * sin;
+            float rv3y = item.rotationCenter.getY() + (v3x - item.rotationCenter.getX()) * sin + (v3y - item.rotationCenter.getY()) * cos;
 
             GL11.glTexCoord2f(0, 0);
             GL11.glVertex2f(rv0x, rv0y);

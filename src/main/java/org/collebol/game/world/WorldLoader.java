@@ -3,6 +3,8 @@ package org.collebol.game.world;
 import org.collebol.shared.objects.GameObject;
 import org.collebol.shared.GameLocation;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +63,65 @@ public class WorldLoader {
             }
         }
         return chunkList;
+    }
+
+    /**
+     * Loads all chunks within the render distance of the given location
+     * that are not yet loaded in the current world.
+     * If a chunk file exists, it will be loaded from disk and added to the world.
+     *
+     * @param location The center location (usually the player's position)
+     */
+    public void loadMissingChunksInRenderDistance(GameLocation location) {
+        Chunk tempChunk = null;
+        try {
+            tempChunk = (Chunk) this.world.getChunkFormat()
+                    .getConstructor(int.class, int.class)
+                    .newInstance(0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        int chunkSize = tempChunk.getChunkSize();
+
+        int centerChunkX = (int) location.getX() / chunkSize;
+        int centerChunkY = (int) location.getY() / chunkSize;
+
+        int minChunkX = centerChunkX - this.renderDistance;
+        int maxChunkX = centerChunkX + this.renderDistance;
+        int minChunkY = centerChunkY - this.renderDistance;
+        int maxChunkY = centerChunkY + this.renderDistance;
+
+        // load chunks within render distance
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
+            for (int chunkY = minChunkY; chunkY <= maxChunkY; chunkY++) {
+
+                if (world.getChunk(chunkX, chunkY) != null) continue;
+
+                try {
+                    Chunk loadedChunk = world.getWorldFileManager().loadChunk(chunkX, chunkY);
+                    if (loadedChunk != null) {
+                        world.addChunk(loadedChunk);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // unload chunks out of render distance.
+        List<Chunk> chunksToRemove = new ArrayList<>();
+        for (Chunk chunk : world.getChunks()) {
+            int x = chunk.getX();
+            int y = chunk.getY();
+            if (x < minChunkX || x > maxChunkX || y < minChunkY || y > maxChunkY) {
+                chunksToRemove.add(chunk);
+            }
+        }
+        for (Chunk chunk : chunksToRemove) {
+            world.getChunks().remove(chunk);
+        }
     }
 
     public int getRenderDistance() {

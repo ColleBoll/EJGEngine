@@ -33,8 +33,8 @@ public class Batch {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(Vector2D position, float scale, float rotation, Vector2D origin) {
-        items.add(new BatchItem(position, scale, rotation, origin));
+    public void addItem(Vector2D position, float scale, float rotation, Vector2D rotationCenter, Vector2D originPosition) {
+        items.add(new BatchItem(position, scale, rotation, rotationCenter, originPosition));
     }
 
     public int getTexture() {
@@ -49,13 +49,15 @@ public class Batch {
         public Vector2D position;
         public float scale;
         public float rotation;
-        public Vector2D origin;
+        public Vector2D rotationCenter;
+        public Vector2D originPosition;
 
-        public BatchItem(Vector2D position, float scale, float rotation, Vector2D origin) {
+        public BatchItem(Vector2D position, float scale, float rotation, Vector2D rotationCenter, Vector2D originPosition) {
             this.position = position;
             this.scale = scale;
             this.rotation = rotation;
-            this.origin = origin;
+            this.rotationCenter = rotationCenter;
+            this.originPosition = originPosition;
         }
     }
 }

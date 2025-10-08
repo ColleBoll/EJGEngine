@@ -138,6 +138,9 @@ public class MainWindow implements Runnable {
         float endTime;
         float dt = -1.0f;
 
+        int frames = 0;
+        float fpsTimer = 0.0f;
+
         while (!GLFW.glfwWindowShouldClose(this.window)) {
             GLFW.glfwPollEvents();
 
@@ -154,6 +157,16 @@ public class MainWindow implements Runnable {
             endTime = Time.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
+
+            frames++;
+            fpsTimer += dt;
+
+            if (fpsTimer >= 1.0f) {
+                int currentFPS = frames;
+                this.currentPanel.setCurrentFPS(currentFPS);
+                frames = 0;
+                fpsTimer -= 1.0f;
+            }
         }
     }
 
@@ -167,10 +180,29 @@ public class MainWindow implements Runnable {
      * </ul>
      */
     public void showDevelopmentTools() {
+        int size = 15;
         getEngine().getRenderers().getCameraRenderer().showGridLines();
         getEngine().getRenderers().getCameraRenderer().showOriginPoint();
-        getEngine().getRenderers().getCameraRenderer().showCoordinates();
-        getCurrentPanel().showScreenDetails();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates(size);
+        getCurrentPanel().showScreenDetails(size);
+    }
+
+    /**
+     * There will be development tools rendered on the panel.
+     * <ul>
+     *     <li>Grid lines</li>
+     *     <li>Coordinates</li>
+     *     <li>Origin-point</li>
+     *     <li>Screen details</li>
+     * </ul>
+     *
+     * @param size the size of the text.
+     */
+    public void showDevelopmentTools(float size) {
+        getEngine().getRenderers().getCameraRenderer().showGridLines();
+        getEngine().getRenderers().getCameraRenderer().showOriginPoint();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates(size);
+        getCurrentPanel().showScreenDetails(size);
     }
 
     private EJGEngine getEngine() {

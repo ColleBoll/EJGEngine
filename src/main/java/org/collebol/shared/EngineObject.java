@@ -14,6 +14,7 @@ public class EngineObject {
     private Vector2D vector;
     private int textureid;
     private Sprite sprite;
+    private Vector2D originPosition;
 
     /**
      * Position relative to the screen.
@@ -52,5 +53,12 @@ public class EngineObject {
     public boolean hasSprite() {
         return this.sprite != null;
     }
-    
+
+    public Vector2D getOriginPosition() {
+        return originPosition;
+    }
+
+    public void setOriginPosition(Vector2D originPosition) {
+        this.originPosition = originPosition;
+    }
 }
