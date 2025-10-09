@@ -8,7 +8,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.system.MemoryStack;
 
+import java.nio.IntBuffer;
 import java.util.HashMap;
 
 /**
@@ -115,12 +117,24 @@ public class MainWindow implements Runnable {
 
         GL.createCapabilities();
 
-        //GL11.glViewport(0, 0, getWidth(), getHeight());
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0, getWidth(), getHeight(), 0, -1, 1);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glLoadIdentity();
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer fbWidth = stack.mallocInt(1);
+            IntBuffer fbHeight = stack.mallocInt(1);
+            GLFW.glfwGetFramebufferSize(this.window, fbWidth, fbHeight);
+
+            int width = fbWidth.get(0);
+            int height = fbHeight.get(0);
+
+            setWidth(width);
+            setHeight(height);
+
+            GL11.glViewport(0, 0, width, height);
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0, width, height, 0, -1, 1);
+            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+            GL11.glLoadIdentity();
+        }
 
         //Call the register method in the engine
         getEngine().register();

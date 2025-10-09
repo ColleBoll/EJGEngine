@@ -64,9 +64,13 @@ public abstract class World {
         this.chunkFormat = chunkFormat;
         this.loadedChunks = new ArrayList<>();
         this.worldFolder = worldFolder;
+        this.worldLoader = new WorldLoader(this, 4);
+        this.worldFileManager = new WorldFileManager(this);
 
         if (!this.worldFolder.exists()) {
             this.worldFolder.mkdirs();
+            File c = new File(this.worldFolder, "chunks");
+            c.mkdirs();
         }
     }
 

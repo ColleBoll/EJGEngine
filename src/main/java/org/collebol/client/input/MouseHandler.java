@@ -18,7 +18,9 @@ import org.collebol.shared.GameLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.system.MemoryStack;
 
+import java.nio.IntBuffer;
 import java.util.*;
 
 public class MouseHandler {
@@ -99,6 +101,23 @@ public class MouseHandler {
 
             @Override
             public void invoke(long window, double xpos, double ypos) {
+                // DPI scaling fix
+                try (MemoryStack stack = MemoryStack.stackPush()) {
+                    IntBuffer fbWidth = stack.mallocInt(1);
+                    IntBuffer fbHeight = stack.mallocInt(1);
+                    IntBuffer winWidth = stack.mallocInt(1);
+                    IntBuffer winHeight = stack.mallocInt(1);
+
+                    GLFW.glfwGetFramebufferSize(window, fbWidth, fbHeight);
+                    GLFW.glfwGetWindowSize(window, winWidth, winHeight);
+
+                    double scaleX = (double) fbWidth.get(0) / winWidth.get(0);
+                    double scaleY = (double) fbHeight.get(0) / winHeight.get(0);
+
+                    xpos *= scaleX;
+                    ypos *= scaleY;
+                }
+
                 position.setX((float) xpos);
                 position.setY((float) ypos);
 
