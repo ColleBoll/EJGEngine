@@ -47,6 +47,15 @@ public abstract class Panel {
      */
     public void showScreenDetails(float size) {
         getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
+                .text("EJGEngine version: " + getEngine().getEngineInfo().getVersion())
+                .position(new Vector2D( 10f, -35f + (size * 2f)))
+                .size(size)
+                .scale(1)
+                .align(Text.ALIGN_TOP_LEFT)
+                .rotation(0)
+        ));
+
+        getEngine().getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Window width: " + getEngine().getWindow().getWidth() + "px")
                 .position(new Vector2D(getEngine().getWindow().getWidth() - 10f, -10f + (size * 2f)))
                 .size(size)
