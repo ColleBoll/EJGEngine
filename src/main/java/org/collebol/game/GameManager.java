@@ -27,8 +27,12 @@ public abstract class GameManager implements Runnable {
     }
 
     public void startGameThread() {
-        this.thread = new Thread();
+        this.thread = new Thread(this);
         this.thread.start();
+    }
+
+    public void stopGameThread() {
+        this.thread = null;
     }
 
     @Override

@@ -8,6 +8,8 @@ import org.collebol.client.gui.Panel;
 import org.collebol.client.gui.graphics.renderer.RenderHandler;
 import org.collebol.client.gui.graphics.renderer.ui.UIRenderer;
 import org.collebol.client.gui.graphics.ui.ComponentHandler;
+import org.collebol.client.utils.EngineInfo;
+import org.collebol.client.utils.GameInfo;
 
 /**
  * This abstract class representing the core engine for EJGEngine on the Client side.
@@ -25,6 +27,9 @@ import org.collebol.client.gui.graphics.ui.ComponentHandler;
 public abstract class EJGEngine {
 
     private MainWindow window;
+
+    private EngineInfo engineInfo = new EngineInfo();
+    private GameInfo gameInfo;
 
     private RenderHandler renderRegisterHandler;
     private ClientEventHandler eventHandler = new ClientEventHandler(this);
@@ -125,5 +130,23 @@ public abstract class EJGEngine {
      */
     public ComponentHandler getComponentHandler() {
         return this.componentHandler;
+    }
+
+    /**
+     * @return info about the engine like: version, author etc.
+     */
+    public EngineInfo getEngineInfo() {
+        return engineInfo;
+    }
+
+    public GameInfo getGameInfo() {
+        if (this.gameInfo == null)
+            throw new RuntimeException("You are trying to get your game info, but you have not set one yet!");
+        return gameInfo;
+    }
+
+    public <T extends GameInfo> void setGameInfo(T gameInfo) {
+        if (gameInfo == null) return;
+        this.gameInfo = gameInfo;
     }
 }

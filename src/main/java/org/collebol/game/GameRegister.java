@@ -104,6 +104,11 @@ public class GameRegister {
         return this.players.get(uuid);
     }
 
+    public List<Entity> getEntitys() {
+        if (this.entitys.isEmpty()) return new ArrayList<>();
+        return new ArrayList<>(this.entitys.values());
+    }
+
     /**
      * Removes an entity from the game register based on its UUID.
      *

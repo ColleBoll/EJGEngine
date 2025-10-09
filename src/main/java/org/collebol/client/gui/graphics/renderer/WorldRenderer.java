@@ -6,11 +6,13 @@ import org.collebol.game.GameManager;
 import org.collebol.game.world.Chunk;
 import org.collebol.game.world.World;
 import org.collebol.shared.objects.GameObject;
+import org.collebol.shared.objects.entity.Entity;
 import org.collebol.shared.objects.entity.Player;
 import org.collebol.shared.physics.PhysicsComponent;
 import org.collebol.shared.physics.collision.BoxCollider;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,7 +61,8 @@ public class WorldRenderer extends Renderer {
      * This method iterates through each chunk and uses the {@link CameraRenderer} to render the objects within each chunk as a batch.
      */
     public void renderWorldChunksAsBatch() {
-        for (Chunk chunk : this.world.getChunks()) {
+        List<Chunk> chunksSnapshot = new ArrayList<>(this.world.getChunks());
+        for (Chunk chunk : chunksSnapshot) {
             // render chunks
             this.engine.getRenderers().getCameraRenderer().renderBatchObjects(chunk.getTilesAsMap());
 
@@ -67,6 +70,10 @@ public class WorldRenderer extends Renderer {
             if (this.gameManager.getGameRegister().getPlayers() == null) return;
             for (Player player : this.gameManager.getGameRegister().getPlayers()) {
                 GameObject obj = player;
+                this.engine.getRenderers().getCameraRenderer().renderObject(obj);
+            }
+            for (Entity entity : this.gameManager.getGameRegister().getEntitys()) {
+                GameObject obj = entity;
                 this.engine.getRenderers().getCameraRenderer().renderObject(obj);
             }
         }

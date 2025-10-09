@@ -64,9 +64,13 @@ public abstract class World {
         this.chunkFormat = chunkFormat;
         this.loadedChunks = new ArrayList<>();
         this.worldFolder = worldFolder;
+        this.worldLoader = new WorldLoader(this, 4);
+        this.worldFileManager = new WorldFileManager(this);
 
         if (!this.worldFolder.exists()) {
             this.worldFolder.mkdirs();
+            File c = new File(this.worldFolder, "chunks");
+            c.mkdirs();
         }
     }
 
@@ -85,6 +89,22 @@ public abstract class World {
 
     public List<Chunk> getChunks() {
         return loadedChunks;
+    }
+
+    /**
+     * Returns the loaded chunk at the given chunk coordinates, or null if it is not loaded.
+     *
+     * @param chunkX the X coordinate of the chunk
+     * @param chunkY the Y coordinate of the chunk
+     * @return the loaded Chunk if present, otherwise null
+     */
+    public Chunk getChunk(int chunkX, int chunkY) {
+        for (Chunk chunk : this.loadedChunks) {
+            if (chunk.getX() == chunkX && chunk.getY() == chunkY) {
+                return chunk;
+            }
+        }
+        return null;
     }
 
     public void setChunks(List<Chunk> chunks) {

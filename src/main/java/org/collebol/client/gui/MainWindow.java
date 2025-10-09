@@ -8,7 +8,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.system.MemoryStack;
 
+import java.nio.IntBuffer;
 import java.util.HashMap;
 
 /**
@@ -115,12 +117,24 @@ public class MainWindow implements Runnable {
 
         GL.createCapabilities();
 
-        //GL11.glViewport(0, 0, getWidth(), getHeight());
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0, getWidth(), getHeight(), 0, -1, 1);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glLoadIdentity();
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer fbWidth = stack.mallocInt(1);
+            IntBuffer fbHeight = stack.mallocInt(1);
+            GLFW.glfwGetFramebufferSize(this.window, fbWidth, fbHeight);
+
+            int width = fbWidth.get(0);
+            int height = fbHeight.get(0);
+
+            setWidth(width);
+            setHeight(height);
+
+            GL11.glViewport(0, 0, width, height);
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0, width, height, 0, -1, 1);
+            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+            GL11.glLoadIdentity();
+        }
 
         //Call the register method in the engine
         getEngine().register();
@@ -138,6 +152,9 @@ public class MainWindow implements Runnable {
         float endTime;
         float dt = -1.0f;
 
+        int frames = 0;
+        float fpsTimer = 0.0f;
+
         while (!GLFW.glfwWindowShouldClose(this.window)) {
             GLFW.glfwPollEvents();
 
@@ -154,6 +171,16 @@ public class MainWindow implements Runnable {
             endTime = Time.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
+
+            frames++;
+            fpsTimer += dt;
+
+            if (fpsTimer >= 1.0f) {
+                int currentFPS = frames;
+                this.currentPanel.setCurrentFPS(currentFPS);
+                frames = 0;
+                fpsTimer -= 1.0f;
+            }
         }
     }
 
@@ -167,10 +194,29 @@ public class MainWindow implements Runnable {
      * </ul>
      */
     public void showDevelopmentTools() {
+        int size = 15;
         getEngine().getRenderers().getCameraRenderer().showGridLines();
         getEngine().getRenderers().getCameraRenderer().showOriginPoint();
-        getEngine().getRenderers().getCameraRenderer().showCoordinates();
-        getCurrentPanel().showScreenDetails();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates(size);
+        getCurrentPanel().showScreenDetails(size);
+    }
+
+    /**
+     * There will be development tools rendered on the panel.
+     * <ul>
+     *     <li>Grid lines</li>
+     *     <li>Coordinates</li>
+     *     <li>Origin-point</li>
+     *     <li>Screen details</li>
+     * </ul>
+     *
+     * @param size the size of the text.
+     */
+    public void showDevelopmentTools(float size) {
+        getEngine().getRenderers().getCameraRenderer().showGridLines();
+        getEngine().getRenderers().getCameraRenderer().showOriginPoint();
+        getEngine().getRenderers().getCameraRenderer().showCoordinates(size);
+        getCurrentPanel().showScreenDetails(size);
     }
 
     private EJGEngine getEngine() {

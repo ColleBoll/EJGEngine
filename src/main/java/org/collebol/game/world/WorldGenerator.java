@@ -1,5 +1,6 @@
 package org.collebol.game.world;
 
+import org.collebol.shared.GameLocation;
 import org.collebol.shared.objects.solids.Tile;
 
 /**
@@ -53,4 +54,48 @@ public abstract class WorldGenerator {
      * @return chunk with chunk data, like: {@link Tile}'s
      */
     public abstract Chunk generateChunk(Chunk chunk);
+
+    public void generateRenderDistanceIfNotExists(GameLocation location) {
+        Chunk tempChunk = null;
+        try {
+            tempChunk = (Chunk) world.getChunkFormat()
+                    .getConstructor(int.class, int.class)
+                    .newInstance(0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        int chunkSize = tempChunk.getChunkSize();
+
+        int centerChunkX = (int) location.getX() / chunkSize;
+        int centerChunkY = (int) location.getY() / chunkSize;
+
+        for (int x = centerChunkX - world.getWorldLoader().getRenderDistance();
+             x <= centerChunkX + world.getWorldLoader().getRenderDistance();
+             x++) {
+            for (int y = centerChunkY - world.getWorldLoader().getRenderDistance();
+                 y <= centerChunkY + world.getWorldLoader().getRenderDistance();
+                 y++) {
+
+                Chunk existingChunk = world.getWorldFileManager().loadChunk(x, y);
+                if (existingChunk == null) {
+                    try {
+                        Chunk newChunk = (Chunk) world.getChunkFormat()
+                                .getConstructor(int.class, int.class)
+                                .newInstance(x, y);
+
+                        newChunk = generateChunk(newChunk);
+
+                        world.getWorldFileManager().saveChunk(newChunk);
+                        world.addChunk(newChunk);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -50,7 +50,7 @@ public class CameraRenderer extends Renderer {
             } else {
                 texId = g.getTexture();
             }
-            this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
+            this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), g.getOriginPosition(), camera.isLighting());
         }
     }
 
@@ -91,7 +91,7 @@ public class CameraRenderer extends Renderer {
                 }
 
                 Batch batch = batches.computeIfAbsent(texId, Batch::new);
-                batch.addItem(v, camera.getZoom(), camera.getRotation(), camera.getOrigin());
+                batch.addItem(v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), obj.getOriginPosition());
             }
         }
         for (Batch batch : batches.values()) {
@@ -118,7 +118,7 @@ public class CameraRenderer extends Renderer {
         } else {
             texId = gameObject.getTexture();
         }
-        this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), camera.isLighting());
+        this.engine.getRenderers().getTextureRenderer("default").render(texId, v, camera.getZoom(), camera.getRotation(), camera.getOrigin(), gameObject.getOriginPosition(), camera.isLighting());
     }
 
     /**
@@ -230,7 +230,7 @@ public class CameraRenderer extends Renderer {
      * showing the mouse game location, camera-origin game location, mouse panel position, camera-origin panel position,
      * camera zoom level, and camera rotation.
      */
-    public void showCoordinates() {
+    public void showCoordinates(float size) {
         Camera camera = this.engine.getWindow().getCurrentPanel().getCamera();
 
         GameLocation pointerLoc = camera.getGameLocation();
@@ -240,8 +240,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Mouse GameLocation [ X: " + mouseLoc.getX() + " / Y: " + mouseLoc.getY() + "]")
-                .position(new Vector2D(10f, 5f))
-                .size(13)
+                .position(new Vector2D(10f, -10f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -249,8 +249,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera-origin GameLocation [ X: " + pointerLoc.getX() + " / Y: " + pointerLoc.getY() + "]")
-                .position(new Vector2D(10f, 20f))
-                .size(13)
+                .position(new Vector2D(10f, 10f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -258,8 +258,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Mouse Panel position [ X: " + mousePos.getX() + " / Y: " + mousePos.getY() + "]")
-                .position(new Vector2D(10f, 50f))
-                .size(13)
+                .position(new Vector2D(10f, 35f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -267,8 +267,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera-origin Panel position [ X: " + camera.getOrigin().getX() + " / Y: " + camera.getOrigin().getY() + "]")
-                .position(new Vector2D(10f, 65f))
-                .size(13)
+                .position(new Vector2D(10f, 55f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -276,8 +276,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera zoom (scale): " + Math.round(camera.getZoom() * 100.0f) / 100.0f)
-                .position(new Vector2D(10f, 95f))
-                .size(13)
+                .position(new Vector2D(10f, 80f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -285,8 +285,8 @@ public class CameraRenderer extends Renderer {
 
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text("Camera rotation: " + Math.round(camera.getRotation() * 100.0f) / 100.0f)
-                .position(new Vector2D(10f, 110f))
-                .size(13)
+                .position(new Vector2D(10f, 100f + (size * 2f)))
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)
@@ -295,7 +295,7 @@ public class CameraRenderer extends Renderer {
         this.engine.getRenderers().getTextRenderer("default").render(new Text(new Text.TextBuilder()
                 .text(mouseLoc.getX() + " / " + mouseLoc.getY())
                 .position(new Vector2D(mousePos.getX(), mousePos.getY() - 15))
-                .size(13)
+                .size(size)
                 .scale(1)
                 .align(Text.ALIGN_TOP_LEFT)
                 .rotation(0)

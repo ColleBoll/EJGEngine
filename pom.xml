@@ -6,7 +6,7 @@
 
     <groupId>org.collebol</groupId>
     <artifactId>EJGEngine</artifactId>
-    <version>0.2.5</version>
+    <version>0.2.6</version>
 
     <licenses>
         <license>
@@ -96,7 +96,28 @@
     </profiles>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/properties</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <delimiters>
+                        <delimiter>${*}</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -117,6 +138,7 @@
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>**/test-assets/**</exclude>
+                                        <exclude>**/properties/**</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -136,6 +158,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/test-assets/**</exclude>
+                                <exclude>**/properties/**</exclude>
                             </excludes>
                         </configuration>
                     </execution>
