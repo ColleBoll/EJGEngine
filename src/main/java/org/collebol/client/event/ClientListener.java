@@ -1,14 +1,5 @@
 package org.collebol.client.event;
 
-import org.collebol.client.event.client.ClientKeyClickEvent;
-import org.collebol.client.event.client.ClientLeftClickEvent;
-import org.collebol.client.event.client.ClientRightClickEvent;
-import org.collebol.client.event.client.field.ClientFieldClickEvent;
-import org.collebol.client.event.client.field.ClientFieldHoverEvent;
-import org.collebol.client.event.client.field.ClientFieldSubHoverEvent;
-import org.collebol.client.event.client.button.ClientButtonClickEvent;
-import org.collebol.client.event.client.button.ClientButtonHoverEvent;
-
 /**
  * The ClientListener class is an abstract class that implements the {@link Listener} interface.
  * It provides methods to handle different types of client events, such as key clicks and mouse clicks.
