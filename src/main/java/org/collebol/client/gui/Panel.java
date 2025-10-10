@@ -27,7 +27,7 @@ public abstract class Panel {
     private float DT;
     private int currentFPS;
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
 
     /**
      * Panel constructor.

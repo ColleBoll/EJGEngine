@@ -23,10 +23,10 @@ import org.collebol.shared.math.Vector2D;
  */
 public class Light {
 
-    private Vector2D position;
-    private float intensity;
-    private float radius;
-    private float[] color;
+    private final Vector2D position;
+    private final float intensity;
+    private final float radius;
+    private final float[] color;
 
     public Light(LightBuilder builder) {
         this.position = builder.position;

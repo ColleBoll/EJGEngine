@@ -35,9 +35,9 @@ public class Camera {
     private float[] ambientLight;
     private boolean lighting;
 
-    private CameraCalculator calculator;
+    private final CameraCalculator calculator;
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
 
     public Camera(Vector2D position, float zoom, float rotation, EJGEngine e) {
         this.position = position;

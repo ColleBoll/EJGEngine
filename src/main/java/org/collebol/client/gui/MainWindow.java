@@ -36,7 +36,7 @@ import java.util.HashMap;
  */
 public class MainWindow implements Runnable {
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
     private String title = "EJGEngine";
     private int refreshInterval = 1;
     private int tileSize = 16;
@@ -51,7 +51,7 @@ public class MainWindow implements Runnable {
     private MouseHandler mouseHandler;
     private KeyHandler keyHandler;
 
-    private HashMap<Integer, Panel> panels = new HashMap<>();
+    private final HashMap<Integer, Panel> panels = new HashMap<>();
 
     private Panel currentPanel;
 

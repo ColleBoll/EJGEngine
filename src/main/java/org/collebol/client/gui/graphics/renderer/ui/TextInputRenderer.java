@@ -28,7 +28,7 @@ public class TextInputRenderer extends Renderer {
      */
     public void renderSubTextInput(int id, int parentId) {
         Field parent = (Field) this.engine.getComponentHandler().getComponent(Field.class, parentId);
-        renderTextInputInternal(id, (float) parent.getPosition().getX(), (float) parent.getPosition().getY());
+        renderTextInputInternal(id, parent.getPosition().getX(), parent.getPosition().getY());
     }
 
     /**

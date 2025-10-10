@@ -25,10 +25,10 @@ import java.nio.ByteBuffer;
  */
 public class Texture {
 
-    private int id;
-    private int textureObject;
-    private int width;
-    private int height;
+    private final int id;
+    private final int textureObject;
+    private final int width;
+    private final int height;
 
     /**
      * This method you can construct your Texture object.

@@ -1,6 +1,8 @@
 package org.collebol.client.event.client;
 
+import org.collebol.client.EJGEngine;
 import org.collebol.client.event.ClientEvent;
+import org.collebol.client.event.ClientListener;
 import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
@@ -12,14 +14,10 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientRightClickEvent extends ClientEvent {
+public class ClientRightClickEvent implements ClientEvent<ClientRightClickEvent.Listener> {
 
-    private Vector2D position;
-    private boolean press;
-
-    public ClientRightClickEvent(){
-
-    }
+    private final Vector2D position;
+    private final boolean press;
 
     public ClientRightClickEvent(Vector2D position, boolean press) {
         this.position = position;
@@ -31,24 +29,19 @@ public class ClientRightClickEvent extends ClientEvent {
     }
 
     public boolean isPressed(){
-        if(press){
-            return true;
-        }else{
-            return false;
-        }
+        return press;
     }
 
     public boolean isReleased(){
-        if(press){
-            return false;
-        }else{
-            return true;
-        }
+        return !press;
     }
 
     @Override
-    public <T> void setValues(Map<Class<?>, T> params) {
-        position = (Vector2D) params.get(Vector2D.class);
-        press = (boolean) params.get(Boolean.class);
+    public void dispatch(Listener listener, EJGEngine engine) {
+        listener.onKeyRightClick(this, engine);
+    }
+
+    public interface Listener extends ClientListener {
+        void onKeyRightClick(ClientRightClickEvent event, EJGEngine engine);
     }
 }

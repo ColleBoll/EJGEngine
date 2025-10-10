@@ -1,6 +1,9 @@
 package org.collebol.client.event.client.button;
 
+import org.collebol.client.EJGEngine;
 import org.collebol.client.event.ClientEvent;
+import org.collebol.client.event.ClientListener;
+import org.collebol.client.event.client.ClientLeftClickEvent;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
 import org.collebol.client.input.KeyType;
@@ -8,15 +11,12 @@ import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 
-public class ClientButtonClickEvent extends ClientEvent {
+public class ClientButtonClickEvent implements ClientEvent<ClientButtonClickEvent.Listener> {
 
-    private Vector2D position;
-    private KeyType keyType;
-    private boolean press;
-    private Button button;
-
-    public ClientButtonClickEvent() {
-    }
+    private final Vector2D position;
+    private final KeyType keyType;
+    private final boolean press;
+    private final Button button;
 
     public ClientButtonClickEvent(Vector2D position, KeyType keyType, boolean press, Button button) {
         this.position = position;
@@ -46,10 +46,11 @@ public class ClientButtonClickEvent extends ClientEvent {
     }
 
     @Override
-    public <T> void setValues(Map<Class<?>, T> params) {
-        position = (Vector2D) params.get(Vector2D.class);
-        keyType = (KeyType) params.get(KeyType.class);
-        press = (boolean) params.get(Boolean.class);
-        button = (Button) params.get(Component.class);
+    public void dispatch(Listener listener, EJGEngine engine) {
+        listener.onButtonClick(this, engine);
+    }
+
+    public interface Listener extends ClientListener {
+        void onButtonClick(ClientButtonClickEvent event, EJGEngine engine);
     }
 }

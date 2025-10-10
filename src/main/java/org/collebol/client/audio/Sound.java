@@ -35,9 +35,9 @@ import java.nio.file.Files;
  */
 public class Sound {
 
-    private int id;
-    private int sourcePointer;
-    private String path;
+    private final int id;
+    private final int sourcePointer;
+    private final String path;
     private Vector2D position;
     private float volume;
     private float pitch;
@@ -91,7 +91,7 @@ public class Sound {
      */
     public static class SoundBuilder {
         private String path = null;
-        private int id;
+        private final int id;
         private Vector2D position = new Vector2D(0, 0);
         private float volume = 1.0f;
         private float pitch = 1.0f;

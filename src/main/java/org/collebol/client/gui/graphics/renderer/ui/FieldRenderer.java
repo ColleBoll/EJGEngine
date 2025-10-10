@@ -75,8 +75,8 @@ public class FieldRenderer extends Renderer {
             GL11.glEnd();
         }
 
-        if (field.subComponents().getComponents() != null) {
-            for (Component c : field.subComponents().getComponents().values()) {
+        if (field.getSubComponentsHandler().getComponents() != null) {
+            for (Component c : field.getSubComponentsHandler().getComponents().values()) {
                 if (c instanceof Field) {
                     this.engine.getRenderers().getUiRenderer().renderSubComponent(Field.class, c.getId(), field.getId());
                 }
@@ -98,7 +98,7 @@ public class FieldRenderer extends Renderer {
      */
     public void renderSubField(int id, int parentId) {
         Field parent = (Field) this.engine.getComponentHandler().getComponent(Field.class, parentId);
-        Field field = (Field) parent.subComponents().getComponent(Field.class, id);
+        Field field = (Field) parent.getSubComponentsHandler().getComponent(Field.class, id);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

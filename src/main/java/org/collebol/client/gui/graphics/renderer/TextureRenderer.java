@@ -21,12 +21,12 @@ import java.util.Map;
  */
 public class TextureRenderer extends Renderer {
 
-    private String name;
+    private final String name;
 
-    private float width;
-    private float height;
-    private Map<Integer, Texture> textures = new HashMap<>();
-    private List<Light> lights = new ArrayList<>();
+    private final float width;
+    private final float height;
+    private final Map<Integer, Texture> textures = new HashMap<>();
+    private final List<Light> lights = new ArrayList<>();
 
     public TextureRenderer(String name, float width, float height) {
         this.name = name;

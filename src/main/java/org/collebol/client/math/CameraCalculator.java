@@ -13,8 +13,8 @@ import org.collebol.shared.math.Vector2D;
  */
 public class CameraCalculator {
 
-    private Camera camera;
-    private EJGEngine engine;
+    private final Camera camera;
+    private final EJGEngine engine;
 
     public CameraCalculator(Camera camera, EJGEngine e) {
         this.camera = camera;

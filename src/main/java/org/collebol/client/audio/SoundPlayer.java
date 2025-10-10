@@ -24,11 +24,11 @@ import java.util.Map;
  */
 public class SoundPlayer implements AudioPlayer {
 
-    private String name;
-    private long device;
-    private long context;
+    private final String name;
+    private final long device;
+    private final long context;
 
-    private Map<Integer, Sound> sounds = new HashMap<>();
+    private final Map<Integer, Sound> sounds = new HashMap<>();
 
     /**
      * SoundPlayer constructor.

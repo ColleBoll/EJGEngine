@@ -30,7 +30,7 @@ public class UIRenderer extends Renderer {
 
     private final EJGEngine engine;
 
-    private Map<Class<? extends Renderer>, Renderer> UIRenderers;
+    private final Map<Class<? extends Renderer>, Renderer> UIRenderers;
 
     public void addUIRenderers() {
         this.UIRenderers.put(FieldRenderer.class, new FieldRenderer(engine));

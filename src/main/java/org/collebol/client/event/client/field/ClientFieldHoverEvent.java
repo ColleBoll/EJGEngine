@@ -1,20 +1,18 @@
 package org.collebol.client.event.client.field;
 
+import org.collebol.client.EJGEngine;
 import org.collebol.client.event.ClientEvent;
-import org.collebol.client.gui.graphics.ui.Component;
+import org.collebol.client.event.ClientListener;
 import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.shared.math.Vector2D;
 
 import java.util.Map;
 
-public class ClientFieldHoverEvent extends ClientEvent {
+public class ClientFieldHoverEvent implements ClientEvent<ClientFieldHoverEvent.Listener> {
 
-    private Vector2D position;
-    private Field field;
-    private boolean entered;
-
-    public ClientFieldHoverEvent() {
-    }
+    private final Vector2D position;
+    private final Field field;
+    private final boolean entered;
 
     public ClientFieldHoverEvent(Vector2D position, Field field, boolean entered) {
         this.position = position;
@@ -39,9 +37,11 @@ public class ClientFieldHoverEvent extends ClientEvent {
     }
 
     @Override
-    public <T> void setValues(Map<Class<?>, T> params) {
-        position = (Vector2D) params.get(Vector2D.class);
-        field = (Field) params.get(Component.class);
-        entered = (boolean) params.get(Boolean.class);
+    public void dispatch(Listener listener, EJGEngine engine) {
+        listener.onFieldHover(this, engine);
+    }
+
+    public interface Listener extends ClientListener {
+        void onFieldHover(ClientFieldHoverEvent event, EJGEngine engine);
     }
 }

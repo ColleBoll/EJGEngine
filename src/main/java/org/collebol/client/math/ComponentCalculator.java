@@ -49,9 +49,9 @@ public class ComponentCalculator {
         float mouseX = position.getX();
         float mouseY = position.getY();
         List<Component> l = new ArrayList<>();
-        if (parent.subComponents().getComponents() == null) return null;
-        if (parent.subComponents().getComponents().isEmpty()) return null;
-        for (Component c : parent.subComponents().getComponents().values()) {
+        if (parent.getSubComponentsHandler().getComponents() == null) return null;
+        if (parent.getSubComponentsHandler().getComponents().isEmpty()) return null;
+        for (Component c : parent.getSubComponentsHandler().getComponents().values()) {
             float cX = c.getPosition().getX() + parent.getPosition().getX();
             float cY = c.getPosition().getY() + parent.getPosition().getY();
             float width = c.getWidth();

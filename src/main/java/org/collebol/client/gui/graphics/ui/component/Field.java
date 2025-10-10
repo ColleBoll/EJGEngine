@@ -1,5 +1,6 @@
 package org.collebol.client.gui.graphics.ui.component;
 
+import org.collebol.client.EJGEngine;
 import org.collebol.client.gui.graphics.Color;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.ComponentHandler;
@@ -30,8 +31,9 @@ public class Field extends Component {
     private float[] backgroundColor;
     private float borderSize;
     private float[] borderColor;
+    private EJGEngine engine;
 
-    private ComponentHandler subComponents;
+    private ComponentHandler subComponentsHandler;
 
     /**
      * Field constructor.
@@ -40,7 +42,9 @@ public class Field extends Component {
      */
     public Field(FieldBuilder builder) {
 
-        this.subComponents = new ComponentHandler();
+        this.engine = builder.engine;
+
+        this.setSubComponentsHandler(new ComponentHandler(this.engine));
 
         setId(builder.id);
         setPosition(builder.position);
@@ -56,7 +60,7 @@ public class Field extends Component {
     }
 
     public static class FieldBuilder {
-        private int id;
+        private final int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
         private float width = 100.0f;
         private float height = 100.0f;
@@ -64,9 +68,11 @@ public class Field extends Component {
         private float[] backgroundColor = Color.WHITE;
         private float borderSize = 0f;
         private float[] borderColor = Color.GRAY;
+        private final EJGEngine engine;
 
-        public FieldBuilder(int id) {
+        public FieldBuilder(int id, EJGEngine engine) {
             this.id = id;
+            this.engine = engine;
         }
         
         public FieldBuilder position(Vector2D position){
@@ -97,6 +103,10 @@ public class Field extends Component {
         public FieldBuilder borderColor(float[] borderColor){
             this.borderColor = borderColor;
             return this;
+        }
+
+        public Field build() {
+            return new Field(this);
         }
     }
 
@@ -143,7 +153,13 @@ public class Field extends Component {
     /**
      * @return A {@link ComponentHandler} containing all the subcomponents of this Field.
      */
-    public ComponentHandler subComponents() {
-        return subComponents;
+    public ComponentHandler getSubComponentsHandler() {
+        if (this.subComponentsHandler == null)
+            throw new RuntimeException("You have to set a subComponentHandler first before using it! setSubComponent(instance engine)");
+        return subComponentsHandler;
+    }
+
+    public void setSubComponentsHandler(ComponentHandler subComponentsHandler) {
+        this.subComponentsHandler = subComponentsHandler;
     }
 }

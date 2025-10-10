@@ -1,6 +1,8 @@
 package org.collebol.client.event.client;
 
+import org.collebol.client.EJGEngine;
 import org.collebol.client.event.ClientEvent;
+import org.collebol.client.event.ClientListener;
 import org.collebol.client.input.KeyType;
 
 import java.util.Map;
@@ -12,14 +14,10 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientKeyClickEvent extends ClientEvent {
+public class ClientKeyClickEvent implements ClientEvent<ClientKeyClickEvent.Listener> {
 
-    private KeyType keyType;
-    private boolean press;
-
-    public ClientKeyClickEvent(){
-
-    }
+    private final KeyType keyType;
+    private final boolean press;
 
     public ClientKeyClickEvent(KeyType keyType, boolean press) {
         this.keyType = keyType;
@@ -27,19 +25,11 @@ public class ClientKeyClickEvent extends ClientEvent {
     }
 
     public boolean isPressed(){
-        if(press){
-            return true;
-        }else{
-            return false;
-        }
+        return press;
     }
 
     public boolean isReleased(){
-        if(press){
-            return false;
-        }else{
-            return true;
-        }
+        return !press;
     }
 
     public KeyType getKeyType() {
@@ -47,8 +37,12 @@ public class ClientKeyClickEvent extends ClientEvent {
     }
 
     @Override
-    public <T> void setValues(Map<Class<?>, T> params) {
-        keyType = (KeyType) params.get(KeyType.class);
-        press = (boolean) params.get(Boolean.class);
+    public void dispatch(Listener listener, EJGEngine engine) {
+        listener.onKeyClick(this, engine);
     }
+
+    public interface Listener extends ClientListener {
+        void onKeyClick(ClientKeyClickEvent event, EJGEngine engine);
+    }
+
 }

@@ -45,7 +45,7 @@ public class TextInput extends Component {
     }
 
     public static class TextInputBuilder {
-        private int id;
+        private final int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
         private float width = 100.0f;
         private float height = 20.0f;

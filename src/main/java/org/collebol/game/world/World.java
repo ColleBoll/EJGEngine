@@ -20,14 +20,14 @@ import java.util.List;
  */
 public abstract class World {
 
-    private String name;
+    private final String name;
 
     private List<Chunk> loadedChunks;
-    private Class<? extends Chunk> chunkFormat;
+    private final Class<? extends Chunk> chunkFormat;
 
     private WorldLoader worldLoader;
     private WorldGenerator worldGenerator;
-    private WorldFileManager worldFileManager;
+    private final WorldFileManager worldFileManager;
 
     private File worldFolder;
 

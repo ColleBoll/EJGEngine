@@ -19,8 +19,8 @@ import org.collebol.shared.GameLocation;
  */
 public class CameraSoundPlayer implements AudioPlayer {
 
-    private String name;
-    private EJGEngine engine;
+    private final String name;
+    private final EJGEngine engine;
 
     public EJGEngine getEngine() {
         return engine;
