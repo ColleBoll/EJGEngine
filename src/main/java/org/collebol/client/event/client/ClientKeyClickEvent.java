@@ -47,7 +47,7 @@ public class ClientKeyClickEvent extends ClientEvent {
     }
 
     @Override
-    public void setValues(Map<Class<?>, Object> params) {
+    public <T> void setValues(Map<Class<?>, T> params) {
         keyType = (KeyType) params.get(KeyType.class);
         press = (boolean) params.get(Boolean.class);
     }

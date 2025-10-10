@@ -44,20 +44,11 @@ public abstract class ClientEvent {
      * @param engine The engine instance that is triggering the event.
      * @param params The parameters associated with the event. These can be of various types such as Vector2D, Boolean, or KeyType.
      */
-    public void call(EJGEngine engine, Object... params) {
-        Map<Class<?>, Object> paramMap = new HashMap<>();
-        for (Object param : params) {
-            if (param instanceof Vector2D) {
-                paramMap.put(Vector2D.class, param);
-            } else if (param instanceof Boolean) {
-                paramMap.put(Boolean.class, param);
-            } else if (param instanceof KeyType) {
-                paramMap.put(KeyType.class, param);
-            } else if (param instanceof Component) {
-                paramMap.put(Component.class, param);
-            } else if (param instanceof Integer) {
-                paramMap.put(Integer.class, param);
-            }
+    @SafeVarargs
+    public final <T> void call(EJGEngine engine, T... params) {
+        Map<Class<?>, T> paramMap = new HashMap<>();
+        for (T param : params) {
+            paramMap.put(param.getClass(), param);
         }
         this.engine = engine;
         setValues(paramMap);
@@ -66,7 +57,7 @@ public abstract class ClientEvent {
         }
     }
 
-    public abstract void setValues(Map<Class<?>, Object> params);
+    public abstract <T> void setValues(Map<Class<?>, T> params);
 
     public EJGEngine getEngine() {
         return this.engine;

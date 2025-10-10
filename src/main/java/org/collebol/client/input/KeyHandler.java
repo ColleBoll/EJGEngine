@@ -112,7 +112,7 @@ public class KeyHandler {
                 }
 
                 if (keyType != null) {
-                    engine.getEventHandler().callClientEvent(ClientKeyClickEvent.class).call(engine, keyPressed, keyType);
+                    engine.getEventHandler().getEvent(ClientKeyClickEvent.class).call(engine, keyPressed, keyType);
                 }
             }
         });

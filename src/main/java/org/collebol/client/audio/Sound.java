@@ -153,6 +153,14 @@ public class Sound {
             this.rollOffFactor = factor;
             return this;
         }
+
+        /**
+         * Build the sound instance.
+         * @return sound instance
+         */
+        public Sound build() {
+            return new Sound(this);
+        }
     }
 
     private String extractResourceToTempFile(String resourcePath) {

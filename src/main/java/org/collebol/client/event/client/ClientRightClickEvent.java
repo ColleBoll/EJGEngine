@@ -47,7 +47,7 @@ public class ClientRightClickEvent extends ClientEvent {
     }
 
     @Override
-    public void setValues(Map<Class<?>, Object> params) {
+    public <T> void setValues(Map<Class<?>, T> params) {
         position = (Vector2D) params.get(Vector2D.class);
         press = (boolean) params.get(Boolean.class);
     }

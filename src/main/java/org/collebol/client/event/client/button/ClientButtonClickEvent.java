@@ -46,7 +46,7 @@ public class ClientButtonClickEvent extends ClientEvent {
     }
 
     @Override
-    public void setValues(Map<Class<?>, Object> params) {
+    public <T> void setValues(Map<Class<?>, T> params) {
         position = (Vector2D) params.get(Vector2D.class);
         keyType = (KeyType) params.get(KeyType.class);
         press = (boolean) params.get(Boolean.class);

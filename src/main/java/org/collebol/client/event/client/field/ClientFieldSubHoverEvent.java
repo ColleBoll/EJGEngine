@@ -51,7 +51,7 @@ public class ClientFieldSubHoverEvent extends ClientEvent {
     }
 
     @Override
-    public void setValues(Map<Class<?>, Object> params) {
+    public <T> void setValues(Map<Class<?>, T> params) {
         position = (Vector2D) params.get(Vector2D.class);
         parent = (Field) params.get(Component.class);
         entered = (boolean) params.get(Boolean.class);
