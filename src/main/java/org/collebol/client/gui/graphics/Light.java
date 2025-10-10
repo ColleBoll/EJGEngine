@@ -76,5 +76,9 @@ public class Light {
             this.color = color;
             return this;
         }
+
+        public Light build() {
+            return new Light(this);
+        }
     }
 }

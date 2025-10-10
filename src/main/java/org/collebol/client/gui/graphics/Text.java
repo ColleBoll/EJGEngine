@@ -103,6 +103,10 @@ public class Text {
             this.origin = origin;
             return this;
         }
+
+        public Text build() {
+            return new Text(this);
+        }
     }
 
     public String getText() {
