@@ -85,7 +85,7 @@ public class TextInputRenderer extends Renderer {
 
             if (input.isFocused()) {
                 int cursorPos = input.getCursorPosition();
-                float cursorX = textX + cursorPos * text.getSize() * 0.6f;
+                float cursorX = textX + (cursorPos * text.getSize()) * 0.5f;
                 GL11.glLineWidth(1f);
                 GL11.glColor4f(0f, 0f, 0f, 1f);
                 GL11.glBegin(GL11.GL_LINES);

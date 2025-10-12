@@ -164,6 +164,8 @@ public class MainWindow implements Runnable {
                 this.currentPanel.update();
                 this.currentPanel.setDT(dt);
                 this.currentPanel.paint();
+
+                this.engine.getEventHandler().getObserver().updateObservers();
             }
 
             GLFW.glfwSwapBuffers(this.window);

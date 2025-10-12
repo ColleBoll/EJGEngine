@@ -1,7 +1,9 @@
 package org.collebol.client.event;
 
 import org.collebol.client.EJGEngine;
+import org.collebol.client.event.client.ClientKeyClickEvent;
 import org.collebol.client.event.client.ClientRightClickEvent;
+import org.collebol.client.event.client.listeners.DefaultKeyClickTextInputListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,9 +31,13 @@ public class ClientEventHandler {
 
     private final Map<Class<?>, List<ClientListener>> listeners = new HashMap<>();
     private final EJGEngine engine;
+    private final ClientObserverManager observer;
 
     public ClientEventHandler(EJGEngine engine) {
         this.engine = engine;
+        this.observer = new ClientObserverManager(engine);
+
+        registerDefaultListeners();
     }
 
     /**
@@ -79,5 +85,19 @@ public class ClientEventHandler {
                 event.dispatch((L) listener, engine);
             }
         }
+    }
+
+    /**
+     * The {@link ClientObserverManager} is used to observe events that could happen.
+     * Like, when data changes it calls a specific event.
+     *
+     * @return the observer manager.
+     */
+    public ClientObserverManager getObserver() {
+        return observer;
+    }
+
+    private void registerDefaultListeners() {
+        registerListener(ClientKeyClickEvent.Listener.class, new DefaultKeyClickTextInputListener());
     }
 }
