@@ -5,6 +5,7 @@ import org.collebol.client.gui.graphics.renderer.Renderer;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
 import org.collebol.client.gui.graphics.ui.component.Field;
+import org.collebol.client.gui.graphics.ui.component.Label;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -82,6 +83,9 @@ public class FieldRenderer extends Renderer {
                 }
                 if (c instanceof Button) {
                     this.engine.getRenderers().getUiRenderer().renderSubComponent(Button.class, c.getId(), field.getId());
+                }
+                if (c instanceof Label) {
+                    this.engine.getRenderers().getUiRenderer().renderSubComponent(Label.class, c.getId(), field.getId());
                 }
             }
         }

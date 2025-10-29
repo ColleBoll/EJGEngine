@@ -6,6 +6,7 @@ import org.collebol.client.gui.graphics.renderer.TextRenderer;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
 import org.collebol.client.gui.graphics.ui.component.Field;
+import org.collebol.client.gui.graphics.ui.component.Label;
 import org.collebol.client.gui.graphics.ui.component.TextInput;
 
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class UIRenderer extends Renderer {
         this.UIRenderers.put(FieldRenderer.class, new FieldRenderer(engine));
         this.UIRenderers.put(ButtonRenderer.class, new ButtonRenderer(engine));
         this.UIRenderers.put(TextInputRenderer.class, new TextInputRenderer(engine));
+        this.UIRenderers.put(LabelRenderer.class, new LabelRenderer(engine));
     }
 
     /**
@@ -62,6 +64,10 @@ public class UIRenderer extends Renderer {
             TextInputRenderer renderer = (TextInputRenderer) this.UIRenderers.get(TextInputRenderer.class);
             renderer.renderTextInput(id);
         }
+        if (cls == Label.class) {
+            LabelRenderer renderer = (LabelRenderer) this.UIRenderers.get(LabelRenderer.class);
+            renderer.renderLabel(id);
+        }
     }
 
     public <T extends Class<? extends Component>> void renderSubComponent(T cls, int id, int fieldId){
@@ -76,6 +82,10 @@ public class UIRenderer extends Renderer {
         if (cls == TextInput.class) {
             TextInputRenderer renderer = (TextInputRenderer) this.UIRenderers.get(TextRenderer.class);
             renderer.renderSubTextInput(id, fieldId);
+        }
+        if (cls == Label.class) {
+            LabelRenderer renderer = (LabelRenderer) this.UIRenderers.get(LabelRenderer.class);
+            renderer.renderSubLabel(id, fieldId);
         }
     }
 }
