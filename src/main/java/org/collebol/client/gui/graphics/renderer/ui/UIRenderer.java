@@ -9,6 +9,7 @@ import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.gui.graphics.ui.component.Label;
 import org.collebol.client.gui.graphics.ui.component.TextInput;
 
+import java.lang.invoke.TypeDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,13 +32,13 @@ public class UIRenderer extends Renderer {
 
     private final EJGEngine engine;
 
-    private final Map<Class<? extends Renderer>, Renderer> UIRenderers;
+    private final Map<Class<? extends Component>, ComponentRenderer<? extends Component>> UIRenderers;
 
     public void addUIRenderers() {
-        this.UIRenderers.put(FieldRenderer.class, new FieldRenderer(engine));
-        this.UIRenderers.put(ButtonRenderer.class, new ButtonRenderer(engine));
-        this.UIRenderers.put(TextInputRenderer.class, new TextInputRenderer(engine));
-        this.UIRenderers.put(LabelRenderer.class, new LabelRenderer(engine));
+        this.UIRenderers.put(Field.class, new FieldRenderer(engine));
+        this.UIRenderers.put(Button.class, new ButtonRenderer(engine));
+        this.UIRenderers.put(TextInput.class, new TextInputRenderer(engine));
+        this.UIRenderers.put(Label.class, new LabelRenderer(engine));
     }
 
     /**
@@ -51,41 +52,13 @@ public class UIRenderer extends Renderer {
         addUIRenderers();
     }
 
-    public <T extends Class<? extends Component>> void renderComponent(T cls, int id) {
-        if (cls == Field.class) {
-            FieldRenderer renderer = (FieldRenderer) this.UIRenderers.get(FieldRenderer.class);
-            renderer.renderField(id);
-        }
-        if(cls == Button.class) {
-            ButtonRenderer renderer = (ButtonRenderer) this.UIRenderers.get(ButtonRenderer.class);
-            renderer.renderButton(id);
-        }
-        if (cls == TextInput.class) {
-            TextInputRenderer renderer = (TextInputRenderer) this.UIRenderers.get(TextInputRenderer.class);
-            renderer.renderTextInput(id);
-        }
-        if (cls == Label.class) {
-            LabelRenderer renderer = (LabelRenderer) this.UIRenderers.get(LabelRenderer.class);
-            renderer.renderLabel(id);
-        }
+    public <T extends Component> void renderComponent(Class<T> cls, int id) {
+        ComponentRenderer<T> renderer = (ComponentRenderer<T>) this.UIRenderers.get(cls);
+        renderer.render(id);
     }
 
-    public <T extends Class<? extends Component>> void renderSubComponent(T cls, int id, int fieldId){
-        if (cls == Field.class) {
-            FieldRenderer renderer = (FieldRenderer) this.UIRenderers.get(FieldRenderer.class);
-            renderer.renderSubField(id, fieldId);
-        }
-        if (cls == Button.class) {
-            ButtonRenderer renderer = (ButtonRenderer) this.UIRenderers.get(ButtonRenderer.class);
-            renderer.renderSubButton(id, fieldId);
-        }
-        if (cls == TextInput.class) {
-            TextInputRenderer renderer = (TextInputRenderer) this.UIRenderers.get(TextRenderer.class);
-            renderer.renderSubTextInput(id, fieldId);
-        }
-        if (cls == Label.class) {
-            LabelRenderer renderer = (LabelRenderer) this.UIRenderers.get(LabelRenderer.class);
-            renderer.renderSubLabel(id, fieldId);
-        }
+    public <T extends Component> void renderSubComponent(Class<T> cls, int id, int parentId){
+        ComponentRenderer<T> renderer = (ComponentRenderer<T>) this.UIRenderers.get(cls);
+        renderer.renderSub(id, parentId);
     }
 }

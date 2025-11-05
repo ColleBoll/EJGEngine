@@ -15,17 +15,6 @@ public class LabelRenderer extends ComponentRenderer<Label> {
         super(engine);
     }
 
-    public void renderLabel(int id) {
-        Label input = (Label) this.engine.getComponentHandler().getComponent(Label.class, id);
-        renderInternal(input, 0, 0);
-    }
-
-    public void renderSubLabel(int id, int parentId) {
-        Field parent = (Field) this.engine.getComponentHandler().getComponent(Field.class, parentId);
-        Label input = (Label) parent.getSubComponentsHandler().getComponent(Label.class, id);
-        renderInternal(input, parent.getPosition().getX(), parent.getPosition().getY());
-    }
-
     @Override
     public void renderInternal(Label input, float offsetX, float offsetY) {
 
