@@ -9,7 +9,7 @@ import org.collebol.shared.math.Vector2D;
 
 /**
  * The Button class represents a UI {@link Component}.
- * A Button can hold text and a action field. So what will happen wen someone clicks the button.
+ * A Button can hold text and an action field. So what will happen wen someone clicks the button.
  *
  * <p>Usage:</p>
  * <blockquote><pre>

@@ -5,6 +5,24 @@ import org.collebol.client.gui.graphics.Text;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.shared.math.Vector2D;
 
+/**
+ * The Label class represents a UI {@link Component} mainly used for Text display in UI components.
+ * A label can therefor only contain text and a background color (default transparent).
+ *
+ * <p>Usage:</p>
+ * <blockquote><pre>
+ *     Label label = new Label(new Label.LabelBuilder(1)
+ *         .position(new Vector(50, 50))
+ *         .width(200)
+ *         .height(30)
+ *         .text(new Text.TextBuilder().text("text here :)").build())
+ *         .build()
+ *     );
+ * </pre></blockquote>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class Label extends Component {
 
     private Text text;

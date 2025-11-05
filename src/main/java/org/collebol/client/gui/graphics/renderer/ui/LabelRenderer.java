@@ -3,17 +3,16 @@ package org.collebol.client.gui.graphics.renderer.ui;
 import org.collebol.client.EJGEngine;
 import org.collebol.client.gui.graphics.Text;
 import org.collebol.client.gui.graphics.renderer.Renderer;
+import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.gui.graphics.ui.component.Label;
 import org.collebol.shared.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
-public class LabelRenderer extends Renderer {
-
-    private final EJGEngine engine;
+public class LabelRenderer extends ComponentRenderer<Label> {
 
     public LabelRenderer(EJGEngine engine) {
-        this.engine = engine;
+        super(engine);
     }
 
     public void renderLabel(int id) {
@@ -27,7 +26,8 @@ public class LabelRenderer extends Renderer {
         renderInternal(input, parent.getPosition().getX(), parent.getPosition().getY());
     }
 
-    private void renderInternal(Label input, float offsetX, float offsetY) {
+    @Override
+    public void renderInternal(Label input, float offsetX, float offsetY) {
 
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
