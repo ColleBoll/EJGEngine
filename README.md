@@ -12,7 +12,7 @@
 
 ### Prerequisites
 
-- **Java 17** or higher: [Download from Oracle](https://www.oracle.com/java/technologies/downloads/)
+- **Java 25** or higher: [Download from Oracle](https://www.oracle.com/java/technologies/downloads/)
 - **Maven**: [Download from Apache](https://maven.apache.org/download.cgi)
 - **IntelliJ IDEA** (recommended) or another IDE
 
