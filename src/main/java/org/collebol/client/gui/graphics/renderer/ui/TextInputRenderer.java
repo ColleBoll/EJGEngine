@@ -2,44 +2,23 @@ package org.collebol.client.gui.graphics.renderer.ui;
 
 import org.collebol.client.EJGEngine;
 import org.collebol.client.gui.graphics.Text;
-import org.collebol.client.gui.graphics.renderer.Renderer;
-import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.gui.graphics.ui.component.TextInput;
 import org.lwjgl.opengl.GL11;
 import org.collebol.shared.math.Vector2D;
 
-public class TextInputRenderer extends Renderer {
-
-    private final EJGEngine engine;
+/**
+ * @see ComponentRenderer
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
+public class TextInputRenderer extends ComponentRenderer<TextInput> {
 
     public TextInputRenderer(EJGEngine engine) {
-        this.engine = engine;
+        super(engine);
     }
 
-    public void renderTextInput(int id) {
-        renderTextInputInternal(id, 0, 0);
-    }
-
-    /**
-     * Renders a TextInput as a subcomponent within a parent Field.
-     *
-     * @param id       the ID of the TextInput
-     * @param parentId the ID of the parent Field
-     */
-    public void renderSubTextInput(int id, int parentId) {
-        Field parent = (Field) this.engine.getComponentHandler().getComponent(Field.class, parentId);
-        renderTextInputInternal(id, (float) parent.getPosition().getX(), (float) parent.getPosition().getY());
-    }
-
-    /**
-     * Internal render method used for both standalone and subcomponent TextInputs.
-     *
-     * @param id     the ID of the TextInput
-     * @param offsetX X offset for parent position (0 if standalone)
-     * @param offsetY Y offset for parent position (0 if standalone)
-     */
-    private void renderTextInputInternal(int id, float offsetX, float offsetY) {
-        TextInput input = (TextInput) this.engine.getComponentHandler().getComponent(TextInput.class, id);
+    @Override
+    public void renderInternal(TextInput input, float offsetX, float offsetY) {
 
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
@@ -85,7 +64,7 @@ public class TextInputRenderer extends Renderer {
 
             if (input.isFocused()) {
                 int cursorPos = input.getCursorPosition();
-                float cursorX = textX + cursorPos * text.getSize() * 0.6f;
+                float cursorX = textX + (cursorPos * text.getSize()) * 0.5f;
                 GL11.glLineWidth(1f);
                 GL11.glColor4f(0f, 0f, 0f, 1f);
                 GL11.glBegin(GL11.GL_LINES);

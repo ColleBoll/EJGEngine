@@ -8,7 +8,7 @@ import java.util.UUID;
 public abstract class Entity extends GameObject {
 
     private GameLocation gameLocation;
-    private UUID uuid;
+    private final UUID uuid;
 
     public Entity(UUID uuid){
         this.uuid = uuid;

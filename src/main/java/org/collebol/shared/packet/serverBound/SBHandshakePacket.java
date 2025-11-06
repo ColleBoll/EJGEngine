@@ -7,7 +7,7 @@ import java.util.UUID;
 public class SBHandshakePacket extends Packet {
 
     private final UUID uuid;
-    private String clientIp;
+    private final String clientIp;
     private final long currentMilisec;
 
     public SBHandshakePacket(UUID uuid, long currentMilisec, String clientIp) {

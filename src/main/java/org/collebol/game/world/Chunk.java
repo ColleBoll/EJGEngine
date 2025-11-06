@@ -28,8 +28,8 @@ public abstract class Chunk {
     private int x;
     private int y;
 
-    private Map<Integer, List<GameObject>> tiles;
-    private List<GameObject> entities;
+    private final Map<Integer, List<GameObject>> tiles;
+    private final List<GameObject> entities;
 
     /**
      * Chunk constructor.

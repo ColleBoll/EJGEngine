@@ -1,5 +1,7 @@
 package org.collebol.client.gui.graphics.ui.component;
 
+import org.collebol.client.event.client.button.ClientButtonClickEvent;
+import org.collebol.client.event.client.button.ClientButtonHoverEvent;
 import org.collebol.client.gui.graphics.Color;
 import org.collebol.client.gui.graphics.Text;
 import org.collebol.client.gui.graphics.ui.Component;
@@ -7,7 +9,7 @@ import org.collebol.shared.math.Vector2D;
 
 /**
  * The Button class represents a UI {@link Component}.
- * A Button can hold text and a action field. So what will happen wen someone clicks the button.
+ * A Button can hold text and an action field. So what will happen wen someone clicks the button.
  *
  * <p>Usage:</p>
  * <blockquote><pre>
@@ -29,6 +31,8 @@ public class Button extends Component {
     private float[] backgroundColor;
     private float borderSize;
     private float[] borderColor;
+    private ClientButtonClickEvent.Listener clickEvent;
+    private ClientButtonHoverEvent.Listener hoverEvent;
 
     public Button(ButtonBuilder builder) {
         setId(builder.id);
@@ -40,10 +44,12 @@ public class Button extends Component {
         this.backgroundColor = builder.backgroundColor;
         this.borderSize = builder.borderSize;
         this.borderColor = builder.borderColor;
+        this.clickEvent = builder.clickEvent;
+        this.hoverEvent = builder.hoverEvent;
     }
 
     public static class ButtonBuilder {
-        private int id;
+        private final int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
         private float width = 20.0f;
         private float height = 10.0f;
@@ -52,6 +58,8 @@ public class Button extends Component {
         private float[] backgroundColor = Color.WHITE;
         private float borderSize = 0f;
         private float[] borderColor = Color.GRAY;
+        private ClientButtonClickEvent.Listener clickEvent;
+        private ClientButtonHoverEvent.Listener hoverEvent;
 
         public ButtonBuilder(int id){
             this.id = id;
@@ -91,6 +99,20 @@ public class Button extends Component {
             this.borderColor = borderColor;
             return this;
         }
+
+        public ButtonBuilder clickEvent(ClientButtonClickEvent.Listener listener) {
+            this.clickEvent = listener;
+            return this;
+        }
+
+        public ButtonBuilder hoverEvent(ClientButtonHoverEvent.Listener listener) {
+            this.hoverEvent = listener;
+            return this;
+        }
+
+        public Button build() {
+            return new Button(this);
+        }
     }
 
     public float[] getBorderColor() {
@@ -123,5 +145,21 @@ public class Button extends Component {
 
     public void setText(Text text) {
         this.text = text;
+    }
+
+    public ClientButtonClickEvent.Listener getClickEvent() {
+        return clickEvent;
+    }
+
+    public void setClickEvent(ClientButtonClickEvent.Listener clickEvent) {
+        this.clickEvent = clickEvent;
+    }
+
+    public ClientButtonHoverEvent.Listener getHoverEvent() {
+        return hoverEvent;
+    }
+
+    public void setHoverEvent(ClientButtonHoverEvent.Listener hoverEvent) {
+        this.hoverEvent = hoverEvent;
     }
 }

@@ -24,13 +24,13 @@ public abstract class Server implements AutoCloseable{
     private static ServerSocket server;
     private static final ExecutorService pool = Executors.newCachedThreadPool();
     private static ServerState serverState;
-    private HashMap<UUID, ServerClient> clientList = new HashMap<>();
+    private final HashMap<UUID, ServerClient> clientList = new HashMap<>();
 
     public Server(String host, int port, ServerState serverState) throws IOException {
         this.host = host;
         this.port = port;
-        this.serverState = serverState;
-        this.server = new ServerSocket(port);
+        Server.serverState = serverState;
+        server = new ServerSocket(port);
     }
 
     /**

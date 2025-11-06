@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class CameraRenderer extends Renderer {
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
 
     public CameraRenderer(EJGEngine e) {
         this.engine = e;
@@ -208,7 +208,7 @@ public class CameraRenderer extends Renderer {
         GL11.glPointSize(5.0f);
 
         GL11.glBegin(GL11.GL_POINTS);
-        GL11.glVertex2f((float) origin.getX(), (float) origin.getY());
+        GL11.glVertex2f(origin.getX(), origin.getY());
         GL11.glEnd();
 
         GL11.glBegin(GL11.GL_LINE_LOOP);

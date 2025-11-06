@@ -23,7 +23,7 @@ import org.collebol.shared.objects.solids.Tile;
  */
 public abstract class WorldGenerator {
 
-    private World world;
+    private final World world;
 
     public WorldGenerator(World world) {
         this.world = world;

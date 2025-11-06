@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class Batch {
 
-    private int texture;
-    private List<BatchItem> items;
+    private final int texture;
+    private final List<BatchItem> items;
 
     /**
      *

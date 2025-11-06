@@ -58,8 +58,7 @@ public class BoxCollider extends Collider {
      */
     @Override
     public boolean intersects(Collider other) {
-        if (other instanceof BoxCollider) {
-            BoxCollider o = (BoxCollider) other;
+        if (other instanceof BoxCollider o) {
 
             double ax = this.getLocation().getX();
             double ay = this.getLocation().getY();

@@ -2,140 +2,102 @@ package org.collebol.client.event;
 
 import org.collebol.client.EJGEngine;
 import org.collebol.client.event.client.ClientKeyClickEvent;
-import org.collebol.client.event.client.ClientLeftClickEvent;
 import org.collebol.client.event.client.ClientRightClickEvent;
-import org.collebol.client.event.client.button.ClientButtonClickEvent;
-import org.collebol.client.event.client.button.ClientButtonHoverEvent;
-import org.collebol.client.event.client.field.ClientFieldClickEvent;
-import org.collebol.client.event.client.field.ClientFieldHoverEvent;
-import org.collebol.client.event.client.field.ClientFieldSubHoverEvent;
+import org.collebol.client.event.client.listeners.DefaultKeyClickTextInputListener;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Class responsible for handling and registering client events in the EJGEngine.
- * This class manages the registration of event listeners and the invocation of client events.
+ * The ClientEventHandler handels the events on the client. For example, if you right-click on your window.
+ * All the Listeners registered with the {@link ClientRightClickEvent} listener will be called.
  *
  * <p>Usage:</p>
+ * The EJGEngine already contains a {@link ClientEventHandler}. You can call it using {@link EJGEngine#getEventHandler()}.
  * <blockquote><pre>
- *     EventHandler eventHandler = new EventHandler(engine);
+ *     // in register() method
+ *     getEventHandler().registerListener(ClientRightClickEvent.Listener.class, ((event, engine) -> {
+ *         // what hapens when right click.
+ *     }));
  * </pre></blockquote>
- * <p>Register event:</p>
- * <blockquote><pre>
- *     eventHandler.registerClientEvent(myEvent);
- * </pre></blockquote>
- * <p>Call event:</p>
- * <blockquote><pre>
- *     eventHandler.callClientEvent(Event.class);
- * </pre></blockquote>
+ * <p>You can also create a separate class implementing the {@link ClientRightClickEvent.Listener} instead of using a lambda.</p>
  *
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
 public class ClientEventHandler {
 
-    private EJGEngine engine;
+    private final Map<Class<?>, List<ClientListener>> listeners = new HashMap<>();
+    private final EJGEngine engine;
+    private final ClientObserverManager observer;
 
-    //Client events
-    private ClientRightClickEvent clientRightClickEvent;
-    private ClientLeftClickEvent clientLeftClickEvent;
-    private ClientKeyClickEvent clientKeyClickEvent;
+    public ClientEventHandler(EJGEngine engine) {
+        this.engine = engine;
+        this.observer = new ClientObserverManager(engine);
 
-    private ClientFieldClickEvent clientFieldClickEvent;
-    private ClientFieldHoverEvent clientFieldHoverEvent;
-    private ClientFieldSubHoverEvent clientFieldSubHoverEvent;
-    private ClientButtonClickEvent clientButtonClickEvent;
-    private ClientButtonHoverEvent clientButtonHoverEvent;
-
-    public ClientEventHandler(EJGEngine e) {
-        this.engine = e;
-
-        this.clientRightClickEvent = new ClientRightClickEvent();
-        this.clientLeftClickEvent = new ClientLeftClickEvent();
-        this.clientKeyClickEvent = new ClientKeyClickEvent();
-
-        this.clientFieldClickEvent = new ClientFieldClickEvent();
-        this.clientFieldHoverEvent = new ClientFieldHoverEvent();
-        this.clientFieldSubHoverEvent = new ClientFieldSubHoverEvent();
-        this.clientButtonClickEvent = new ClientButtonClickEvent();
-        this.clientButtonHoverEvent = new ClientButtonHoverEvent();
+        registerDefaultListeners();
     }
 
     /**
-     * Registers a client event listener by checking if the listener has implemented specific event handling methods.
+     * Use this to register a Listener extending {@link ClientListener}.<br>
+     * This listener will be executed when the selected Event happens.
      *
-     * @param event The client listener to be registered.
+     * <p>Usage (example):</p>
+     * You can use every Event implementing {@link ClientEvent}.
+     * <blockquote><pre>
+     *     registerListener(ClientRightClickEvent.Listener.class, ((event, engine) -> {
+     *         // what hapens when right click.
+     *     }));
+     * </pre></blockquote>
+     * <p>You can also create a separate class implementing the {@link ClientRightClickEvent.Listener} instead of using a lambda.</p>
+     *
+     * @param type The class of the Event listener.
+     * @param listener The listener itself.
+     * @param <L> The kind of listener you use.
      */
-    public void registerClientEvent(ClientListener event) {
-        try {
-            Method onRightClickMethod = event.getClass().getMethod("onRightClick", ClientRightClickEvent.class);
-            if (onRightClickMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientRightClickEvent.registerEvent(event);
+    public <L extends ClientListener> void registerListener(Class<L> type, L listener) {
+        listeners.computeIfAbsent(type, k -> new ArrayList<>()).add(listener);
+    }
+
+    /**
+     * Use this to call a specific event. Every Listener associated with the given event will be executed.
+     *
+     * <p>Usage (example):</p>
+     * <blockquote><pre>
+     *     call(new ClientRightClickEvent(
+     *         new Vector2D(10, 10), // position of the event
+     *         true // is pressed
+     *     ), ClientRightClickEvent.Listener.class);
+     * </pre></blockquote>
+     *
+     * @param event The event you want to send
+     * @param listenerType The event you want to call
+     * @param <E> {@link ClientEvent}
+     * @param <L> {@link ClientListener}
+     */
+    @SuppressWarnings("unchecked")
+    public <E extends ClientEvent<L>, L extends ClientListener> void call(E event, Class<L> listenerType) {
+        List<ClientListener> list = listeners.get(listenerType);
+        if (list != null) {
+            for (ClientListener listener : list) {
+                event.dispatch((L) listener, engine);
             }
-            Method onLeftClickMethod = event.getClass().getMethod("onLeftClick", ClientLeftClickEvent.class);
-            if (onLeftClickMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientLeftClickEvent.registerEvent(event);
-            }
-            Method onKeyClickMethod = event.getClass().getMethod("onKeyClick", ClientKeyClickEvent.class);
-            if (onKeyClickMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientKeyClickEvent.registerEvent(event);
-            }
-            Method onFieldClickMethod = event.getClass().getMethod("onFieldClick", ClientFieldClickEvent.class);
-            if (onFieldClickMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientFieldClickEvent.registerEvent(event);
-            }
-            Method onFieldHoverMethod = event.getClass().getMethod("onFieldHover", ClientFieldHoverEvent.class);
-            if (onFieldHoverMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientFieldHoverEvent.registerEvent(event);
-            }
-            Method onFieldSubHoverMethod = event.getClass().getMethod("onFieldSubHover", ClientFieldSubHoverEvent.class);
-            if (onFieldSubHoverMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientFieldSubHoverEvent.registerEvent(event);
-            }
-            Method onButtonClickMethod = event.getClass().getMethod("onButtonClick", ClientButtonClickEvent.class);
-            if (onButtonClickMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientButtonClickEvent.registerEvent(event);
-            }
-            Method onButtonHoverMethod = event.getClass().getMethod("onButtonHover", ClientButtonHoverEvent.class);
-            if (onButtonHoverMethod.getDeclaringClass() != ClientListener.class) {
-                this.clientButtonHoverEvent.registerEvent(event);
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
     }
 
     /**
-     * Returns the client event instance based on the provided event class.
+     * The {@link ClientObserverManager} is used to observe events that could happen.
+     * Like, when data changes it calls a specific event.
      *
-     * @param eventClass The class of the event to be returned.
-     * @return The instance of the event if it matches one of the known client events, otherwise null.
+     * @return the observer manager.
      */
-    public ClientEvent callClientEvent(Class<? extends ClientEvent> eventClass) {
-        if (eventClass.equals(ClientRightClickEvent.class)) {
-            return this.clientRightClickEvent;
-        }
-        if (eventClass.equals(ClientLeftClickEvent.class)) {
-            return this.clientLeftClickEvent;
-        }
-        if (eventClass.equals(ClientKeyClickEvent.class)) {
-            return this.clientKeyClickEvent;
-        }
-        if (eventClass.equals(ClientFieldClickEvent.class)) {
-            return this.clientFieldClickEvent;
-        }
-        if (eventClass.equals(ClientFieldHoverEvent.class)) {
-            return this.clientFieldHoverEvent;
-        }
-        if (eventClass.equals(ClientFieldSubHoverEvent.class)) {
-            return this.clientFieldSubHoverEvent;
-        }
-        if (eventClass.equals(ClientButtonClickEvent.class)) {
-            return this.clientButtonClickEvent;
-        }
-        if (eventClass.equals(ClientButtonHoverEvent.class)) {
-            return this.clientButtonHoverEvent;
-        }
-        return null;
+    public ClientObserverManager getObserver() {
+        return observer;
+    }
+
+    private void registerDefaultListeners() {
+        registerListener(ClientKeyClickEvent.Listener.class, new DefaultKeyClickTextInputListener());
     }
 }

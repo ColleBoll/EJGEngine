@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
 public class KeyHandler {
-    private EJGEngine engine;
+    private final EJGEngine engine;
     private boolean keyPressed;
 
     public KeyHandler(EJGEngine e) {
@@ -112,7 +112,7 @@ public class KeyHandler {
                 }
 
                 if (keyType != null) {
-                    engine.getEventHandler().callClientEvent(ClientKeyClickEvent.class).call(engine, keyPressed, keyType);
+                    engine.getEventHandler().call(new ClientKeyClickEvent(keyType, keyPressed), ClientKeyClickEvent.Listener.class);
                 }
             }
         });

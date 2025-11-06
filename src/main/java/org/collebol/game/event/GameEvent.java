@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class GameEvent {
 
-    private List<GameListener> listeners = new ArrayList<>();
+    private final List<GameListener> listeners = new ArrayList<>();
 
     public void registerEvent(GameListener listener) {
         this.listeners.add(listener);

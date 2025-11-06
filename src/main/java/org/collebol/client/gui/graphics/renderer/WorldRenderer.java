@@ -30,9 +30,9 @@ import java.util.List;
  */
 public class WorldRenderer extends Renderer {
 
-    private World world;
-    private GameManager gameManager;
-    private EJGEngine engine;
+    private final World world;
+    private final GameManager gameManager;
+    private final EJGEngine engine;
 
     /**
      * WorldRenderer constructor

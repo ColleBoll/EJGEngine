@@ -6,8 +6,8 @@ import org.collebol.shared.physics.PhysicsComponent;
 
 public abstract class Collider extends PhysicsComponent {
 
-    private GameLocation location;
-    private GameLocation originLocation;
+    private final GameLocation location;
+    private final GameLocation originLocation;
 
     public Collider(GameObject owner, GameLocation originLocation) {
         super(owner);

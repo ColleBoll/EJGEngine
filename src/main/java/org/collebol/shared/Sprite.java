@@ -29,8 +29,8 @@ import java.util.List;
  */
 public class Sprite {
 
-    private List<Integer> frameIds; // Texture ID's sorted with position ID's
-    private float frameDuration;
+    private final List<Integer> frameIds; // Texture ID's sorted with position ID's
+    private final float frameDuration;
     private int currentFrame;
     private float elapsedTime;
 

@@ -4,7 +4,7 @@ import org.collebol.shared.objects.entity.Player;
 
 public class Client {
 
-    private Player player;
+    private final Player player;
 
     public Client(Player player) {
         this.player = player;

@@ -21,10 +21,10 @@ import java.util.Map;
  */
 public class SoundHandler {
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
 
-    private Map<String, SoundPlayer> soundPlayers;
-    private Map<String, CameraSoundPlayer> cameraPlayers;
+    private final Map<String, SoundPlayer> soundPlayers;
+    private final Map<String, CameraSoundPlayer> cameraPlayers;
 
     /**
      * SoundHandler constructor.

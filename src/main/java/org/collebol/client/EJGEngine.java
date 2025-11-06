@@ -28,7 +28,7 @@ public abstract class EJGEngine {
 
     private MainWindow window;
 
-    private EngineInfo engineInfo = new EngineInfo();
+    private final EngineInfo engineInfo = new EngineInfo();
     private GameInfo gameInfo;
 
     private RenderHandler renderRegisterHandler;
@@ -55,7 +55,7 @@ public abstract class EJGEngine {
 
         this.renderRegisterHandler = new RenderHandler();
         this.soundHandler = new SoundHandler(this);
-        this.componentHandler = new ComponentHandler();
+        this.componentHandler = new ComponentHandler(this);
 
         getRenderers().registerNewRenderer(new UIRenderer(this));
 

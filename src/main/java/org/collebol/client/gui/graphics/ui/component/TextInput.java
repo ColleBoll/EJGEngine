@@ -45,7 +45,7 @@ public class TextInput extends Component {
     }
 
     public static class TextInputBuilder {
-        private int id;
+        private final int id;
         private Vector2D position = new Vector2D(0.0f, 0.0f);
         private float width = 100.0f;
         private float height = 20.0f;
@@ -111,21 +111,51 @@ public class TextInput extends Component {
         }
     }
 
-    public Text getText() { return text; }
-    public void setText(Text text) { this.text = text; }
+    public Text getText() {
+        return text;
+    }
 
-    public float[] getBackgroundColor() { return backgroundColor; }
-    public void setBackgroundColor(float[] backgroundColor) { this.backgroundColor = backgroundColor; }
+    public void setText(Text text) {
+        this.text = text;
+    }
 
-    public float getBorderSize() { return borderSize; }
-    public void setBorderSize(float borderSize) { this.borderSize = borderSize; }
+    public float[] getBackgroundColor() {
+        return backgroundColor;
+    }
 
-    public float[] getBorderColor() { return borderColor; }
-    public void setBorderColor(float[] borderColor) { this.borderColor = borderColor; }
+    public void setBackgroundColor(float[] backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
-    public int getCursorPosition() { return cursorPosition; }
-    public void setCursorPosition(int cursorPosition) { this.cursorPosition = cursorPosition; }
+    public float getBorderSize() {
+        return borderSize;
+    }
 
-    public boolean isFocused() { return focused; }
-    public void setFocused(boolean focused) { this.focused = focused; }
+    public void setBorderSize(float borderSize) {
+        this.borderSize = borderSize;
+    }
+
+    public float[] getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(float[] borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public int getCursorPosition() {
+        return cursorPosition;
+    }
+
+    public void setCursorPosition(int cursorPosition) {
+        this.cursorPosition = cursorPosition;
+    }
+
+    public boolean isFocused() {
+        return focused;
+    }
+
+    public void setFocused(boolean focused) {
+        this.focused = focused;
+    }
 }

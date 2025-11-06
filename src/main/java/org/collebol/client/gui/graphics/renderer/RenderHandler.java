@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public class RenderHandler {
 
-    private Map<String, TextRenderer> textRenderers;
-    private Map<String, TextureRenderer> textureRenderers;
+    private final Map<String, TextRenderer> textRenderers;
+    private final Map<String, TextureRenderer> textureRenderers;
     private CameraRenderer cameraRenderer;
     private WorldRenderer worldRenderer;
     private UIRenderer uiRenderer;

@@ -17,11 +17,11 @@ import java.util.*;
  */
 public class GameRegister {
 
-    private Map<UUID, Player> players;
-    private Map<UUID, Entity> entitys;
-    private Map<String, World> worlds;
+    private final Map<UUID, Player> players;
+    private final Map<UUID, Entity> entitys;
+    private final Map<String, World> worlds;
 
-    private PhysicsManager physicsManager;
+    private final PhysicsManager physicsManager;
 
     /**
      * Constructs a new GameRegister instance, initializing empty collections for players, entities, and worlds.

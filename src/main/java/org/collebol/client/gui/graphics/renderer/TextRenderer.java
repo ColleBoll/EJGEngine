@@ -23,9 +23,9 @@ import static org.lwjgl.nanovg.NanoVG.*;
 public class TextRenderer extends Renderer {
 
     private long vg;
-    private EJGEngine engine;
-    private String name;
-    private String fontPath;
+    private final EJGEngine engine;
+    private final String name;
+    private final String fontPath;
 
     private EJGEngine getEngine() {
         return engine;

@@ -21,7 +21,7 @@ import java.io.*;
  */
 public class WorldFileManager {
 
-    private World world;
+    private final World world;
 
     public WorldFileManager(World world) {
         this.world = world;

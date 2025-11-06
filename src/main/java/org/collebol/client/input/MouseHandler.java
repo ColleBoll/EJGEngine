@@ -28,7 +28,7 @@ public class MouseHandler {
     private boolean leftPressed, rightPressed;
     private Vector2D position = new Vector2D(0, 0);
 
-    private EJGEngine engine;
+    private final EJGEngine engine;
 
     public MouseHandler(EJGEngine e) {
         this.engine = e;
@@ -41,25 +41,25 @@ public class MouseHandler {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     leftPressed = (action == GLFW.GLFW_PRESS);
                     if (action == GLFW.GLFW_PRESS) {
-                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, true, position);
+                        engine.getEventHandler().call(new ClientLeftClickEvent(position, true), ClientLeftClickEvent.Listener.class);
 
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
-                                engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.LEFT_MOUSE);
+                                engine.getEventHandler().call(new ClientFieldClickEvent(position, KeyType.LEFT_MOUSE, true, field), ClientFieldClickEvent.Listener.class);
                             }
                             if(c instanceof Button button1){
-                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, true, position, button1, KeyType.LEFT_MOUSE);
+                                engine.getEventHandler().call(new ClientButtonClickEvent(position, KeyType.LEFT_MOUSE, true, button1), ClientButtonClickEvent.Listener.class);
                             }
                         }
                     } else {
-                        engine.getEventHandler().callClientEvent(ClientLeftClickEvent.class).call(engine, false, position);
+                        engine.getEventHandler().call(new ClientLeftClickEvent(position, false), ClientLeftClickEvent.Listener.class);
 
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
-                                engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.LEFT_MOUSE);
+                                engine.getEventHandler().call(new ClientFieldClickEvent(position, KeyType.LEFT_MOUSE, false, field), ClientFieldClickEvent.Listener.class);
                             }
                             if(c instanceof Button button1){
-                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, false, position, button1, KeyType.LEFT_MOUSE);
+                                engine.getEventHandler().call(new ClientButtonClickEvent(position, KeyType.LEFT_MOUSE, false, button1), ClientButtonClickEvent.Listener.class);
                             }
                         }
                     }
@@ -68,25 +68,25 @@ public class MouseHandler {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     rightPressed = (action == GLFW.GLFW_PRESS);
                     if (action == GLFW.GLFW_PRESS) {
-                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, true, position);
+                        engine.getEventHandler().call(new ClientRightClickEvent(position, true), ClientRightClickEvent.Listener.class);
 
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
-                                engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, true, position, field, KeyType.RIGHT_MOUSE);
+                                engine.getEventHandler().call(new ClientFieldClickEvent(position, KeyType.RIGHT_MOUSE, true, field), ClientFieldClickEvent.Listener.class);
                             }
                             if(c instanceof Button button1){
-                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, true, position, button1, KeyType.RIGHT_MOUSE);
+                                engine.getEventHandler().call(new ClientButtonClickEvent(position, KeyType.RIGHT_MOUSE, true, button1), ClientButtonClickEvent.Listener.class);
                             }
                         }
                     } else if (action == GLFW.GLFW_RELEASE) {
-                        engine.getEventHandler().callClientEvent(ClientRightClickEvent.class).call(engine, false, position);
+                        engine.getEventHandler().call(new ClientRightClickEvent(position, false), ClientRightClickEvent.Listener.class);
 
                         for(Component c : ComponentCalculator.getComponentUnderMouse(position, engine)){
                             if(c instanceof Field field){
-                                engine.getEventHandler().callClientEvent(ClientFieldClickEvent.class).call(engine, false, position, field, KeyType.RIGHT_MOUSE);
+                                engine.getEventHandler().call(new ClientFieldClickEvent(position, KeyType.RIGHT_MOUSE, false, field), ClientFieldClickEvent.Listener.class);
                             }
                             if(c instanceof Button button1){
-                                engine.getEventHandler().callClientEvent(ClientButtonClickEvent.class).call(engine, false, position, button1, KeyType.RIGHT_MOUSE);
+                                engine.getEventHandler().call(new ClientButtonClickEvent(position, KeyType.RIGHT_MOUSE, false, button1), ClientButtonClickEvent.Listener.class);
                             }
                         }
                     }
@@ -96,8 +96,8 @@ public class MouseHandler {
         });
 
         GLFW.glfwSetCursorPosCallback(window, new GLFWCursorPosCallback() {
-            private List<Component> enteredComponentList = new ArrayList<>();
-            private List<Component> enteredSubComponentList = new ArrayList<>();
+            private final List<Component> enteredComponentList = new ArrayList<>();
+            private final List<Component> enteredSubComponentList = new ArrayList<>();
 
             @Override
             public void invoke(long window, double xpos, double ypos) {
@@ -129,15 +129,11 @@ public class MouseHandler {
                 for(Component component : new ArrayList<>(enteredComponentList)){
                     if(!currentHoveredComp.contains(component)){
                         if(component instanceof Field){
-                            engine.getEventHandler()
-                                    .callClientEvent(ClientFieldHoverEvent.class)
-                                    .call(engine, position, component, false);
+                            engine.getEventHandler().call(new ClientFieldHoverEvent(position, (Field) component, false), ClientFieldHoverEvent.Listener.class);
                             enteredComponentList.remove(component);
                         }
                         if(component instanceof Button){
-                            engine.getEventHandler()
-                                    .callClientEvent(ClientButtonHoverEvent.class)
-                                    .call(engine, position, component, false);
+                            engine.getEventHandler().call(new ClientButtonHoverEvent(position, (Button) component, false), ClientButtonHoverEvent.Listener.class);
                             enteredComponentList.remove(component);
                         }
                     }
@@ -148,9 +144,7 @@ public class MouseHandler {
                         currentHoveredSubComp.addAll(l);
                         for(Component sub : new ArrayList<>(enteredSubComponentList)){
                             if(!currentHoveredSubComp.contains(sub)){
-                                engine.getEventHandler()
-                                        .callClientEvent(ClientFieldSubHoverEvent.class)
-                                        .call(engine, position, component, false, sub.getId());
+                                engine.getEventHandler().call(new ClientFieldSubHoverEvent(position, (Field) component, sub, sub.getId(), false), ClientFieldSubHoverEvent.Listener.class);
                                 enteredSubComponentList.remove(sub);
                             }
                         }
@@ -160,30 +154,24 @@ public class MouseHandler {
                 for(Component component : currentHoveredComp){
                     if(!enteredComponentList.contains(component)){
                         if(component instanceof Field){
-                            engine.getEventHandler()
-                                    .callClientEvent(ClientFieldHoverEvent.class)
-                                    .call(engine, position, component, true);
+                            engine.getEventHandler().call(new ClientFieldHoverEvent(position, (Field) component, true), ClientFieldHoverEvent.Listener.class);
                             enteredComponentList.add(component);
                         }
                         if(component instanceof Button){
-                            engine.getEventHandler()
-                                    .callClientEvent(ClientButtonHoverEvent.class)
-                                    .call(engine, position, component, true);
+                            engine.getEventHandler().call(new ClientButtonHoverEvent(position, (Button) component, true), ClientButtonHoverEvent.Listener.class);
                             enteredComponentList.add(component);
                         }
                     }
                     //subcomponents field
                     if(component instanceof Field){
-                        if(((Field) component).subComponents().getComponents() == null) return;
+                        if(((Field) component).getSubComponentsHandler().getComponents() == null) return;
                         List<Component> l = ComponentCalculator.checkIfSubComponent((Field) component, position);
                         if(l == null) l = new ArrayList<>();
                         if(l.isEmpty()) return;
                         currentHoveredSubComp.addAll(l);
                         for(Component sub : currentHoveredSubComp){
                             if(!enteredSubComponentList.contains(sub)){
-                                engine.getEventHandler()
-                                        .callClientEvent(ClientFieldSubHoverEvent.class)
-                                        .call(engine, position, component, true, sub.getId());
+                                engine.getEventHandler().call(new ClientFieldSubHoverEvent(position, (Field) component, sub, sub.getId(), true), ClientFieldSubHoverEvent.Listener.class);
                                 enteredSubComponentList.add(sub);
                             }
                         }

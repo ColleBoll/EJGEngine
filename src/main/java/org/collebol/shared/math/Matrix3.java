@@ -2,7 +2,7 @@ package org.collebol.shared.math;
 
 public class Matrix3 {
 
-    private float[][] matrix;
+    private final float[][] matrix;
 
     public Matrix3() {
         this.matrix = new float[3][3];
