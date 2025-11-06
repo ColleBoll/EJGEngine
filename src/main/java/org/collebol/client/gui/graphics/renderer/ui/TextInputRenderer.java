@@ -6,6 +6,11 @@ import org.collebol.client.gui.graphics.ui.component.TextInput;
 import org.lwjgl.opengl.GL11;
 import org.collebol.shared.math.Vector2D;
 
+/**
+ * @see ComponentRenderer
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class TextInputRenderer extends ComponentRenderer<TextInput> {
 
     public TextInputRenderer(EJGEngine engine) {

@@ -2,13 +2,15 @@ package org.collebol.client.gui.graphics.renderer.ui;
 
 import org.collebol.client.EJGEngine;
 import org.collebol.client.gui.graphics.Text;
-import org.collebol.client.gui.graphics.renderer.Renderer;
-import org.collebol.client.gui.graphics.ui.Component;
-import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.gui.graphics.ui.component.Label;
 import org.collebol.shared.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * @see ComponentRenderer
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class LabelRenderer extends ComponentRenderer<Label> {
 
     public LabelRenderer(EJGEngine engine) {

@@ -9,17 +9,7 @@ import org.collebol.client.gui.graphics.ui.component.Label;
 import org.lwjgl.opengl.GL11;
 
 /**
- * The FieldRenderer class is responsible for rendering field components in the UI.
- * It handles the rendering of both standalone fields and sub-fields within a parent component.
- * This class uses OpenGL for rendering the field's background, border, and any subcomponents it contains.
- *
- * <p>Usage:</p>
- * <blockquote><pre>
- *     FieldRenderer fieldRenderer = new FieldRenderer(engine);
- *     fieldRenderer.render(fieldId);
- *     fieldRenderer.renderSub(subFieldId, parentId);
- * </pre></blockquote>
- *
+ * @see ComponentRenderer
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */

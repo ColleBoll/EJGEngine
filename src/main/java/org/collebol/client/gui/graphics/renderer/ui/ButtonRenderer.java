@@ -9,17 +9,7 @@ import org.collebol.shared.math.Vector2D;
 import org.lwjgl.opengl.GL11;
 
 /**
- * The ButtonRenderer class is responsible for rendering button components in the UI.
- * It handles the rendering of both standalone buttons and sub-buttons within a parent component.
- * This class uses OpenGL for rendering the button's background, border, and text.
- *
- * <p>Usage:</p>
- * <blockquote><pre>
- *     ButtonRenderer buttonRenderer = new ButtonRenderer(engine);
- *     buttonRenderer.render(buttonId);
- *     buttonRenderer.renderSub(subButtonId, parentId);
- * </pre></blockquote>
- *
+ * @see ComponentRenderer
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
