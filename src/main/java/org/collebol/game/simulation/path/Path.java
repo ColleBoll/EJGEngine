@@ -40,6 +40,7 @@ public abstract class Path {
             this.currentIndex++;
             return l;
         } else {
+            
             return this.endLoc;
         }
     }
