@@ -1,6 +1,6 @@
 # EJGEngine
 
-**EJGEngine** is an ambitious, in-development game engine written entirely in Java. While still in its early stages, the goal of EJGEngine is to become a powerful and user-friendly platform that enables anyone — from beginners with minimal programming experience to seasoned developers — to create 2D games quickly and efficiently.
+**EJGEngine** is an in-development game engine written entirely in Java. While still in its development stages, the goal of EJGEngine is to become an user-friendly platform that enables anyone from beginners with minimal programming experience to seasoned developers to create 2D games quickly and efficiently.
 
 ## Features
 
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.collebol</groupId>
             <artifactId>EJGEngine</artifactId>
-            <version>0.2.0</version>
+            <version>0.2.7</version>
         </dependency>
     </dependencies>
     ```
