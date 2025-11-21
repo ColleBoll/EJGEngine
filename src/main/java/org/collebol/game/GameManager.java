@@ -48,12 +48,17 @@ public abstract class GameManager implements Runnable {
             lastTime = currentTime;
             if (delta >= 1) { //everything in here will be updated at the ticks per second
                 update();
+                defaultUpdate();
                 delta--;
             }
         }
     }
 
     public abstract void update();
+
+    private void defaultUpdate() {
+        this.gameRegister.getSimulationManager().updatePath();
+    }
 
     public int getTicks() {
         return this.ticks;

@@ -4,6 +4,7 @@ import org.collebol.shared.objects.entity.Entity;
 import org.collebol.shared.objects.entity.Player;
 import org.collebol.game.world.World;
 import org.collebol.shared.physics.PhysicsManager;
+import org.collebol.shared.simulation.SimulationManager;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class GameRegister {
     private final Map<String, World> worlds;
 
     private final PhysicsManager physicsManager;
+    private final SimulationManager simulationManager;
 
     /**
      * Constructs a new GameRegister instance, initializing empty collections for players, entities, and worlds.
@@ -32,6 +34,7 @@ public class GameRegister {
         this.worlds = new HashMap<>();
 
         this.physicsManager = new PhysicsManager();
+        this.simulationManager = new SimulationManager(this);
     }
 
     /**
@@ -161,5 +164,9 @@ public class GameRegister {
 
     public PhysicsManager getPhysicsManager() {
         return physicsManager;
+    }
+
+    public SimulationManager getSimulationManager() {
+        return simulationManager;
     }
 }
