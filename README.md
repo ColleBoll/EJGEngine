@@ -13,17 +13,17 @@
 - Game physics (Collisions etc.)
 - Game simulations (Path finding etc.).
 - Audio engine based on OpenAL.
-- Extensive Javadoc documentation.
+- Extensive API Javadoc documentation.
 - And a lot more!
 
-## Preview
+# Preview
 Here are some things you can do and use with this engine!
 
-### Build in development details
+## Build in development details
 ![buildtools GIF](https://github.com/user-attachments/assets/4e8a33fd-75cb-4049-a365-83648ee9a653)
-<br><br><br>
+<br><br>
 
-### World rendering
+## World rendering
 ![Map rendering GIF](https://github.com/user-attachments/assets/87bfb2c1-ea0b-4cfb-90c3-b37222411659)
 <details>
 <summary>Show code</summary>
@@ -53,9 +53,9 @@ Here are some things you can do and use with this engine!
     }
     
 </details>
-<br><br>
+<br>
 
-### UI Components
+## UI Components
 ![Button Hover GIF](https://github.com/user-attachments/assets/3865b0b2-1398-4d7c-bde0-ea71952dfb68)
 <details>
 <summary>Show code</summary>
@@ -76,22 +76,22 @@ Here are some things you can do and use with this engine!
     );
     
 </details>
-<br><br>
+<br>
 
-### Simple client events
+## Simple client events
 <img width="982" height="224" alt="Screenshot_20251124_135527" src="https://github.com/user-attachments/assets/34329aa8-5dd7-476d-b7d9-f863f8114d88" />
 
-<br><br><br>
+<br><br>
 
-## Getting Started
+# Getting Started
 
-### Prerequisites
+## Prerequisites
 
 - **Java 25** or higher: [Download from Oracle](https://www.oracle.com/java/technologies/downloads/)
 - **Maven**: [Download from Apache](https://maven.apache.org/download.cgi)
 - **IntelliJ IDEA** (recommended) or another IDE
 
-### Installation
+## Installation
 > [!TIP]
 > Read the full documentation of the use on the [wiki](https://github.com/ColleBoll/EJGEngine/wiki).
 
