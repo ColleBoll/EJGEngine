@@ -1,12 +1,23 @@
 # EJGEngine
 
-**EJGEngine** is an in-development game engine written entirely in Java. While still in its development stages, the goal of EJGEngine is to become an user-friendly platform that enables anyone from beginners with minimal programming experience to seasoned developers to create 2D games quickly and efficiently.
+**EJGEngine** is an in-development 2D game engine for Java game development. While still in its development stages, the goal of EJGEngine is to become a user-friendly platform that enables anyone from beginners with minimal programming experience to seasoned developers to create 2D games quickly and efficiently.
+
+***Build 2D games fast and efficient!***
 
 ## Features
 
-- Cross-platform support (Windows and macOS)
-- Written in Java
-- Uses LWJGL for graphics and audio
+- Cross-platform support (Windows, macOS and Linux)
+- Render objects easily using build in renderers (based on OpenGL).
+- User Interface components (Button's, Labels's etc.)
+- Client event system.
+- Game physics (Collisions etc.)
+- Game simulations (Path finding etc.)
+- Audio engine based on OpenAL.
+- And a lot more!
+
+## Preview
+
+
 
 ## Getting Started
 
