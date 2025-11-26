@@ -11,6 +11,7 @@ public class DefaultKeyClickTextInputListener implements ClientKeyClickEvent.Lis
     @Override
     public void onKeyClick(ClientKeyClickEvent event, EJGEngine engine) {
         if (event.isReleased()) return;
+        if (engine.getComponentHandler().getComponents() == null) return;
         for (Component component : engine.getComponentHandler().getComponents().values()) {
             if (component instanceof TextInput) {
                 if (((TextInput) component).isFocused()) {
