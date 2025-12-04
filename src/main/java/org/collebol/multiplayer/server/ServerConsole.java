@@ -1,4 +1,4 @@
-package org.collebol.server;
+package org.collebol.multiplayer.server;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

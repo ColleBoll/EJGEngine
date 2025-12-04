@@ -1,4 +1,4 @@
-package org.collebol.shared.packet;
+package org.collebol.multiplayer.packet;
 
 import java.io.Serializable;
 

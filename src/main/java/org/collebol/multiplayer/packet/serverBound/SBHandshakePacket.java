@@ -1,6 +1,6 @@
-package org.collebol.shared.packet.serverBound;
+package org.collebol.multiplayer.packet.serverBound;
 
-import org.collebol.shared.packet.Packet;
+import org.collebol.multiplayer.packet.Packet;
 
 import java.util.UUID;
 

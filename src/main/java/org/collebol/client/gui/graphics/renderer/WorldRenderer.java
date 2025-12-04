@@ -8,9 +8,6 @@ import org.collebol.game.world.World;
 import org.collebol.shared.objects.GameObject;
 import org.collebol.shared.objects.entity.Entity;
 import org.collebol.shared.objects.entity.Player;
-import org.collebol.shared.physics.PhysicsComponent;
-import org.collebol.shared.physics.collision.BoxCollider;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;

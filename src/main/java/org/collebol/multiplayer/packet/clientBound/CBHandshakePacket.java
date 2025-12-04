@@ -1,6 +1,6 @@
-package org.collebol.shared.packet.clientBound;
+package org.collebol.multiplayer.packet.clientBound;
 
-import org.collebol.shared.packet.Packet;
+import org.collebol.multiplayer.packet.Packet;
 
 public class CBHandshakePacket extends Packet {
 

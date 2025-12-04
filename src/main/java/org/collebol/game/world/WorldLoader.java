@@ -3,8 +3,6 @@ package org.collebol.game.world;
 import org.collebol.shared.objects.GameObject;
 import org.collebol.shared.GameLocation;
 
-import java.io.EOFException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
