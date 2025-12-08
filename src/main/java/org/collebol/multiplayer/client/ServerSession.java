@@ -1,5 +1,6 @@
 package org.collebol.multiplayer.client;
 
+import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.packet.Packet;
 import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.packet.serverBound.SBHandshakePacket;
@@ -11,11 +12,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class ServerSession implements AutoCloseable {
+public class ServerSession extends Session implements AutoCloseable {
 
     private Socket serverSocket;
-    private OutputStream out;
-    private DataInputStream in;
 
     private String host;
     private int port;
@@ -33,8 +32,9 @@ public class ServerSession implements AutoCloseable {
     public void connect() {
         try {
             this.serverSocket = new Socket(host, port);
-            this.out = serverSocket.getOutputStream();
-            this.in = new DataInputStream(serverSocket.getInputStream());
+            setOut(new DataOutputStream(serverSocket.getOutputStream()));
+            setIn(new DataInputStream(serverSocket.getInputStream()));
+            registerDefaultPackets();
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -42,49 +42,19 @@ public class ServerSession implements AutoCloseable {
         }
     }
 
+
+    @Override
     public void handle() throws IOException {
         while (!isClosed()) {
-            Packet packet = receive();
-            switch (packet.packetId()) {
-                case 0:
-                    CBHandshakePacket hp = (CBHandshakePacket) packet;
-                    IO.println("Succes, connection: "+(System.currentTimeMillis() - hp.getCurrentMilisec()) + "ms");
-                    break;
-                default:
-                    IO.println("Unknown packet received!");
-                    break;
-            }
+            Packet<?> packet = receive();
+            packet.handle(this);
         }
     }
 
-    public Packet receive() throws IOException {
-        byte packetType = in.readByte();
-        Packet packet;
-        switch (packetType) {
-            case 0:
-                long milisec = in.readLong();
-                packet = new CBHandshakePacket(milisec);
-                return packet;
-            default:
-                throw new IOException("Packet not found!");
-        }
-    }
-
-    public void send(Packet packet) throws IOException {
-        DataOutputStream dOut = new DataOutputStream(out);
-        dOut.write(packet.packetId());
-
-        switch (packet.packetId()) {
-            case 0:
-                SBHandshakePacket handshakePacket = (SBHandshakePacket) packet;
-                dOut.writeUTF(handshakePacket.getUuid().toString());
-                dOut.writeLong(handshakePacket.getCurrentMilisec());
-                dOut.writeUTF(handshakePacket.getClientIp());
-                break;
-            default:
-                throw new IOException("Unsupported packet type: " + packet.packetId());
-        }
-        dOut.flush();
+    @Override
+    public void registerDefaultPackets() throws IOException {
+        registerPacket(CBHandshakePacket.class);
+        registerPacket(SBHandshakePacket.class);
     }
 
     public boolean isClosed() {
@@ -93,8 +63,8 @@ public class ServerSession implements AutoCloseable {
 
     @Override
     public void close() throws IOException {
-        out.close();
-        in.close();
+        getOut().close();
+        getIn().close();
         serverSocket.close();
     }
 }
