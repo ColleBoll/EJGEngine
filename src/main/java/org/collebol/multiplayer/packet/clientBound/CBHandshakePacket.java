@@ -9,7 +9,10 @@ import java.io.IOException;
 
 public class CBHandshakePacket extends Packet<CBHandshakePacket> {
 
-    private final long currentMilisec;
+    private long currentMilisec;
+
+    public CBHandshakePacket() {
+    }
 
     public CBHandshakePacket(long currentMilisec) {
         this.currentMilisec = currentMilisec;
@@ -26,7 +29,7 @@ public class CBHandshakePacket extends Packet<CBHandshakePacket> {
 
     @Override
     public void handle(Session session) throws IOException {
-        IO.println("Succes, connection: "+(System.currentTimeMillis() - this.getCurrentMilisec()) + "ms");
+        IO.println("Connection successfully been created - "+(System.currentTimeMillis() - this.getCurrentMilisec()) + "ms");
     }
 
     @Override

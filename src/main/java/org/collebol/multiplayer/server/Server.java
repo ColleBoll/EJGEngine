@@ -1,5 +1,7 @@
 package org.collebol.multiplayer.server;
 
+import org.collebol.multiplayer.packet.clientBound.CBCloseConnectionPacket;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is the server side of the EJGEngine project. This is the base of an external server socket.
@@ -24,13 +27,15 @@ public abstract class Server implements AutoCloseable {
     private static ServerSocket serverSocket;
     private static final ExecutorService pool = Executors.newCachedThreadPool();
     private static ServerState serverState;
-    private static List<ClientSession> clientList = new ArrayList<>();
+    private static final List<ClientSession> clientList = new ArrayList<>();
+    private static Server instance;
 
     public Server() throws IOException {
         this.host = "localhost";
         this.port = 36676;
         Server.serverState = null;
         serverSocket = new ServerSocket(this.port);
+        instance = this;
     }
 
     public Server(String host, int port) throws IOException {
@@ -38,6 +43,7 @@ public abstract class Server implements AutoCloseable {
         this.port = port;
         Server.serverState = null;
         serverSocket = new ServerSocket(port);
+        instance = this;
     }
 
     /**
@@ -51,30 +57,37 @@ public abstract class Server implements AutoCloseable {
      * </ol>
      */
     public void start() {
+        ServerConsole.server("Server is starting...");
         starting();
-        ServerConsole.server("Server is starting");
 
         running();
-        ServerConsole.server("Server is running");
+        ServerConsole.server("Server is running!");
 
         serverState = ServerState.RUNNING;
 
-        ServerConsole.server("Server is started at: " + host + ":" + port);
+        ServerConsole.server("Server is started[HOST=" + serverSocket.getLocalSocketAddress() + "]");
 
         ServerConsole.consoleListener();
 
         listen();
     }
 
+    /**
+     * Listen for incoming connection to the {@link #serverSocket}.<br>
+     * If connection has been made the accept() method is called
+     * where it tries to make a {@link ClientSession} out of the clientSocket.
+     */
     public void listen() {
         try {
+            ServerConsole.server("Listening for client connection...");
             while(serverState == ServerState.RUNNING){
                 try {
 
-                    // wacht tot connectie is gemaakt door client
-                    Socket clientSocket = serverSocket.accept();
+                    Socket clientSocket = serverSocket.accept(); // wait until a client connection has been made
 
-                    // als connectie is gemaakt -> accept
+                    ServerConsole.info("Connection has been made[IP=" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
+
+                    //if connection is been made -> accept()
                     accept(clientSocket);
 
                 } catch (IOException e) {
@@ -84,21 +97,20 @@ public abstract class Server implements AutoCloseable {
                     throw new RuntimeException(e);
                 }
             }
-        } finally {
-            stopping();
-            ServerConsole.server("Server is stopped!");
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     private void accept(Socket clientSocket) {
 
-        // als connectie -> submit nieuwe task in thread
-        // zodat er meerdere connecties gemaakt kunnen worden
+        // if connection accept -> submit new task in thread
+        // so there can be multiple client connections
         pool.submit(() -> {
 
-            // maak de session van de gemaakte connectie van de client socket
-            try (ClientSession session = new ClientSession(clientSocket, this)) {
-                ServerConsole.server("Connection has been made[" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
+            // try to make a session out of the client socket
+            try (ClientSession session = new ClientSession(clientSocket)) {
+                ServerConsole.info("Client session has been made[IP=" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
                 session.handle();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -112,20 +124,56 @@ public abstract class Server implements AutoCloseable {
 
     public abstract void stopping();
 
+    /**
+     * You can use this method to shut down the server with all its sessions.
+     */
     public static void shutdown() {
+        ServerConsole.server("Stopping server...");
+        getInstance().stopping();
+        serverState = ServerState.STOPPED;
+
         try {
-            serverState = ServerState.STOPPED;
-            pool.shutdown();
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
-                for (ClientSession s : clientList) {
-                    s.close();
+                ServerConsole.server("Server socket closed!");
+            }
+
+            CBCloseConnectionPacket closePacket = new CBCloseConnectionPacket(System.currentTimeMillis());
+
+            synchronized (clientList) {
+                for (ClientSession session : clientList) {
+                    try {
+                        session.send(closePacket);
+
+                        new Thread(() -> {
+                            try {
+                                Thread.sleep(2000);
+                                if (!session.isClosed()) {
+                                    ServerConsole.warn("Client did not respond in time, forcing close session[UUID=" + session.getUuid() + "]");
+                                    session.close();
+                                }
+                            } catch (Exception ignored) {}
+                        }).start();
+
+                    } catch (Exception e) {
+                        ServerConsole.error("Failed to send close packet[ERROR=" + e.getMessage()+"]");
+                        session.close();
+                    }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            pool.shutdown();
+            if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {
+                ServerConsole.warn("Forcing shutdown of active threads...");
+                pool.shutdownNow();
+            }
+
+            serverState = ServerState.STOPPED;
+            ServerConsole.server("Server is stopped!");
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ServerConsole.error("Shutdown error: ");
+            e.printStackTrace();
         }
     }
 
@@ -150,7 +198,11 @@ public abstract class Server implements AutoCloseable {
         Server.serverState = serverState;
     }
 
-    public List<ClientSession> getClientList() {
+    public static List<ClientSession> getClientList() {
         return clientList;
+    }
+
+    public static Server getInstance() {
+        return instance;
     }
 }

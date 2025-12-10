@@ -4,6 +4,7 @@ import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.packet.Packet;
 import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.server.ClientSession;
+import org.collebol.multiplayer.server.Server;
 import org.collebol.multiplayer.server.ServerConsole;
 
 import java.io.DataInputStream;
@@ -13,9 +14,12 @@ import java.util.UUID;
 
 public class SBHandshakePacket extends Packet<SBHandshakePacket> {
 
-    private final UUID uuid;
-    private final String clientIp;
-    private final long currentMilisec;
+    private UUID uuid;
+    private String clientIp;
+    private long currentMilisec;
+
+    public SBHandshakePacket() {
+    }
 
     public SBHandshakePacket(UUID uuid, long currentMilisec, String clientIp) {
         this.uuid = uuid;
@@ -42,7 +46,14 @@ public class SBHandshakePacket extends Packet<SBHandshakePacket> {
 
     @Override
     public void handle(Session session) throws IOException {
-        ServerConsole.info("Handshake packet[UUID="+getUuid()+", IP="+getClientIp()+"] - " + (System.currentTimeMillis() - getCurrentMilisec()) + "ms");
+        ClientSession clientSession = (ClientSession) session;
+
+        ServerConsole.info("Handshake packet[UUID="+getUuid()+
+                ", IP="+clientSession.getClientSocket().getInetAddress()+":"+clientSession.getClientSocket().getPort()+"] - "+
+                (System.currentTimeMillis() - getCurrentMilisec()) + "ms");
+
+        clientSession.setUuid(getUuid());
+        Server.getClientList().add(clientSession);
 
         CBHandshakePacket response = new CBHandshakePacket(System.currentTimeMillis());
         session.send(response);

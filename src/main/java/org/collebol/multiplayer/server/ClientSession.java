@@ -2,30 +2,29 @@ package org.collebol.multiplayer.server;
 
 import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.packet.Packet;
-import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.packet.serverBound.SBHandshakePacket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.UUID;
 
 /**
- * This class is responsible for managing every Client Session that has made a valid connection with the socket.
+ * This class is responsible for managing every Client Session that has made a valid connection with the server socket.
  *
+ * @see Session
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
 public class ClientSession extends Session implements AutoCloseable {
 
     private final Socket clientSocket;
-    private final Server server;
+    private UUID uuid;
 
-    public ClientSession(Socket socket, Server server) throws IOException {
+    public ClientSession(Socket socket) throws IOException {
         this.clientSocket = socket;
-        this.server = server;
         setOut(new DataOutputStream(socket.getOutputStream()));
         setIn(new DataInputStream(socket.getInputStream()));
         registerDefaultPackets();
@@ -33,17 +32,30 @@ public class ClientSession extends Session implements AutoCloseable {
 
 
     @Override
-    public void handle() throws IOException {
-        while (!isClosed()) {
-            Packet<?> packet = receive();
-            packet.handle(this);
+    public void handle() throws Exception {
+
+        try {
+            clientSocket.setSoTimeout(2000);
+            ServerConsole.info("Waiting for handshake from client[IP=" + getClientSocket().getInetAddress() + ":" + getClientSocket().getPort() + "]");
+            Packet<?> firstPacket = receive();
+            if (firstPacket.packetId() == 0) {
+                firstPacket.handle(this);
+            }
+
+            clientSocket.setSoTimeout(0);
+            while (!isClosed()) {
+                Packet<?> packet = receive();
+                packet.handle(this);
+            }
+        } catch (SocketTimeoutException e) {
+            ServerConsole.error("No handshake received from client[IP=" + getClientSocket().getInetAddress() + ":" + getClientSocket().getPort() + ", TIMEOUT=2000]");
+            ServerConsole.warn("Closing client connection because no handshake[IP=" + getClientSocket().getInetAddress() + ":" + getClientSocket().getPort() + "]");
         }
     }
 
     @Override
     public void registerDefaultPackets() throws IOException {
         registerPacket(SBHandshakePacket.class);
-        registerPacket(CBHandshakePacket.class);
     }
 
     public boolean isClosed() {
@@ -55,7 +67,19 @@ public class ClientSession extends Session implements AutoCloseable {
         getOut().close();
         getIn().close();
         clientSocket.close();
-        server.getClientList().remove(this);
+        Server.getClientList().remove(this);
         ServerConsole.warn("Client lost connection[IP=" + clientSocket.getInetAddress() + ":" + clientSocket.getPort() + "]");
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

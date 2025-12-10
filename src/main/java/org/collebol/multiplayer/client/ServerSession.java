@@ -2,16 +2,22 @@ package org.collebol.multiplayer.client;
 
 import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.packet.Packet;
+import org.collebol.multiplayer.packet.clientBound.CBCloseConnectionPacket;
 import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
-import org.collebol.multiplayer.packet.serverBound.SBHandshakePacket;
+import org.collebol.multiplayer.packet.clientBound.CBStringPacket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
+/**
+ * This class is responsible for the connection session to the server.
+ *
+ * @see Session
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ServerSession extends Session implements AutoCloseable {
 
     private Socket serverSocket;
@@ -29,14 +35,25 @@ public class ServerSession extends Session implements AutoCloseable {
         this.port = port;
     }
 
+    /**
+     * With this method you can try to make the connection to the server socket.<br>
+     * This is being done with the settet {@link #host} and {@link #port}.<br>
+     *
+     * <p>Default host:
+     * <li>
+     *     <ul>Host: {@code localhost}</ul>
+     *     <ul>Port: {@code 36676}</ul>
+     * </li>
+     * </p>
+     *
+     * @throws IOException if the host does not exist or connection can not been made
+     */
     public void connect() {
         try {
             this.serverSocket = new Socket(host, port);
             setOut(new DataOutputStream(serverSocket.getOutputStream()));
             setIn(new DataInputStream(serverSocket.getInputStream()));
             registerDefaultPackets();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +71,8 @@ public class ServerSession extends Session implements AutoCloseable {
     @Override
     public void registerDefaultPackets() throws IOException {
         registerPacket(CBHandshakePacket.class);
-        registerPacket(SBHandshakePacket.class);
+        registerPacket(CBStringPacket.class);
+        registerPacket(CBCloseConnectionPacket.class);
     }
 
     public boolean isClosed() {
