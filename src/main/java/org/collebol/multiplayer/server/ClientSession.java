@@ -33,15 +33,18 @@ public class ClientSession extends Session implements AutoCloseable {
 
     @Override
     public void handle() throws Exception {
-
         try {
+            // to make sure the client sends a handshake packet,
+            // the connection will close after 2sec of there is no
+            // handshake recieved.
             clientSocket.setSoTimeout(2000);
             ServerConsole.info("Waiting for handshake from client[IP=" + getClientSocket().getInetAddress() + ":" + getClientSocket().getPort() + "]");
             Packet<?> firstPacket = receive();
             if (firstPacket.packetId() == 0) {
                 firstPacket.handle(this);
             }
-
+            // if the handshake packet is received within the timespan
+            // the while loop starts, and it begins listening for incoming packets
             clientSocket.setSoTimeout(0);
             while (!isClosed()) {
                 Packet<?> packet = receive();

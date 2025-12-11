@@ -138,19 +138,21 @@ public abstract class Server implements AutoCloseable {
                 ServerConsole.server("Server socket closed!");
             }
 
+            // close the active client sessions (the connections of the client on the server)
             CBCloseConnectionPacket closePacket = new CBCloseConnectionPacket(System.currentTimeMillis());
-
             synchronized (clientList) {
                 for (ClientSession session : clientList) {
                     try {
+                        // send a packet to the client so it can disconnect is self
                         session.send(closePacket);
 
+                        // if the client does not respond within 2sec the session will be force closed
                         new Thread(() -> {
                             try {
                                 Thread.sleep(2000);
                                 if (!session.isClosed()) {
                                     ServerConsole.warn("Client did not respond in time, forcing close session[UUID=" + session.getUuid() + "]");
-                                    session.close();
+                                    session.close(); // force close client session
                                 }
                             } catch (Exception ignored) {}
                         }).start();
