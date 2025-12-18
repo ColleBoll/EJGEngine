@@ -2,6 +2,11 @@ package org.collebol.multiplayer.server;
 
 import org.collebol.multiplayer.packet.clientBound.CBCloseConnectionPacket;
 import org.collebol.multiplayer.packet.clientBound.CBStringPacket;
+import org.collebol.multiplayer.server.console.ConsoleCommand;
+import org.collebol.multiplayer.server.console.commands.ConsoleCloseCommand;
+import org.collebol.multiplayer.server.console.commands.ConsoleHelpCommand;
+import org.collebol.multiplayer.server.console.commands.ConsoleSendCommand;
+import org.collebol.multiplayer.server.console.commands.ConsoleSessionsCommand;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -27,83 +32,31 @@ public class ServerConsole {
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
 
-    public static void consoleListener() {
+    private final Map<String, ConsoleCommand> registeredCommands = new HashMap<>();
+
+    private void registerDefaultCommands() {
+        registerCommand("help", new ConsoleHelpCommand());
+        registerCommand("sessions", new ConsoleSessionsCommand());
+        registerCommand("send", new ConsoleSendCommand());
+        registerCommand("close", new ConsoleCloseCommand());
+    }
+
+    public void consoleListener() {
+        registerDefaultCommands();
         Thread inputThread = new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
                 String[] i = input.split(" ");
-                if (i[0].equalsIgnoreCase("help")) {
-                    server("HELP COMMANDS:");
-                    server("- stop: stop the current server.");
-                    server("- sessions: list of active sessions");
-                    server("- send: send a message to a session");
-                    server("- close: force close a session");
-                }
+
                 if (i[0].equalsIgnoreCase("stop")) {
                     Server.shutdown();
                     scanner.close();
                     break;
                 }
-                if (i[0].equalsIgnoreCase("sessions")) {
-                    server("ACTIVE CLIENT SESSIONS:");
-                    if (!Server.getClientList().isEmpty()) {
-                        for (ClientSession s : Server.getClientList()) {
-                            server("- [IP=" + s.getClientSocket().getInetAddress() + ":" + s.getClientSocket().getPort() +
-                                    ", UUID=" + s.getUuid() +"]"
-                            );
-                        }
-                    } else {
-                        server("- none");
-                    }
-                }
-                if (i[0].equalsIgnoreCase("send")) {
-                    if (i.length >= 3) {
-                        UUID uuid = null;
-                        ClientSession session = null;
-                        for (ClientSession s : Server.getClientList()) {
-                            if (s.getUuid().toString().equals(i[1])) { uuid = UUID.fromString(i[1]); session = s; }
-                        }
-                        if (uuid != null) {
 
-                            String message = String.join(" ", Arrays.copyOfRange(i, 2, i.length));
-
-                            CBStringPacket packet = new CBStringPacket(message, System.currentTimeMillis());
-                            try {
-                                session.send(packet);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            server("String packet send[UUID=" + uuid + ", MESSAGE='" + message + "']");
-
-                        } else { error("Given UUID is not a valid session[UUID=" + i[1] + "]"); }
-                    } else {
-                        incorrectSyntax("send <UUID> <MESSAGE>...");
-                    }
-                }
-                if (i[0].equalsIgnoreCase("close")) {
-                    if (i.length >= 2) {
-                        UUID uuid = null;
-                        ClientSession session = null;
-                        for (ClientSession s : Server.getClientList()) {
-                            if (s.getUuid().equals(UUID.fromString(i[1]))) { uuid = UUID.fromString(i[1]); session = s; }
-                        }
-                        if (uuid != null) {
-
-                            try {
-                                CBCloseConnectionPacket packet = new CBCloseConnectionPacket(System.currentTimeMillis());
-                                session.send(packet);
-                                server("Connection Close packet send[UUID=" + uuid + "]");
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-
-                        } else { error("Given UUID is not a valid session[UUID=" + i[1] + "]"); }
-                    } else {
-                        incorrectSyntax("close <UUID>");
-                    }
-                }
+                ConsoleCommand cmd = getRegisteredCommands().getOrDefault(i[0], (args, console) -> incorrectSyntax(args[0]));
+                cmd.response(i, this);
             }
         });
         inputThread.start();
@@ -127,5 +80,14 @@ public class ServerConsole {
 
     public static void incorrectSyntax(String syntax) {
         error("Incorrect syntax['" + syntax + "']");
+    }
+
+    public void registerCommand(String name, ConsoleCommand consoleCommand) {
+        if (this.registeredCommands == null) return;
+        this.registeredCommands.putIfAbsent(name, consoleCommand);
+    }
+
+    public Map<String, ConsoleCommand> getRegisteredCommands() {
+        return registeredCommands;
     }
 }

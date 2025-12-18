@@ -29,6 +29,7 @@ public abstract class Server implements AutoCloseable {
     private static ServerState serverState;
     private static final List<ClientSession> clientList = new ArrayList<>();
     private static Server instance;
+    public ServerConsole console = new ServerConsole();
 
     public Server() throws IOException {
         this.host = "localhost";
@@ -67,7 +68,7 @@ public abstract class Server implements AutoCloseable {
 
         ServerConsole.server("Server is started[HOST=" + serverSocket.getLocalSocketAddress() + "]");
 
-        ServerConsole.consoleListener();
+        console.consoleListener();
 
         listen();
     }
@@ -202,6 +203,10 @@ public abstract class Server implements AutoCloseable {
 
     public static List<ClientSession> getClientList() {
         return clientList;
+    }
+
+    public ServerConsole getConsole() {
+        return console;
     }
 
     public static Server getInstance() {
