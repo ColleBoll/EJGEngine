@@ -2,6 +2,7 @@ package org.collebol.client.input;
 
 import org.collebol.client.EJGEngine;
 import org.collebol.client.event.client.ClientLeftClickEvent;
+import org.collebol.client.event.client.ClientMouseScrollEvent;
 import org.collebol.client.event.client.ClientRightClickEvent;
 import org.collebol.client.event.client.button.ClientButtonClickEvent;
 import org.collebol.client.event.client.button.ClientButtonHoverEvent;
@@ -18,6 +19,7 @@ import org.collebol.shared.GameLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
@@ -177,6 +179,17 @@ public class MouseHandler {
                         }
                     }
                 }
+            }
+        });
+
+        // mouse scroll
+        GLFW.glfwSetScrollCallback(window, new GLFWScrollCallback() {
+            @Override
+            public void invoke(long window, double xOffset, double yOffset) {
+                engine.getEventHandler().call(
+                        new ClientMouseScrollEvent(new Vector2D((float) xOffset, (float) yOffset)),
+                        ClientMouseScrollEvent.Listener.class
+                );
             }
         });
     }
