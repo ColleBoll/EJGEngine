@@ -63,7 +63,11 @@ public enum KeyType {
     F7("f7", true), F8("f8", true), F9("f9", true), F10("f10", true), F11("f11", true), F12("f12", true),
 
     RIGHT_MOUSE("right_mouse", true),
-    LEFT_MOUSE("left_mouse", true);
+    LEFT_MOUSE("left_mouse", true),
+    SCROLL_UP("scroll_up", true),
+    SCROLL_DOWN("scroll_down", true),
+    SCROLL_RIGHT("scroll_right", true),
+    SCROLL_LEFT("scroll_left", true);
 
     private final String value;
     private final boolean action;
