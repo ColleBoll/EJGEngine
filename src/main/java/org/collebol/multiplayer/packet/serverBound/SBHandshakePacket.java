@@ -12,6 +12,19 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * <code>Server Bound Packet</code>
+ *
+ * <p>
+ *     A handshake packet is the start of a healthy connection between the client and server.
+ *     It contains multiple data the server uses to register the client.
+ *     It handles this packet with adding the client to the {@link Server#getClientList()} and returning a
+ *     {@link CBHandshakePacket} to confirm the connection.
+ * </p>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class SBHandshakePacket extends Packet<SBHandshakePacket> {
 
     private UUID uuid;

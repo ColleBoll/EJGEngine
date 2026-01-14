@@ -5,6 +5,12 @@ import org.collebol.shared.objects.entity.Entity;
 
 import java.util.ArrayList;
 
+/**
+ * A simple default {@link Path} you can use for your {@link Entity}'s simulation.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class DefaultPath extends Path{
 
     public DefaultPath(Entity entity) {

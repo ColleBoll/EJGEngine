@@ -6,6 +6,13 @@ import org.collebol.client.event.ClientListener;
 import org.collebol.client.input.KeyType;
 import org.collebol.shared.math.Vector2D;
 
+/**
+ * The ClientMouseScrollEvent class represents an event triggered by a mouse scroll.
+ * It contains information about the direction of the scroll.
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class ClientMouseScrollEvent implements ClientEvent<ClientMouseScrollEvent.Listener> {
 
     private final Vector2D offset;

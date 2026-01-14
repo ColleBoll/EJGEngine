@@ -7,6 +7,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * <code>Client Bound Packet</code>
+ *
+ * <p>
+ *     This packet is used by the server to send a data string to the client.
+ * </p>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class CBStringPacket extends Packet<CBStringPacket> {
 
     private long currentMilisec;
