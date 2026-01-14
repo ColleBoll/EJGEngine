@@ -8,6 +8,17 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * <code>Client Bound Packet</code>
+ *
+ * <p>
+ *     This packet is used by the server to "ask" the client to "disconnect" from the server without forcing it
+ *     at the server.
+ * </p>
+ *
+ * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
+ * @since 1.0-dev
+ */
 public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> {
 
     private long currentMilisec;
