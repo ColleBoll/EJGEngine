@@ -20,8 +20,8 @@ public class EventHandler<C extends Context> {
         listeners.computeIfAbsent(type, k -> new ArrayList<>()).add(listener);
     }
 
-    public <E extends Event<L, C>, L extends EventListener> void call(E event, L listenerType) {
-        List<EventListener> list = listeners.get(listenerType.getClass());
+    public <E extends Event<L, C>, L extends EventListener> void call(E event, Class<L> listenerType) {
+        List<EventListener> list = listeners.get(listenerType);
         if (list != null) {
             for (EventListener listener : list) {
                 event.dispatch((L) listener, context);

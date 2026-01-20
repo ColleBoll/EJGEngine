@@ -1,17 +1,13 @@
 package org.collebol.client.event.client.button;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
-import org.collebol.client.event.client.ClientLeftClickEvent;
-import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
 import org.collebol.client.input.KeyType;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
 
-import java.util.Map;
-
-public class ClientButtonClickEvent implements ClientEvent<ClientButtonClickEvent.Listener> {
+public class ClientButtonClickEvent implements Event<ClientButtonClickEvent.Listener, EJGEngine> {
 
     private final Vector2D position;
     private final KeyType keyType;
@@ -50,7 +46,7 @@ public class ClientButtonClickEvent implements ClientEvent<ClientButtonClickEven
         listener.onButtonClick(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onButtonClick(ClientButtonClickEvent event, EJGEngine engine);
     }
 }

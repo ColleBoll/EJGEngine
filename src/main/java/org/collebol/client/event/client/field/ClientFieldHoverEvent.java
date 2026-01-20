@@ -1,15 +1,14 @@
 package org.collebol.client.event.client.field;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
 import org.collebol.client.gui.graphics.ui.component.Field;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
 
-import java.util.Map;
+public class ClientFieldHoverEvent implements Event<ClientFieldHoverEvent.Listener, EJGEngine> {
 
-public class ClientFieldHoverEvent implements ClientEvent<ClientFieldHoverEvent.Listener> {
-
+    public static Listener Listener;
     private final Vector2D position;
     private final Field field;
     private final boolean entered;
@@ -41,7 +40,7 @@ public class ClientFieldHoverEvent implements ClientEvent<ClientFieldHoverEvent.
         listener.onFieldHover(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onFieldHover(ClientFieldHoverEvent event, EJGEngine engine);
     }
 }

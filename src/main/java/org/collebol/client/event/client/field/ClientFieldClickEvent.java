@@ -1,21 +1,19 @@
 package org.collebol.client.event.client.field;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
-import org.collebol.client.event.client.ClientLeftClickEvent;
 import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Field;
 import org.collebol.client.input.KeyType;
 import org.collebol.client.math.ComponentCalculator;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class ClientFieldClickEvent implements ClientEvent<ClientFieldClickEvent.Listener> {
+public class ClientFieldClickEvent implements Event<ClientFieldClickEvent.Listener, EJGEngine> {
 
+    public static Listener Listener;
     private final Vector2D position;
     private final KeyType keyType;
     private final boolean press;
@@ -64,7 +62,7 @@ public class ClientFieldClickEvent implements ClientEvent<ClientFieldClickEvent.
         actionSubComponent = ComponentCalculator.checkIfSubComponent(field, position);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onFieldClick(ClientFieldClickEvent event, EJGEngine engine);
     }
 }
