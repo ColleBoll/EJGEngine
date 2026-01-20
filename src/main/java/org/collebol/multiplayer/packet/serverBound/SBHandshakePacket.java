@@ -6,6 +6,9 @@ import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.server.ClientSession;
 import org.collebol.multiplayer.server.Server;
 import org.collebol.multiplayer.server.ServerConsole;
+import org.collebol.shared.Context;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,7 +28,7 @@ import java.util.UUID;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class SBHandshakePacket extends Packet<SBHandshakePacket> {
+public class SBHandshakePacket extends Packet<SBHandshakePacket> implements Event<SBHandshakePacket.Listener, Context> {
 
     private UUID uuid;
     private String clientIp;
@@ -68,6 +71,8 @@ public class SBHandshakePacket extends Packet<SBHandshakePacket> {
         clientSession.setUuid(getUuid());
         Server.getClientList().add(clientSession);
 
+        Server.getInstance().getEventHandler().call(this, SBHandshakePacket.Listener.class);
+
         CBHandshakePacket response = new CBHandshakePacket(System.currentTimeMillis());
         session.send(response);
     }
@@ -86,5 +91,15 @@ public class SBHandshakePacket extends Packet<SBHandshakePacket> {
         out.writeUTF(getUuid().toString());
         out.writeLong(getCurrentMilisec());
         out.writeUTF(getClientIp());
+    }
+
+    @Override
+    public void dispatch(Listener listener, Context context) {
+        listener.onPacketReceive(this, (Server) context);
+    }
+
+
+    public interface Listener extends EventListener {
+        void onPacketReceive(SBHandshakePacket event, Server server);
     }
 }

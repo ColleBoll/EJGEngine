@@ -1,8 +1,12 @@
 package org.collebol.multiplayer.packet.clientBound;
 
 import org.collebol.multiplayer.Session;
+import org.collebol.multiplayer.client.ServerSession;
 import org.collebol.multiplayer.packet.Packet;
 import org.collebol.multiplayer.packet.serverBound.SBHandshakePacket;
+import org.collebol.shared.Context;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,7 +23,7 @@ import java.io.IOException;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CBHandshakePacket extends Packet<CBHandshakePacket> {
+public class CBHandshakePacket extends Packet<CBHandshakePacket> implements Event<CBHandshakePacket.Listener, Context> {
 
     private long currentMilisec;
 
@@ -41,7 +45,8 @@ public class CBHandshakePacket extends Packet<CBHandshakePacket> {
 
     @Override
     public void handle(Session session) throws IOException {
-        IO.println("Connection successfully been created - "+(System.currentTimeMillis() - this.getCurrentMilisec()) + "ms");
+        ServerSession s = (ServerSession) session;
+        s.getEventHandler().call(this, CBHandshakePacket.Listener.class);
     }
 
     @Override
@@ -55,4 +60,12 @@ public class CBHandshakePacket extends Packet<CBHandshakePacket> {
         out.writeLong(getCurrentMilisec());
     }
 
+    @Override
+    public void dispatch(Listener listener, Context context) {
+        listener.onPacketReceive(this, (ServerSession) context);
+    }
+
+    public interface Listener extends EventListener {
+        void onPacketReceive(CBHandshakePacket event, ServerSession session);
+    }
 }

@@ -7,8 +7,8 @@ import org.collebol.shared.event.EventHandler;
 
 public class ClientEventHandler extends EventHandler<EJGEngine> {
 
-    public ClientEventHandler(EJGEngine context) {
-        super(context);
+    public ClientEventHandler(EJGEngine engine) {
+        super(engine);
 
         registerDefaultListeners();
     }
