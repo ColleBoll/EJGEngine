@@ -1,17 +1,14 @@
 package org.collebol.client.event.client.button;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
-import org.collebol.client.event.client.ClientLeftClickEvent;
-import org.collebol.client.gui.graphics.ui.Component;
 import org.collebol.client.gui.graphics.ui.component.Button;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
 
-import java.util.Map;
+public class ClientButtonHoverEvent implements Event<ClientButtonHoverEvent.Listener, EJGEngine> {
 
-public class ClientButtonHoverEvent implements ClientEvent<ClientButtonHoverEvent.Listener> {
-
+    public static Listener Listener;
     private final Vector2D position;
     private final Button button;
     private final boolean entered;
@@ -43,7 +40,7 @@ public class ClientButtonHoverEvent implements ClientEvent<ClientButtonHoverEven
         listener.onButtonHover(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onButtonHover(ClientButtonHoverEvent event, EJGEngine engine);
     }
 }

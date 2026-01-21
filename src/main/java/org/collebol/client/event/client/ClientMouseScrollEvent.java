@@ -1,9 +1,9 @@
 package org.collebol.client.event.client;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
 import org.collebol.client.input.KeyType;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
 
 /**
@@ -13,8 +13,9 @@ import org.collebol.shared.math.Vector2D;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientMouseScrollEvent implements ClientEvent<ClientMouseScrollEvent.Listener> {
+public class ClientMouseScrollEvent implements Event<ClientMouseScrollEvent.Listener, EJGEngine> {
 
+    public static Listener Listener;
     private final Vector2D offset;
     private final KeyType keyType;
 
@@ -47,7 +48,7 @@ public class ClientMouseScrollEvent implements ClientEvent<ClientMouseScrollEven
         listener.onMouseScroll(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onMouseScroll(ClientMouseScrollEvent event, EJGEngine engine);
     }
 }

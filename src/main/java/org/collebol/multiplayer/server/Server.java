@@ -1,6 +1,8 @@
 package org.collebol.multiplayer.server;
 
+import org.collebol.multiplayer.packet.PacketEventHandler;
 import org.collebol.multiplayer.packet.clientBound.CBCloseConnectionPacket;
+import org.collebol.shared.event.EventContext;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public abstract class Server implements AutoCloseable {
+public abstract class Server implements AutoCloseable, EventContext {
 
     private final String host;
     private final int port;
@@ -30,6 +32,7 @@ public abstract class Server implements AutoCloseable {
     private static final List<ClientSession> clientList = new ArrayList<>();
     private static Server instance;
     public ServerConsole console = new ServerConsole();
+    private final PacketEventHandler eventHandler = new PacketEventHandler(this);
 
     public Server() throws IOException {
         this.host = "localhost";
@@ -211,5 +214,9 @@ public abstract class Server implements AutoCloseable {
 
     public static Server getInstance() {
         return instance;
+    }
+
+    public PacketEventHandler getEventHandler() {
+        return eventHandler;
     }
 }

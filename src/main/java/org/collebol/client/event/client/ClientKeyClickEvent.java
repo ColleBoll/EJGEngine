@@ -1,9 +1,9 @@
 package org.collebol.client.event.client;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
 import org.collebol.client.input.KeyType;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 import java.util.Map;
 
@@ -14,8 +14,9 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientKeyClickEvent implements ClientEvent<ClientKeyClickEvent.Listener> {
+public class ClientKeyClickEvent implements Event<ClientKeyClickEvent.Listener, EJGEngine> {
 
+    public static Listener Listener;
     private final KeyType keyType;
     private final boolean press;
 
@@ -41,7 +42,7 @@ public class ClientKeyClickEvent implements ClientEvent<ClientKeyClickEvent.List
         listener.onKeyClick(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onKeyClick(ClientKeyClickEvent event, EJGEngine engine);
     }
 

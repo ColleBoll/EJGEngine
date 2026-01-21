@@ -1,7 +1,11 @@
 package org.collebol.multiplayer.packet.clientBound;
 
 import org.collebol.multiplayer.Session;
+import org.collebol.multiplayer.client.ServerSession;
 import org.collebol.multiplayer.packet.Packet;
+import org.collebol.shared.event.EventContext;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,7 +21,7 @@ import java.io.IOException;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CBStringPacket extends Packet<CBStringPacket> {
+public class CBStringPacket extends Packet<CBStringPacket> implements Event<CBStringPacket.Listener, EventContext> {
 
     private long currentMilisec;
     private String message;
@@ -45,7 +49,8 @@ public class CBStringPacket extends Packet<CBStringPacket> {
 
     @Override
     public void handle(Session session) throws IOException {
-        IO.println("String packet: '" + getMessage() + "' - " + (System.currentTimeMillis() - this.getCurrentMilisec()) + "ms");
+        ServerSession s = (ServerSession) session;
+        s.getEventHandler().call(this, CBStringPacket.Listener.class);
     }
 
     @Override
@@ -59,5 +64,14 @@ public class CBStringPacket extends Packet<CBStringPacket> {
     public void send(DataOutputStream out) throws IOException {
         out.writeUTF(getMessage());
         out.writeLong(getCurrentMilisec());
+    }
+
+    @Override
+    public void dispatch(Listener listener, EventContext context) {
+        listener.onPacketReceive(this, (ServerSession) context);
+    }
+
+    public interface Listener extends EventListener {
+        void onPacketReceive(CBStringPacket event, ServerSession session);
     }
 }

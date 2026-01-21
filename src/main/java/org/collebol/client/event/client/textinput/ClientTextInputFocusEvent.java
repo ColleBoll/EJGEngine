@@ -1,9 +1,9 @@
 package org.collebol.client.event.client.textinput;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
 import org.collebol.client.gui.graphics.ui.component.TextInput;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 /**
  * This event will be called when the fucus changes of a (registered) {@link TextInput} .
@@ -11,7 +11,7 @@ import org.collebol.client.gui.graphics.ui.component.TextInput;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientTextInputFocusEvent implements ClientEvent<ClientTextInputFocusEvent.Listener> {
+public class ClientTextInputFocusEvent implements Event<ClientTextInputFocusEvent.Listener, EJGEngine> {
 
     private final TextInput textInput;
     private final boolean focused;
@@ -34,7 +34,7 @@ public class ClientTextInputFocusEvent implements ClientEvent<ClientTextInputFoc
         listener.onFocusChange(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onFocusChange(ClientTextInputFocusEvent event, EJGEngine engine);
     }
 }

@@ -3,6 +3,9 @@ package org.collebol.multiplayer.packet.clientBound;
 import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.client.ServerSession;
 import org.collebol.multiplayer.packet.Packet;
+import org.collebol.shared.event.EventContext;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,7 +22,7 @@ import java.io.IOException;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> {
+public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> implements Event<CBCloseConnectionPacket.Listener, EventContext> {
 
     private long currentMilisec;
 
@@ -42,7 +45,7 @@ public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> {
     @Override
     public void handle(Session session) throws IOException {
         ServerSession s = (ServerSession) session;
-        IO.println("Connection close packet - " + (System.currentTimeMillis() - this.getCurrentMilisec()) + "ms");
+        s.getEventHandler().call(this, CBCloseConnectionPacket.Listener.class);
         s.close();
     }
 
@@ -55,5 +58,14 @@ public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> {
     @Override
     public void send(DataOutputStream out) throws IOException {
         out.writeLong(getCurrentMilisec());
+    }
+
+    @Override
+    public void dispatch(Listener listener, EventContext context) {
+        listener.onPacketReceive(this, (ServerSession) context);
+    }
+
+    public interface Listener extends EventListener {
+        void onPacketReceive(CBCloseConnectionPacket event, ServerSession session);
     }
 }

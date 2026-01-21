@@ -1,11 +1,9 @@
 package org.collebol.client.event.client;
 
 import org.collebol.client.EJGEngine;
-import org.collebol.client.event.ClientEvent;
-import org.collebol.client.event.ClientListener;
+import org.collebol.shared.event.Event;
+import org.collebol.shared.event.EventListener;
 import org.collebol.shared.math.Vector2D;
-
-import java.util.Map;
 
 /**
  * The ClientRightClickEvent class represents an event triggered by a right mouse click.
@@ -14,8 +12,9 @@ import java.util.Map;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ClientRightClickEvent implements ClientEvent<ClientRightClickEvent.Listener> {
+public class ClientRightClickEvent implements Event<ClientRightClickEvent.Listener, EJGEngine> {
 
+    public static Listener Listener;
     private final Vector2D position;
     private final boolean press;
 
@@ -41,7 +40,7 @@ public class ClientRightClickEvent implements ClientEvent<ClientRightClickEvent.
         listener.onKeyRightClick(this, engine);
     }
 
-    public interface Listener extends ClientListener {
+    public interface Listener extends EventListener {
         void onKeyRightClick(ClientRightClickEvent event, EJGEngine engine);
     }
 }
