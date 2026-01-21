@@ -3,7 +3,7 @@ package org.collebol.multiplayer.packet.clientBound;
 import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.client.ServerSession;
 import org.collebol.multiplayer.packet.Packet;
-import org.collebol.shared.Context;
+import org.collebol.shared.event.EventContext;
 import org.collebol.shared.event.Event;
 import org.collebol.shared.event.EventListener;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> implements Event<CBCloseConnectionPacket.Listener, Context> {
+public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> implements Event<CBCloseConnectionPacket.Listener, EventContext> {
 
     private long currentMilisec;
 
@@ -61,7 +61,7 @@ public class CBCloseConnectionPacket extends Packet<CBCloseConnectionPacket> imp
     }
 
     @Override
-    public void dispatch(Listener listener, Context context) {
+    public void dispatch(Listener listener, EventContext context) {
         listener.onPacketReceive(this, (ServerSession) context);
     }
 

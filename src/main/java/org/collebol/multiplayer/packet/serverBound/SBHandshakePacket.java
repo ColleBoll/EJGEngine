@@ -6,7 +6,7 @@ import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.server.ClientSession;
 import org.collebol.multiplayer.server.Server;
 import org.collebol.multiplayer.server.ServerConsole;
-import org.collebol.shared.Context;
+import org.collebol.shared.event.EventContext;
 import org.collebol.shared.event.Event;
 import org.collebol.shared.event.EventListener;
 
@@ -28,7 +28,7 @@ import java.util.UUID;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class SBHandshakePacket extends Packet<SBHandshakePacket> implements Event<SBHandshakePacket.Listener, Context> {
+public class SBHandshakePacket extends Packet<SBHandshakePacket> implements Event<SBHandshakePacket.Listener, EventContext> {
 
     private UUID uuid;
     private String clientIp;
@@ -94,7 +94,7 @@ public class SBHandshakePacket extends Packet<SBHandshakePacket> implements Even
     }
 
     @Override
-    public void dispatch(Listener listener, Context context) {
+    public void dispatch(Listener listener, EventContext context) {
         listener.onPacketReceive(this, (Server) context);
     }
 

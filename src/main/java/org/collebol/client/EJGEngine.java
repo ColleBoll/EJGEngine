@@ -10,7 +10,7 @@ import org.collebol.client.gui.graphics.renderer.ui.UIRenderer;
 import org.collebol.client.gui.graphics.ui.ComponentHandler;
 import org.collebol.client.utils.EngineInfo;
 import org.collebol.client.utils.GameInfo;
-import org.collebol.shared.Context;
+import org.collebol.shared.event.EventContext;
 
 /**
  * This abstract class representing the core engine for EJGEngine on the Client side.
@@ -25,7 +25,7 @@ import org.collebol.shared.Context;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public abstract class EJGEngine implements Context {
+public abstract class EJGEngine implements EventContext {
 
     private MainWindow window;
 

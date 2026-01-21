@@ -4,7 +4,7 @@ import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.client.ServerSession;
 import org.collebol.multiplayer.packet.Packet;
 import org.collebol.multiplayer.packet.serverBound.SBHandshakePacket;
-import org.collebol.shared.Context;
+import org.collebol.shared.event.EventContext;
 import org.collebol.shared.event.Event;
 import org.collebol.shared.event.EventListener;
 
@@ -23,7 +23,7 @@ import java.io.IOException;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class CBHandshakePacket extends Packet<CBHandshakePacket> implements Event<CBHandshakePacket.Listener, Context> {
+public class CBHandshakePacket extends Packet<CBHandshakePacket> implements Event<CBHandshakePacket.Listener, EventContext> {
 
     private long currentMilisec;
 
@@ -61,7 +61,7 @@ public class CBHandshakePacket extends Packet<CBHandshakePacket> implements Even
     }
 
     @Override
-    public void dispatch(Listener listener, Context context) {
+    public void dispatch(Listener listener, EventContext context) {
         listener.onPacketReceive(this, (ServerSession) context);
     }
 

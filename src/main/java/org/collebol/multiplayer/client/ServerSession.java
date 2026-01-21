@@ -1,12 +1,12 @@
 package org.collebol.multiplayer.client;
 
-import org.collebol.multiplayer.PacketEventHandler;
+import org.collebol.multiplayer.packet.PacketEventHandler;
 import org.collebol.multiplayer.Session;
 import org.collebol.multiplayer.packet.Packet;
 import org.collebol.multiplayer.packet.clientBound.CBCloseConnectionPacket;
 import org.collebol.multiplayer.packet.clientBound.CBHandshakePacket;
 import org.collebol.multiplayer.packet.clientBound.CBStringPacket;
-import org.collebol.shared.Context;
+import org.collebol.shared.event.EventContext;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,7 +20,7 @@ import java.net.Socket;
  * @author ColleBol - <a href="mailto:contact@collebol.org">contact@collebol.org</a>
  * @since 1.0-dev
  */
-public class ServerSession extends Session implements AutoCloseable, Context {
+public class ServerSession extends Session implements AutoCloseable, EventContext {
 
     private Socket serverSocket;
 
